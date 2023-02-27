@@ -1,6 +1,4 @@
-import DocumentIcon from "@/components/base/icons/Document";
-import GroupIcon from "@/components/base/icons/Group";
-import NotificationIcon from "@/components/base/icons/Notification";
+import Header from "@/components/base/header";
 import Layout from "@/components/templates/Layout";
 import Head from "next/head";
 import { useEffect } from "react";
@@ -19,7 +17,9 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout></Layout>
+      <Layout activeRoute="profile">
+        <Header>Profile</Header>
+      </Layout>
     </>
   );
 }
