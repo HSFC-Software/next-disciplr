@@ -100,11 +100,6 @@ body {
     rgb(var(--background-start-rgb));
 }
 
-main {
-  min-height: 100vh;
-  min-height: calc(100vh - var(--main, 0px));
-}
-
 a {
   color: inherit;
   text-decoration: none;

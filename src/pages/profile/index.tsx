@@ -21,30 +21,28 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout activeRoute="profile">
-        <div className="shrink-0">
-          <Header>
-            <div className="flex w-full justify-between items-center">
-              <span>Profile</span>
-              <Dropdown
-                label={
-                  <span className="text-3xl">
-                    <HiOutlineCog6Tooth />
-                  </span>
-                }
-                placement="bottom-end"
-                inline
-                arrowIcon={null!}
-              >
-                <Dropdown.Item className={styles.dropdownItem}>
-                  Update Profile
-                </Dropdown.Item>
-                <Dropdown.Item className={styles.dropdownItem}>
-                  Sign out
-                </Dropdown.Item>
-              </Dropdown>
-            </div>
-          </Header>
-        </div>
+        <Header>
+          <div className="flex w-full justify-between items-center">
+            <span>Profile</span>
+            <Dropdown
+              label={
+                <span className="text-3xl">
+                  <HiOutlineCog6Tooth />
+                </span>
+              }
+              placement="bottom-end"
+              inline
+              arrowIcon={null!}
+            >
+              <Dropdown.Item className={styles.dropdownItem}>
+                Update Profile
+              </Dropdown.Item>
+              <Dropdown.Item className={styles.dropdownItem}>
+                Sign out
+              </Dropdown.Item>
+            </Dropdown>
+          </div>
+        </Header>
         <div className="grow overflow-y-auto">
           <section className="px-7 grow overflow-y-auto h-full">
             <div className="flex justify-center py-5 mb-4">
