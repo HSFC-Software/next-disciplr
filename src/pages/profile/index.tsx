@@ -3,6 +3,7 @@ import Layout from "@/components/templates/Layout";
 import Head from "next/head";
 import { useEffect } from "react";
 import vhCheck from "vh-check";
+import styles from "./profile.module.scss";
 
 export default function Home() {
   useEffect(() => {
@@ -18,7 +19,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout activeRoute="profile">
-        <Header>Profile</Header>
+        <Header>
+          <div className="flex w-full justify-between items-center">
+            <span>Profile</span>
+            <button>
+              <span className="font-normal text-base text-[#554AF0]">Edit</span>
+            </button>
+          </div>
+        </Header>
+        <div className="flex justify-center py-5">
+          <div className="w-[100px] h-[100px] bg-gray-100 rounded-full" />
+        </div>
+        <label className={styles.label}>General Information</label>
       </Layout>
     </>
   );
