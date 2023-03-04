@@ -1,5 +1,5 @@
 import Header from "@/components/base/header";
-import Layout from "@/components/templates/Layout";
+import Layout from "@/components/templates/layout";
 import Head from "next/head";
 import { useEffect } from "react";
 import vhCheck from "vh-check";

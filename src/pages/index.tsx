@@ -1,16 +1,12 @@
 import DocumentIcon from "@/components/base/icons/Document";
 import GroupIcon from "@/components/base/icons/Group";
 import NotificationIcon from "@/components/base/icons/Notification";
-import Layout from "@/components/templates/Layout";
+import Layout from "@/components/templates/layout";
 import Head from "next/head";
 import { useEffect } from "react";
 import vhCheck from "vh-check";
 
 export default function Home() {
-  useEffect(() => {
-    vhCheck("main");
-  }, []);
-
   return (
     <>
       <Head>
