@@ -19,8 +19,8 @@ export default function Layout(props: {
 
   return (
     <>
-      <main className="w-screen flex flex-col bg-white">
-        <div className="grow">
+      <main className="w-screen h-screen flex flex-col bg-white">
+        <div className="grow flex-col flex overflow-hidden">
           {props?.header}
           {props.children}
         </div>

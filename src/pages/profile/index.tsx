@@ -4,6 +4,8 @@ import Head from "next/head";
 import { useEffect } from "react";
 import vhCheck from "vh-check";
 import styles from "./profile.module.scss";
+import { HiOutlineCog6Tooth } from "react-icons/hi2";
+import { Dropdown } from "flowbite-react";
 
 export default function Home() {
   useEffect(() => {
@@ -19,18 +21,85 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout activeRoute="profile">
-        <Header>
-          <div className="flex w-full justify-between items-center">
-            <span>Profile</span>
-            <button>
-              <span className="font-normal text-base text-[#554AF0]">Edit</span>
-            </button>
-          </div>
-        </Header>
-        <div className="flex justify-center py-5">
-          <div className="w-[100px] h-[100px] bg-gray-100 rounded-full" />
+        <div className="shrink-0">
+          <Header>
+            <div className="flex w-full justify-between items-center">
+              <span>Profile</span>
+              <Dropdown
+                label={
+                  <span className="text-3xl">
+                    <HiOutlineCog6Tooth />
+                  </span>
+                }
+                placement="bottom-end"
+                inline
+                arrowIcon={null!}
+              >
+                <Dropdown.Item className={styles.dropdownItem}>
+                  Update Profile
+                </Dropdown.Item>
+                <Dropdown.Item className={styles.dropdownItem}>
+                  Sign out
+                </Dropdown.Item>
+              </Dropdown>
+            </div>
+          </Header>
         </div>
-        <label className={styles.label}>General Information</label>
+        <div className="grow overflow-y-auto">
+          <section className="px-7 grow overflow-y-auto h-full">
+            <div className="flex justify-center py-5 mb-4">
+              <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
+                JD
+              </div>
+            </div>
+            <label className={`${styles.label} uppercase font-medium`}>
+              General Information
+            </label>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Name</label>
+              <div className="text-lg">John</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Middle Name</label>
+              <div className="text-lg">-</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Surname</label>
+              <div className="text-lg">-</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Birthday</label>
+              <div className="text-lg">January 21, 1990</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Sex</label>
+              <div className="text-lg">Male</div>
+            </div>
+            <label className={`${styles.label} uppercase font-medium mt-7`}>
+              Contact Information
+            </label>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Mobile Name</label>
+              <div className="text-lg">-</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Email Address</label>
+              <div className="text-lg">-</div>
+            </div>
+            <div className="py-5 flex flex-col gap-2">
+              <label className={styles.label}>Address</label>
+              <div className="text-lg">
+                Blk X Lot Y Phase Z Not Existing Village, Brgy. Autocomplete
+                Exciting City Province of the Ph.
+              </div>
+            </div>
+            {/* <div className="mt-12 mb-10 text-center">
+              <button className="py-3 px-12 rounded-lg bg-[#554AF0] text-white">
+                Logout
+              </button>
+            </div> */}
+          </section>
+        </div>
       </Layout>
     </>
   );
