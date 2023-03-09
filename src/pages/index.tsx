@@ -1,10 +1,6 @@
-import DocumentIcon from "@/components/base/icons/Document";
-import GroupIcon from "@/components/base/icons/Group";
-import NotificationIcon from "@/components/base/icons/Notification";
 import Layout from "@/components/templates/layout";
 import Head from "next/head";
-import { useEffect } from "react";
-import vhCheck from "vh-check";
+import NetorkCard from "@/components/modules/network-card";
 
 export default function Home() {
   return (
@@ -15,7 +11,15 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout></Layout>
+      <Layout>
+        <NetorkCard
+          first_name="John"
+          last_name="Doe"
+          created_at="2021-01-01"
+          member_count={4}
+          status="Active"
+        />
+      </Layout>
     </>
   );
 }
