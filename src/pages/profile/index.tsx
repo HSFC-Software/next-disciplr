@@ -6,11 +6,21 @@ import vhCheck from "vh-check";
 import styles from "./profile.module.scss";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { Dropdown } from "flowbite-react";
+import { useGetProfileFromToken } from "@/lib/queries";
+import { useToken } from "@/lib/hooks";
+import moment from "moment";
 
 export default function Home() {
+  const token = useToken();
+  const { data: profile } = useGetProfileFromToken(token);
+
   useEffect(() => {
     vhCheck("main");
   }, []);
+
+  let name = profile?.first_name ?? "-";
+  if (profile?.middle_name) name += ` ${profile?.middle_name}`;
+  if (profile?.last_name) name += ` ${profile?.last_name}`;
 
   return (
     <>
@@ -47,7 +57,7 @@ export default function Home() {
           <section className="px-7 grow overflow-y-auto h-full">
             <div className="flex justify-center py-5 mb-4">
               <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
-                JD
+                {profile?.first_name[0] ?? "-"}
               </div>
             </div>
             <label className={`${styles.label} uppercase font-medium`}>
@@ -55,41 +65,35 @@ export default function Home() {
             </label>
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Name</label>
-              <div className="text-lg">John</div>
-            </div>
-            <div className="py-5 flex flex-col gap-2">
-              <label className={styles.label}>Middle Name</label>
-              <div className="text-lg">-</div>
-            </div>
-            <div className="py-5 flex flex-col gap-2">
-              <label className={styles.label}>Surname</label>
-              <div className="text-lg">-</div>
+              <div className="text-lg">{name}</div>
             </div>
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Birthday</label>
-              <div className="text-lg">January 21, 1990</div>
+              <div className="text-lg">
+                {profile?.birthday
+                  ? moment(profile?.birthday).format("LL")
+                  : "-"}
+              </div>
             </div>
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Sex</label>
-              <div className="text-lg">Male</div>
+              <div className="text-lg">{profile?.sex ?? "-"}</div>
             </div>
+
             <label className={`${styles.label} uppercase font-medium mt-7`}>
               Contact Information
             </label>
             <div className="py-5 flex flex-col gap-2">
-              <label className={styles.label}>Mobile Name</label>
-              <div className="text-lg">-</div>
+              <label className={styles.label}>Mobile</label>
+              <div className="text-lg">{profile?.contact_number ?? "-"}</div>
             </div>
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Email Address</label>
-              <div className="text-lg">-</div>
+              <div className="text-lg">{profile?.email}</div>
             </div>
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Address</label>
-              <div className="text-lg">
-                Blk X Lot Y Phase Z Not Existing Village, Brgy. Autocomplete
-                Exciting City Province of the Ph.
-              </div>
+              <div className="text-lg">{profile?.address ?? "-"}</div>
             </div>
             {/* <div className="mt-12 mb-10 text-center">
               <button className="py-3 px-12 rounded-lg bg-[#554AF0] text-white">
