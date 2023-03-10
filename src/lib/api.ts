@@ -17,3 +17,21 @@ export const getNetworksByDiscipler = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export const getNetworkDetails = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/networks/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const getSubNetworks = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/subnetworks/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

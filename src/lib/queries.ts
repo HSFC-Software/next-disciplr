@@ -1,9 +1,14 @@
 import jwt from "jsonwebtoken";
 import { useQuery } from "react-query";
-import { getProfileByEmail, getNetworksByDiscipler } from "@/lib/api";
 import { Profile } from "@/types/profile";
 import { Network } from "@/types/networks";
 import { useToken } from "./hooks";
+import {
+  getProfileByEmail,
+  getNetworksByDiscipler,
+  getNetworkDetails,
+  getSubNetworks,
+} from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
   type UserMetadata = {
@@ -45,6 +50,28 @@ export const useGetNetworksByDiscipler = (id: string) => {
   return useQuery<Network[] | null>(
     ["getNetworksByDiscipler", { id }],
     async () => await getNetworksByDiscipler(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useGetNetworkDetails = (id: string) => {
+  return useQuery<Network | null>(
+    ["getNetworkDetails", { id }],
+    async () => await getNetworkDetails(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useGetSubNetworks = (id: string) => {
+  return useQuery<Network[] | null>(
+    ["getSubNetworks", { id }],
+    async () => await getSubNetworks(id),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,
