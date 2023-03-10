@@ -3,12 +3,11 @@ import Layout from "@/components/templates/layout";
 import Head from "next/head";
 import NetworkCard from "@/components/modules/network-card";
 import { useGetNetworksByDiscipler, useGetProfile } from "@/lib/queries";
+import moment from "moment";
 
 const Networks = () => {
   const { data: profile } = useGetProfile();
   const { data: networks } = useGetNetworksByDiscipler(profile?.id ?? "");
-
-  console.log(networks);
 
   return (
     <>
@@ -24,17 +23,20 @@ const Networks = () => {
             <span>Networks</span>
           </div>
         </Header>
-        {networks?.map((network) => {
-          return (
-            <NetworkCard
-              key={network.id}
-              alias={network.name}
-              created_at={network.created_at}
-              member_count={network.member_count}
-              status={network.status}
-            />
-          );
-        })}
+        <div className="p-7 flex flex-col gap-8">
+          {networks?.map((network) => {
+            return (
+              <NetworkCard
+                id={network.id}
+                key={network.id}
+                alias={network.name}
+                created_at={moment(network.created_at).format("MMM DD, YYYY")}
+                member_count={network.member_count}
+                status={network.status}
+              />
+            );
+          })}
+        </div>
       </Layout>
     </>
   );
