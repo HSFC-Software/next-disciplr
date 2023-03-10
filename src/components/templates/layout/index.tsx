@@ -52,10 +52,16 @@ function Nav(props: { activeRoute?: string }) {
         <DocumentIcon width={30} height={30} />
         <span className="text-xs text-[#686777]">Consolidations</span>
       </div>
-      <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
-        <GroupIcon width={30} height={30} />
-        <span className="text-xs text-[#686777]">Networks</span>
-      </div>
+      <Link href="/networks">
+        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
+          <GroupIcon
+            width={30}
+            height={30}
+            isActive={activeRoute === "networks"}
+          />
+          <span className="text-xs text-[#686777]">Networks</span>
+        </div>
+      </Link>
       <Link href="/profile">
         <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
           <UserIcon
