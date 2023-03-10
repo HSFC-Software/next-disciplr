@@ -1,0 +1,11 @@
+.addNetwork_main {
+    @apply flex self-center items-center py-3 w-80 h-16 mt-10 bg-white border border-gray-200 rounded-lg shadow-lg
+}
+
+.addNetwork_img {
+    @apply pl-2 ml-3 px-2 bg-indigo-300 text-indigo-700 rounded-lg text-lg
+}
+
+.addNetwork_text {
+    @apply font-bold ml-2 text-gray-600
+}
