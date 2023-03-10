@@ -1,0 +1,10 @@
+.badge_main {
+    @apply flex self-center items-center w-80 mt-2 ml-2
+}
+.badge_img {
+    @apply h-9 w-9 overflow-auto relative rounded-full object-cover z-40
+}
+.badge_name {
+    @apply px-3 py-1 text-xs font-bold text-center border-gray-200 rounded-lg shadow-lg bg-gray-300 relative -left-2
+}
+
