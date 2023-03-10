@@ -1,22 +1,14 @@
 import Header from "@/components/base/header";
 import Layout from "@/components/templates/layout";
 import Head from "next/head";
-import { useEffect } from "react";
-import vhCheck from "vh-check";
 import styles from "./profile.module.scss";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { Dropdown } from "flowbite-react";
-import { useGetProfileFromToken } from "@/lib/queries";
-import { useToken } from "@/lib/hooks";
+import { useGetProfile } from "@/lib/queries";
 import moment from "moment";
 
 export default function Home() {
-  const token = useToken();
-  const { data: profile } = useGetProfileFromToken(token);
-
-  useEffect(() => {
-    vhCheck("main");
-  }, []);
+  const { data: profile } = useGetProfile();
 
   let name = profile?.first_name ?? "-";
   if (profile?.middle_name) name += ` ${profile?.middle_name}`;

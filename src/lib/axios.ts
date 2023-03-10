@@ -3,6 +3,9 @@ import api from "axios";
 const functions = api.create({
   baseURL: "http://localhost:54321/functions/v1",
   timeout: 10000,
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 functions.interceptors.request.use(
