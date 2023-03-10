@@ -3,16 +3,14 @@ import Layout from "@/components/templates/layout";
 import { useGetNetworkDetails, useGetSubNetworks } from "@/lib/queries";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import NetworkCard from "@/components/modules/network-card";
-import moment from "moment";
+import Member from "@/components/modules/networks/members/member";
+import Body from "@/components/base/body";
+import { Leader } from "@/components/modules/networks/leader";
+import { Networks } from "@/components/modules/networks/networks";
 
 const NetowrkDetails = () => {
   const router = useRouter();
   const { data: network } = useGetNetworkDetails(String(router.query.id));
-  const { data: subNetworks } = useGetSubNetworks(network?.id ?? "");
-
-  console.log(network);
-  console.log(subNetworks);
 
   return (
     <>
@@ -28,27 +26,16 @@ const NetowrkDetails = () => {
             <span>{network?.name}</span>
           </div>
         </Header>
-        <div className="p-7">
-          <section>
-            <header>Leader</header>
-            {network?.discipler_id.first_name} {network?.discipler_id.last_name}
-          </section>
-          <section className="mt-12">
-            <header>Networks</header>
-            {subNetworks?.map((network) => {
-              return (
-                <NetworkCard
-                  id={network.id}
-                  key={network.id}
-                  alias={network.name}
-                  created_at={moment(network.created_at).format("MMM DD, YYYY")}
-                  member_count={network.member_count}
-                  status={network.status}
-                />
-              );
-            })}
-          </section>
-        </div>
+        <Body>
+          <div className="p-7 flex flex-col gap-12">
+            <Leader
+              first_name={network?.discipler_id.first_name}
+              last_name={network?.discipler_id.last_name}
+            />
+            <Networks id={network?.id ?? ""} />
+            <Member />
+          </div>
+        </Body>
       </Layout>
     </>
   );

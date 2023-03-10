@@ -35,3 +35,12 @@ export const getSubNetworks = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export const getNetworkMembers = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/network_disciples/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
