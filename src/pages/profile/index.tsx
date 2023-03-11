@@ -6,6 +6,7 @@ import { HiOutlineCog6Tooth } from "react-icons/hi2";
 import { Dropdown } from "flowbite-react";
 import { useGetProfile } from "@/lib/queries";
 import moment from "moment";
+import Body from "@/components/base/body";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -45,7 +46,7 @@ export default function Home() {
             </Dropdown>
           </div>
         </Header>
-        <div className="grow overflow-y-auto">
+        <Body>
           <section className="px-7 grow overflow-y-auto h-full">
             <div className="flex justify-center py-5 mb-4">
               <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
@@ -93,7 +94,7 @@ export default function Home() {
               </button>
             </div> */}
           </section>
-        </div>
+        </Body>
       </Layout>
     </>
   );

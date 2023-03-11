@@ -8,6 +8,7 @@ import {
   getNetworksByDiscipler,
   getNetworkDetails,
   getSubNetworks,
+  getNetworkMembers,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -72,6 +73,17 @@ export const useGetSubNetworks = (id: string) => {
   return useQuery<Network[] | null>(
     ["getSubNetworks", { id }],
     async () => await getSubNetworks(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useGetNetworkMembers = (id: string) => {
+  return useQuery<{ id: string; disciples: Partial<Profile> }[] | null>(
+    ["getNetworkMembers", { id }],
+    async () => await getNetworkMembers(id),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,

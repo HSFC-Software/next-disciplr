@@ -1,0 +1,27 @@
+.member_main {
+  @apply flex flex-col;
+}
+
+.member_nav {
+  @apply px-2 py-2 flex justify-between;
+}
+
+.member_count {
+  @apply text-gray-700;
+}
+
+.member_addnew {
+  @apply text-gray-500;
+}
+
+.member_button {
+  @apply ml-2 px-2 bg-indigo-500 text-indigo-700 rounded-lg text-lg;
+}
+
+.member_list {
+  @apply flex flex-wrap gap-x-1 gap-y-2;
+}
+
+.member_show {
+  @apply text-center mt-7 text-indigo-600;
+}

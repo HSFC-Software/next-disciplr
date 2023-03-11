@@ -31,7 +31,7 @@ const Networks = () => {
                 key={network.id}
                 alias={network.name}
                 created_at={moment(network.created_at).format("MMM DD, YYYY")}
-                member_count={network.member_count}
+                member_count={network.member_count ?? 0}
                 status={network.status}
               />
             );
