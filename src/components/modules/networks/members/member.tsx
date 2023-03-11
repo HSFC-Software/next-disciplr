@@ -18,7 +18,6 @@ export default function Member() {
       </div>
       <div className={style.member_list}>
         {members?.map((member) => {
-          console.log(member);
           return (
             <MemberBadge
               key={member.id}
