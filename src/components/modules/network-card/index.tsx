@@ -1,4 +1,5 @@
 import { getNetworksByDiscipler } from "@/lib/api";
+import moment from "moment";
 import Link from "next/link";
 import styles from "./index.module.scss";
 
@@ -16,42 +17,26 @@ type Props = {
 export default function NetworkCard(props: Props) {
   const { created_at, member_count, status, id } = props;
 
-  if (status === "Active") {
-    return (
-      <Link href={`/networks/${id}`}>
-        <div className={styles.card_main}>
-          <div className={styles.card_body}>
-            <img
-              className={styles.card_img}
-              src="https://assets.entrepreneur.com/content/3x2/2000/20200429211042-GettyImages-1164615296.jpeg?crop=1:1"
-              alt=""
-            />
-            <div className={styles.card_status}>{member_count} members</div>
-            <div className={styles.card_content}>
-              <div>{props?.alias}</div>
-              <div className={styles.card_createdAt}>{created_at}</div>
-            </div>
-          </div>
-        </div>
-      </Link>
-    );
+  const words = props?.alias?.trim().split(" ");
+  console.log(words);
+  let initials = words?.[0].charAt(0);
+  if (words?.length! > 1) {
+    initials = `${words?.[0]?.charAt(0)}${words?.[1]?.charAt(0)}`;
   }
 
   return (
     <Link href={`/networks/${id}`}>
-      <div className={styles.card_main}>
-        <div className={styles.card_body_inactive}>
-          <img
-            className={styles.card_img}
-            src="https://assets.entrepreneur.com/content/3x2/2000/20200429211042-GettyImages-1164615296.jpeg?crop=1:1"
-            alt=""
-          />
-          <div className={styles.card_status_inactive}>
-            {member_count} members
+      <div className={`${styles.card_main} ${status}`}>
+        <div className={styles.card_body}>
+          <div className="relative">
+            <div className={styles.card_img}>{initials}</div>
+            <div className={styles.card_status}>{member_count} members</div>
           </div>
           <div className={styles.card_content}>
-            <div>{props.alias}</div>
-            <div className={styles.card_createdAt}>{created_at}</div>
+            <div>{props?.alias}</div>
+            <div className={styles.card_createdAt}>
+              Opened last {moment(created_at).fromNow()}
+            </div>
           </div>
         </div>
       </div>
