@@ -9,7 +9,6 @@ export const Networks = (props: { id: string }) => {
     <section className="flex flex-col gap-3">
       <header>Networks</header>
       {subNetworks?.map((network) => {
-        console.log({ network });
         return (
           <NetworkCard
             id={network.networks_id.id}

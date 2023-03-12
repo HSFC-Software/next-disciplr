@@ -12,7 +12,6 @@ import Addnetwork from "@/components/modules/networks/add-network";
 const NetowrkDetails = () => {
   const router = useRouter();
   const { data: network } = useGetNetworkDetails(String(router.query.id));
-  console.log(network);
   return (
     <>
       <Head>
