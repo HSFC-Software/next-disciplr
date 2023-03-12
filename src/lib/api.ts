@@ -64,9 +64,11 @@ export const openNetwork = async (
   }
 };
 
+export type SearchedLeader = Pick<Profile, "id" | "first_name" | "last_name">;
+
 export const searchLeaders = async (
   keyword: string
-): Promise<Pick<Profile, "id" | "first_name" | "last_name">> => {
+): Promise<SearchedLeader[]> => {
   try {
     const { data } = await axios.post(`/profile?q=${keyword}`);
     return data;

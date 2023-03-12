@@ -7,14 +7,8 @@ import Body from "@/components/base/body";
 import { useEffect, useRef, useState } from "react";
 import Button from "@/components/base/button";
 import { useOpenNetwork } from "@/lib/mutations";
-
-export const getServerSideProps = (context: any) => {
-  return {
-    props: {
-      id: context.query.id,
-    },
-  };
-};
+import { SearchedLeader } from "@/lib/api";
+import useDebounce from "@/lib/hooks";
 
 const NewNetwork = () => {
   const [initialized, setInitialized] = useState(false);
@@ -23,10 +17,11 @@ const NewNetwork = () => {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: openNetwork } = useOpenNetwork(router.query.id as string);
-  const { data: searchResult } = useSearchLeaders(leaderQ);
-
-  console.log(searchResult);
-
+  const debouncedSearch = useDebounce(leaderQ, 500);
+  const { data: searchResult } = useSearchLeaders(debouncedSearch);
+  const [selectedLeader, setSelectedLeader] = useState<SearchedLeader | null>(
+    null
+  );
   const { data: network } = useGetNetworkDetails(String(router.query.id));
 
   useEffect(() => {
@@ -44,12 +39,24 @@ const NewNetwork = () => {
     if (network) {
       const payload = {
         name,
-        discipler_id: network?.discipler_id.id,
+        discipler_id: selectedLeader?.id ?? "",
         network_id: network?.id,
       };
 
       openNetwork(payload, { onSuccess: handleOnSuccess });
     }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setLeaderQ(e.target.value);
+    setSelectedLeader(null);
+  };
+
+  const handleSelectLeader = (leader: SearchedLeader) => {
+    setLeaderQ(leader.first_name ?? "" + leader.last_name ?? "");
+    setSelectedLeader(leader);
+    setName(leader.first_name + "'s Network");
+    inputRef.current?.focus();
   };
 
   return (
@@ -75,9 +82,31 @@ const NewNetwork = () => {
               <input
                 placeholder="Search leader"
                 value={leaderQ}
-                onChange={(e) => setLeaderQ(e.target.value)}
+                onChange={handleChange}
                 className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
               />
+              <div
+                style={{
+                  marginTop: -8,
+                  display: selectedLeader || !leaderQ ? "none" : "block",
+                }}
+                className="max-h-[180px] overflow-y-auto py-2"
+              >
+                {searchResult?.map((leader) => {
+                  const name = `${leader.first_name ?? ""} ${
+                    leader.last_name ?? ""
+                  }`.trim();
+                  return (
+                    <li
+                      onClick={() => handleSelectLeader(leader)}
+                      className="block py-2 pl-2"
+                      key={leader.id}
+                    >
+                      {name}
+                    </li>
+                  );
+                })}
+              </div>
             </div>
             <div className="flex flex-col gap-2 mb-7">
               <label className="block uppercase text-sm">Network Name</label>
@@ -89,7 +118,10 @@ const NewNetwork = () => {
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
-            <Button disabled={!network} onClick={handleSubmit}>
+            <Button
+              disabled={!network || !selectedLeader || !name}
+              onClick={handleSubmit}
+            >
               Open New Network
             </Button>
           </div>
