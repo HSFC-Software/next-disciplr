@@ -16,7 +16,7 @@ export default function Auth() {
 
   if (data) {
     // authenticated
-    window.location.href = "/";
+    window.location.href = "/networks";
   }
 
   if (data === null) {
