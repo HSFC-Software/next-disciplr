@@ -1,3 +1,4 @@
+import Auth from "@/components/base/auth";
 import DocumentIcon from "@/components/base/icons/Document";
 import GroupIcon from "@/components/base/icons/Group";
 import NotificationIcon from "@/components/base/icons/Notification";
@@ -13,7 +14,7 @@ export default function Layout(props: {
   const { activeRoute } = props;
 
   return (
-    <>
+    <Auth>
       <main className="w-screen h-screen flex flex-col bg-white relative text-gray-900">
         <div id="header-filler" />
         <div id="content-area" className="grow flex-col flex overflow-hidden">
@@ -23,7 +24,7 @@ export default function Layout(props: {
         <div id="footer-filler" />
         <Nav activeRoute={activeRoute} />
       </main>
-    </>
+    </Auth>
   );
 }
 
@@ -42,7 +43,7 @@ function Nav(props: { activeRoute?: string }) {
   return (
     <nav
       id="nav"
-      className="shrink-0 flex border-t px-7 py-5 justify-between fixed bottom-0 w-screen bg-white"
+      className="shrink-0 flex border-t px-7 py-5 justify-between fixed bottom-0 w-screen bg-white z-10"
     >
       <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
         <NotificationIcon width={30} height={30} />
