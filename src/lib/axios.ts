@@ -1,10 +1,11 @@
 import api from "axios";
 
 const functions = api.create({
-  baseURL: "http://localhost:54321/functions/v1",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
+    Authorization: "Bearer" + " " + process.env.NEXT_PUBLIC_API_URL,
   },
 });
 

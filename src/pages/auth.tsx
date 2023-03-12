@@ -1,6 +1,5 @@
 import { useGetProfileFromToken } from "@/lib/queries";
 import { useEffect, useState } from "react";
-import { redirect } from "next/navigation";
 
 export default function Auth() {
   const [token, setToken] = useState("");
