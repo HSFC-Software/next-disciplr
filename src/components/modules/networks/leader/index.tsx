@@ -16,7 +16,9 @@ export const Leader = (props: Partial<Profile>) => {
         </header>
       </div>
       <div className="flex items-center pl-[15%]">
-        <Avatar size={77}>{initials}</Avatar>
+        <Avatar fontSize="text-xl" size={77}>
+          {initials}
+        </Avatar>
         <div className="ml-[-38px] bg-[#F5F5F5] w-full h-20 py-16 rounded-l-[32px] flex items-center pl-14">
           <div className="flex flex-col gap-1">
             <span>

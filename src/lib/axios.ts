@@ -5,7 +5,7 @@ const functions = api.create({
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: "Bearer" + " " + process.env.NEXT_PUBLIC_API_URL,
+    // Authorization: "Bearer" + " " + process.env.NEXT_PUBLIC_API_URL,
   },
 });
 

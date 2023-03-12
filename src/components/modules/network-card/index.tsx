@@ -28,7 +28,9 @@ export default function NetworkCard(props: Props) {
       <div className={`${styles.card_main} ${status}`}>
         <div className={styles.card_body}>
           <div className="relative">
-            <Avatar size={77}>{initials}</Avatar>
+            <Avatar fontSize="text-xl" size={77}>
+              {initials}
+            </Avatar>
             <div className={styles.card_status}>{member_count} members</div>
           </div>
           <div className={styles.card_content}>

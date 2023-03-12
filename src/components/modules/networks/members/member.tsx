@@ -2,10 +2,14 @@ import style from "./member.module.scss";
 import MemberBadge from "@/components/base/member-badge/badge";
 import { useGetNetworkMembers } from "@/lib/queries";
 import { useRouter } from "next/router";
+import { useModalContext } from "@/components/base/modal/Provider";
 
 export default function Member() {
   const router = useRouter();
   const { data: members } = useGetNetworkMembers(String(router.query.id));
+  console.log(router);
+
+  const { showModal, closeModal } = useModalContext();
 
   const handleOnAddMember = () => {
     router.push("/networks/add-member?id=" + router.query.id);
@@ -32,6 +36,7 @@ export default function Member() {
         {members?.map((member) => {
           return (
             <MemberBadge
+              editable={router.pathname === "/networks/[id]/update"}
               key={member.id}
               first_name={member.disciples.first_name ?? ""}
               last_name={member.disciples.last_name ?? ""}

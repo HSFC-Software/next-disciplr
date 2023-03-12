@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import Body from "@/components/base/body";
 import Button from "@/components/base/button";
 import { SearchedLeader } from "@/lib/api";
-import useDebounce from "@/lib/hooks";
+import { useDebounce } from "@/lib/hooks";
 import { useLinkExistingMember, useLinkNewMember } from "@/lib/mutations";
 
 const AddMember = () => {

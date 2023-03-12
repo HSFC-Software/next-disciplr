@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import Button from "@/components/base/button";
 import { useOpenNetwork } from "@/lib/mutations";
 import { SearchedLeader } from "@/lib/api";
-import useDebounce from "@/lib/hooks";
+import { useDebounce } from "@/lib/hooks";
 
 const NewNetwork = () => {
   const [initialized, setInitialized] = useState(false);

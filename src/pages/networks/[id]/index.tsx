@@ -8,6 +8,7 @@ import Body from "@/components/base/body";
 import { Leader } from "@/components/modules/networks/leader";
 import { Networks } from "@/components/modules/networks/networks";
 import Addnetwork from "@/components/modules/networks/add-network";
+import Link from "next/link";
 
 const NetowrkDetails = () => {
   const router = useRouter();
@@ -23,7 +24,14 @@ const NetowrkDetails = () => {
       <Layout activeRoute="networks">
         <Header>
           <div className="flex w-full justify-between items-center">
-            <span>{network?.name}</span>
+            <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+              {network?.name}
+            </span>
+            <Link href={`/networks/${String(router.query.id)}/update`}>
+              <button className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]">
+                Edit
+              </button>
+            </Link>
           </div>
         </Header>
         <Body>

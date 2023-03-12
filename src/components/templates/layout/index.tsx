@@ -3,6 +3,7 @@ import DocumentIcon from "@/components/base/icons/Document";
 import GroupIcon from "@/components/base/icons/Group";
 import NotificationIcon from "@/components/base/icons/Notification";
 import UserIcon from "@/components/base/icons/User";
+import { ModalProvider } from "@/components/base/modal/Provider";
 import Link from "next/link";
 import { ReactNode, useEffect } from "react";
 
@@ -14,17 +15,19 @@ export default function Layout(props: {
   const { activeRoute } = props;
 
   return (
-    <Auth>
-      <main className="w-screen h-screen flex flex-col bg-white relative text-gray-900">
-        <div id="header-filler" />
-        <div id="content-area" className="grow flex-col flex overflow-hidden">
-          {props?.header}
-          {props.children}
-        </div>
-        <div id="footer-filler" />
-        <Nav activeRoute={activeRoute} />
-      </main>
-    </Auth>
+    <ModalProvider>
+      <Auth>
+        <main className="w-screen h-screen flex flex-col bg-white relative text-gray-900">
+          <div id="header-filler" />
+          <div id="content-area" className="grow flex-col flex overflow-hidden">
+            {props?.header}
+            {props.children}
+          </div>
+          <div id="footer-filler" />
+          <Nav activeRoute={activeRoute} />
+        </main>
+      </Auth>
+    </ModalProvider>
   );
 }
 
