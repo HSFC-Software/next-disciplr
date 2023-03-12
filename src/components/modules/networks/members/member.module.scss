@@ -3,7 +3,7 @@
 }
 
 .member_nav {
-  @apply px-2 py-2 flex justify-between;
+  @apply px-2 py-2 flex justify-between items-center mb-4;
 }
 
 .member_count {
@@ -14,9 +14,9 @@
   @apply text-gray-500;
 }
 
-.member_button {
-  @apply ml-2 px-2 bg-indigo-500 text-indigo-700 rounded-lg text-lg;
-}
+// .member_button {
+//   @apply;
+// }
 
 .member_list {
   @apply flex flex-wrap gap-x-1 gap-y-2;

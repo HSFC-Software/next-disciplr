@@ -76,3 +76,35 @@ export const searchLeaders = async (
     return Promise.reject(err);
   }
 };
+
+export type LinkNewMemberPayload = {
+  first_name: string;
+  last_name: string;
+  middle_name?: string;
+  network_id: string;
+};
+
+export const linkNewMember = async (payload: LinkNewMemberPayload) => {
+  try {
+    const { data } = await axios.post(`/link/disciple/new`, payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export type LinkExistingMemberPayload = {
+  disciple_id: string;
+  network_id: string;
+};
+
+export const linkExistingMember = async (
+  payload: LinkExistingMemberPayload
+) => {
+  try {
+    const { data } = await axios.post(`/link/disciple`, payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
