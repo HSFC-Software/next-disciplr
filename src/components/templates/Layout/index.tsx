@@ -45,14 +45,6 @@ function Nav(props: { activeRoute?: string }) {
       id="nav"
       className="shrink-0 flex border-t px-7 py-5 justify-between fixed bottom-0 w-screen bg-white z-10"
     >
-      <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
-        <NotificationIcon width={30} height={30} />
-        <span className="text-xs text-[#686777]">Home</span>
-      </div>
-      <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
-        <DocumentIcon width={30} height={30} />
-        <span className="text-xs text-[#686777]">Consolidations</span>
-      </div>
       <Link href="/networks">
         <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
           <GroupIcon
@@ -63,6 +55,35 @@ function Nav(props: { activeRoute?: string }) {
           <span className="text-xs text-[#686777]">Networks</span>
         </div>
       </Link>
+
+      <Link href="/conso">
+        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor relative">
+          <DocumentIcon
+            width={30}
+            height={30}
+            isActive={activeRoute === "conso"}
+          />
+          <span className="text-[8px] absolute bg-red-500 text-white px-2 rounded-lg top-0 ml-8">
+            Soon
+          </span>
+          <span className="text-xs text-[#686777]">Consolidations</span>
+        </div>
+      </Link>
+
+      <Link href="/">
+        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor relative">
+          <NotificationIcon
+            width={30}
+            height={30}
+            isActive={activeRoute === "/"}
+          />
+          <span className="text-[8px] absolute bg-red-500 text-white px-2 rounded-lg top-0 ml-8">
+            Soon
+          </span>
+          <span className="text-xs text-[#686777]">Notifcations</span>
+        </div>
+      </Link>
+
       <Link href="/profile">
         <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
           <UserIcon

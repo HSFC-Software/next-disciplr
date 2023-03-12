@@ -71,7 +71,6 @@ const AddMember = () => {
   const handleClickAddInstead = () => {
     setAddType("Add");
     const words = q.trim().split(" ");
-    console.log(words);
 
     if (words.length === 1) {
       setFirstname(words[0]);
