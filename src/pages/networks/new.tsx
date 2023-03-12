@@ -1,6 +1,6 @@
 import Header from "@/components/base/header";
 import Layout from "@/components/templates/layout";
-import { useGetNetworkDetails } from "@/lib/queries";
+import { useGetNetworkDetails, useSearchLeaders } from "@/lib/queries";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Body from "@/components/base/body";
@@ -17,30 +17,24 @@ export const getServerSideProps = (context: any) => {
 };
 
 const NewNetwork = () => {
-  let leader = "";
   const [initialized, setInitialized] = useState(false);
+  const [leaderQ, setLeaderQ] = useState("");
   const [name, setName] = useState("");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const { mutate: openNetwork } = useOpenNetwork(router.query.id as string);
+  const { data: searchResult } = useSearchLeaders(leaderQ);
+
+  console.log(searchResult);
 
   const { data: network } = useGetNetworkDetails(String(router.query.id));
 
   useEffect(() => {
-    if (network && !name && inputRef.current && !initialized) {
+    if (network && !name && !initialized) {
       setName(`${network.discipler_id.first_name}'s Network`);
-      inputRef.current.focus();
       setInitialized(true);
     }
-  }, [name, network, inputRef, initialized]);
-
-  if (network?.discipler_id?.first_name) {
-    leader += network?.discipler_id?.last_name;
-  }
-
-  if (network?.discipler_id?.last_name) {
-    leader += ", " + network?.discipler_id?.first_name;
-  }
+  }, [name, network, initialized]);
 
   const handleOnSuccess = () => {
     router.push(`/networks/${router.query.id}`);
@@ -79,9 +73,10 @@ const NewNetwork = () => {
                 Leader&apos;s Name
               </label>
               <input
-                value={leader}
-                disabled
-                className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none opacity-50"
+                placeholder="Search leader"
+                value={leaderQ}
+                onChange={(e) => setLeaderQ(e.target.value)}
+                className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
               />
             </div>
             <div className="flex flex-col gap-2 mb-7">

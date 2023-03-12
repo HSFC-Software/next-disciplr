@@ -9,6 +9,7 @@ import {
   getNetworkDetails,
   getSubNetworks,
   getNetworkMembers,
+  searchLeaders,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -84,6 +85,17 @@ export const useGetNetworkMembers = (id: string) => {
   return useQuery<{ id: string; disciples: Partial<Profile> }[] | null>(
     ["getNetworkMembers", { id }],
     async () => await getNetworkMembers(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useSearchLeaders = (keyword: string) => {
+  return useQuery(
+    ["searchLeaders", { id: keyword }],
+    async () => await searchLeaders(keyword),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,

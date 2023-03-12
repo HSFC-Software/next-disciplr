@@ -1,5 +1,6 @@
 import axios from "@/lib/axios";
 import { Network } from "@/types/networks";
+import { Profile } from "@/types/profile";
 
 export const getProfileByEmail = async (email: string) => {
   try {
@@ -57,6 +58,17 @@ export const openNetwork = async (
 ): Promise<Network> => {
   try {
     const { data } = await axios.post(`/link/network`, payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const searchLeaders = async (
+  keyword: string
+): Promise<Pick<Profile, "id" | "first_name" | "last_name">> => {
+  try {
+    const { data } = await axios.post(`/profile?q=${keyword}`);
     return data;
   } catch (err) {
     return Promise.reject(err);
