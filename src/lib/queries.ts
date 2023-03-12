@@ -82,14 +82,17 @@ export const useGetSubNetworks = (id: string) => {
 };
 
 export const useGetNetworkMembers = (id: string) => {
-  return useQuery<{ id: string; disciples: Partial<Profile> }[] | null>(
-    ["getNetworkMembers", { id }],
-    async () => await getNetworkMembers(id),
-    {
-      staleTime: 1000 * 60 * 5,
-      enabled: true,
-    }
-  );
+  return useQuery<
+    | {
+        status: "Active" | "Inactive";
+        id: string;
+        disciples: Partial<Profile>;
+      }[]
+    | null
+  >(["getNetworkMembers", { id }], async () => await getNetworkMembers(id), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
 };
 
 export const useSearchLeaders = (keyword: string) => {

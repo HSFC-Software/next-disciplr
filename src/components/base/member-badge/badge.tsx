@@ -14,7 +14,7 @@ export default function MemberBadge(props: Props) {
   const { first_name, last_name, editable, onRemove } = props;
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center bg-transparent">
       <Avatar fontSize="text-base" size={40}>
         {`${first_name?.charAt(0) ?? ""}${last_name?.charAt(0) ?? ""}`.trim()}
       </Avatar>
