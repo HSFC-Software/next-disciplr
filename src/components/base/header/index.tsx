@@ -12,7 +12,10 @@ export default function Header({ children }: { children?: ReactNode }) {
   });
 
   return (
-    <header id="header" className="p-7 border-b fixed top-0 w-screen bg-white">
+    <header
+      id="header"
+      className="p-7 border-b fixed top-0 w-screen bg-white z-10"
+    >
       <span className="text-[#04021D] text-2xl font-semibold">{children}</span>
     </header>
   );
