@@ -14,9 +14,10 @@ export default function Member() {
   return (
     <div className={style.member_main}>
       <div className={style.member_nav}>
-        <div className="text-[#686777] font-medium">
+        <header className="text-[#686777] uppercase font-semibold">
           MEMBERS({members?.length ?? 0})
-        </div>
+        </header>
+
         <button
           onClick={handleOnAddMember}
           className="text-[#686777] font-light text-sm"

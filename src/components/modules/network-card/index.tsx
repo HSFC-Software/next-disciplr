@@ -1,4 +1,4 @@
-import { getNetworksByDiscipler } from "@/lib/api";
+import Avatar from "@/components/base/avatar";
 import moment from "moment";
 import Link from "next/link";
 import styles from "./index.module.scss";
@@ -18,7 +18,6 @@ export default function NetworkCard(props: Props) {
   const { created_at, member_count, status, id } = props;
 
   const words = props?.alias?.trim().split(" ");
-  console.log(words);
   let initials = words?.[0].charAt(0);
   if (words?.length! > 1) {
     initials = `${words?.[0]?.charAt(0)}${words?.[1]?.charAt(0)}`;
@@ -29,7 +28,7 @@ export default function NetworkCard(props: Props) {
       <div className={`${styles.card_main} ${status}`}>
         <div className={styles.card_body}>
           <div className="relative">
-            <div className={styles.card_img}>{initials}</div>
+            <Avatar size={77}>{initials}</Avatar>
             <div className={styles.card_status}>{member_count} members</div>
           </div>
           <div className={styles.card_content}>

@@ -1,3 +1,4 @@
+import Avatar from "@/components/base/avatar";
 import { Profile } from "@/types/profile";
 
 export const Leader = (props: Partial<Profile>) => {
@@ -15,9 +16,7 @@ export const Leader = (props: Partial<Profile>) => {
         </header>
       </div>
       <div className="flex items-center pl-[15%]">
-        <div className="shrink-0 bg-[#eaeaea] h-[77px] w-[77px] rounded-full z-10 flex justify-center items-center font-bold text-xl">
-          {initials}
-        </div>
+        <Avatar size={77}>{initials}</Avatar>
         <div className="ml-[-38px] bg-[#F5F5F5] w-full h-20 py-16 rounded-l-[32px] flex items-center pl-14">
           <div className="flex flex-col gap-1">
             <span>

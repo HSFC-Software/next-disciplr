@@ -32,10 +32,11 @@ const NetowrkDetails = () => {
               first_name={network?.discipler_id.first_name}
               last_name={network?.discipler_id.last_name}
             />
-            <div className="px-7">
+            <div className="px-7 flex flex-col gap-12">
               <Member />
               <Networks id={network?.id ?? ""} />
               <Addnetwork />
+              <div />
             </div>
           </div>
         </Body>
