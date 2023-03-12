@@ -27,14 +27,16 @@ const NetowrkDetails = () => {
           </div>
         </Header>
         <Body>
-          <div className="p-7 flex flex-col gap-12">
+          <div className="flex flex-col gap-12">
             <Leader
               first_name={network?.discipler_id.first_name}
               last_name={network?.discipler_id.last_name}
             />
-            <Networks id={network?.id ?? ""} />
-            <Member />
-            <Addnetwork />
+            <div className="px-7">
+              <Member />
+              <Networks id={network?.id ?? ""} />
+              <Addnetwork />
+            </div>
           </div>
         </Body>
       </Layout>
