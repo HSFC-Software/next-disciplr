@@ -15,6 +15,11 @@ export default function Home() {
   if (profile?.middle_name) name += ` ${profile?.middle_name}`;
   if (profile?.last_name) name += ` ${profile?.last_name}`;
 
+  const handleSignOut = () => {
+    localStorage.removeItem("access_token");
+    window.location.href = "/sign-in";
+  };
+
   return (
     <>
       <Head>
@@ -40,7 +45,10 @@ export default function Home() {
               <Dropdown.Item className={styles.dropdownItem}>
                 Update Profile
               </Dropdown.Item>
-              <Dropdown.Item className={styles.dropdownItem}>
+              <Dropdown.Item
+                onClick={handleSignOut}
+                className={styles.dropdownItem}
+              >
                 Sign out
               </Dropdown.Item>
             </Dropdown>
