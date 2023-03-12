@@ -1,7 +1,9 @@
+type Status = "Active" | "Inactive";
+
 export type Network = {
   id: string;
   name: string;
-  status: "Active" | "Inactive";
+  status: Status;
   member_count: number;
   created_at: string;
   is_deleted: boolean;
@@ -10,4 +12,12 @@ export type Network = {
     first_name: string;
     last_name: string;
   };
+};
+
+export type SubNetwork = {
+  id: string;
+  created_at: string;
+  main_network_id: string;
+  networks_id: Network;
+  status: Status;
 };

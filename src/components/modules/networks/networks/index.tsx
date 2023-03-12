@@ -9,13 +9,14 @@ export const Networks = (props: { id: string }) => {
     <section className="flex flex-col gap-3">
       <header>Networks</header>
       {subNetworks?.map((network) => {
+        console.log({ network });
         return (
           <NetworkCard
-            id={network.id}
+            id={network.networks_id.id}
             key={network.id}
-            alias={network.name}
+            alias={network.networks_id.name}
             created_at={moment(network.created_at).format("MMM DD, YYYY")}
-            member_count={network.member_count ?? 0}
+            member_count={network.networks_id.member_count ?? 0}
             status={network.status}
           />
         );

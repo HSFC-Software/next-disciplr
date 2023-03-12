@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import { Network } from "@/types/networks";
 
 export const getProfileByEmail = async (email: string) => {
   try {
@@ -39,6 +40,23 @@ export const getSubNetworks = async (id: string) => {
 export const getNetworkMembers = async (id: string) => {
   try {
     const { data } = await axios.get(`/network_disciples/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export type OpenNetworkPayload = {
+  name: string;
+  discipler_id: string;
+  network_id: string;
+};
+
+export const openNetwork = async (
+  payload: OpenNetworkPayload
+): Promise<Network> => {
+  try {
+    const { data } = await axios.post(`/link/network`, payload);
     return data;
   } catch (err) {
     return Promise.reject(err);

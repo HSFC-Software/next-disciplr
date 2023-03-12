@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { useQuery } from "react-query";
 import { Profile } from "@/types/profile";
-import { Network } from "@/types/networks";
+import { Network, SubNetwork } from "@/types/networks";
 import { useToken } from "./hooks";
 import {
   getProfileByEmail,
@@ -70,7 +70,7 @@ export const useGetNetworkDetails = (id: string) => {
 };
 
 export const useGetSubNetworks = (id: string) => {
-  return useQuery<Network[] | null>(
+  return useQuery<SubNetwork[] | null>(
     ["getSubNetworks", { id }],
     async () => await getSubNetworks(id),
     {

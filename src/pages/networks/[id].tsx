@@ -1,17 +1,18 @@
 import Header from "@/components/base/header";
 import Layout from "@/components/templates/layout";
-import { useGetNetworkDetails, useGetSubNetworks } from "@/lib/queries";
+import { useGetNetworkDetails } from "@/lib/queries";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Member from "@/components/modules/networks/members/member";
 import Body from "@/components/base/body";
 import { Leader } from "@/components/modules/networks/leader";
 import { Networks } from "@/components/modules/networks/networks";
+import Addnetwork from "@/components/modules/networks/add-network";
 
 const NetowrkDetails = () => {
   const router = useRouter();
   const { data: network } = useGetNetworkDetails(String(router.query.id));
-
+  console.log(network);
   return (
     <>
       <Head>
@@ -34,6 +35,7 @@ const NetowrkDetails = () => {
             />
             <Networks id={network?.id ?? ""} />
             <Member />
+            <Addnetwork />
           </div>
         </Body>
       </Layout>
