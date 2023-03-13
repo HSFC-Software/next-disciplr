@@ -1,3 +1,4 @@
+import Modal from "@/components/base/modal";
 import Header from "@/components/base/header";
 import Layout from "@/components/templates/layout";
 import { useGetNetworkDetails } from "@/lib/queries";
@@ -5,14 +6,26 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Member from "@/components/modules/networks/members/member";
 import Body from "@/components/base/body";
-import { Leader } from "@/components/modules/networks/leader";
 import { Networks } from "@/components/modules/networks/networks";
-import Addnetwork from "@/components/modules/networks/add-network";
 import { useEffect, useState } from "react";
+import { useMarkInactiveNetwork, useUpdateNetwork } from "@/lib/mutations";
+import { BiBookmarkAltMinus } from "react-icons/bi";
+import { TbSquareRoundedXFilled } from "react-icons/tb";
+import {
+  ModalProvider,
+  useModalContext,
+} from "@/components/base/modal/Provider";
 
 const UpdateNetworkDetails = () => {
   const router = useRouter();
-  const { data: network } = useGetNetworkDetails(String(router.query.id));
+
+  const networkId = String(router.query.id);
+  const { data: network } = useGetNetworkDetails(networkId);
+  const { mutate: update } = useUpdateNetwork(networkId);
+  const { mutate: markInactive, isLoading: inactivating } =
+    useMarkInactiveNetwork();
+
+  const [showInactiveWarning, setShowInactiveWarning] = useState(false);
 
   const [name, setName] = useState("");
 
@@ -21,6 +34,48 @@ const UpdateNetworkDetails = () => {
       setName(network.name);
     }
   }, []);
+
+  const handleSuccess = () => {
+    router.push("/networks/" + networkId);
+  };
+
+  const handleSave = () => {
+    update({ name }, { onSuccess: handleSuccess });
+  };
+
+  const handleMakeInactive = () => {
+    markInactive(network?.id ?? "", {
+      onSuccess: () => setShowInactiveWarning(false),
+    });
+  };
+  const handleRemove = () => {};
+
+  const handleMakeActive = () => {
+    update({ status: "Active" });
+  };
+
+  const markInactiveWarning = (
+    <Modal isOpen={showInactiveWarning}>
+      <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
+        <button
+          onClick={() => setShowInactiveWarning(false)}
+          className="absolute top-0 right-0 mt-[-12px] mr-[-12px] text-[#E22134]"
+        >
+          <TbSquareRoundedXFilled size={35} />
+        </button>
+        <div className="mb-3">
+          Are you sure you want to make this network <strong>Inactive</strong>?
+        </div>
+        <button
+          disabled={inactivating}
+          onClick={() => handleMakeInactive()}
+          className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
+        >
+          Confirm
+        </button>
+      </div>
+    </Modal>
+  );
 
   return (
     <>
@@ -36,13 +91,34 @@ const UpdateNetworkDetails = () => {
             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
               Update Network
             </span>
-            <button className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]">
+            <button
+              onClick={handleSave}
+              className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]"
+            >
               Save
             </button>
           </div>
         </Header>
+        {network?.status === "Inactive" && (
+          <div className="bg-orange-200 w-full left-0 text-base p-4">
+            <span className="text-xs font-semibold">
+              This network is Inactive.{" "}
+            </span>
+            <button
+              onClick={handleMakeActive}
+              className="text-xs text-[#554AF0]"
+            >
+              Want to set this network active?
+            </button>
+          </div>
+        )}
         <Body>
-          <div className="flex flex-col gap-12">
+          <div
+            style={{
+              opacity: network?.status === "Inactive" ? 0.7 : 1,
+            }}
+            className="flex flex-col gap-12"
+          >
             <div>
               <div className="flex flex-col gap-2 px-7 mt-7">
                 <label className="block uppercase text-sm">Network Name</label>
@@ -58,10 +134,39 @@ const UpdateNetworkDetails = () => {
             <div className="px-7 flex flex-col gap-12">
               <Member />
               <Networks id={network?.id ?? ""} />
+              {network?.status === "Active" && (
+                <div className="flex justify-center">
+                  <button
+                    // disabled={inactivating}
+                    onClick={() => setShowInactiveWarning(true)}
+                    className="flex items-center gap-2 rounded-xl p-3 px-5 bg-[#F5F5F5] text-orange-500"
+                  >
+                    <BiBookmarkAltMinus size={24} />
+                    <div className="font-semibold">
+                      Mark this network as Inactive
+                    </div>
+                  </button>
+                </div>
+              )}
+              {network?.status === "Inactive" && (
+                <div className="flex justify-center">
+                  <button
+                    disabled={!network}
+                    onClick={handleRemove}
+                    className="flex items-center gap-2 rounded-xl p-3 px-5 bg-[#F5F5F5] text-red-500"
+                  >
+                    <BiBookmarkAltMinus size={24} />
+                    <div className="font-semibold">
+                      Remove and disconnect this network
+                    </div>
+                  </button>
+                </div>
+              )}
               <div />
             </div>
           </div>
         </Body>
+        {markInactiveWarning}
       </Layout>
     </>
   );

@@ -34,8 +34,20 @@ const NetowrkDetails = () => {
             </Link>
           </div>
         </Header>
+        {network?.status === "Inactive" && (
+          <div className="bg-orange-200 w-full left-0 text-base p-4">
+            <span className="text-xs font-semibold">
+              This network is Inactive.{" "}
+            </span>
+          </div>
+        )}
         <Body>
-          <div className="flex flex-col gap-12">
+          <div
+            style={{
+              opacity: network?.status === "Inactive" ? 0.7 : 1,
+            }}
+            className="flex flex-col gap-12"
+          >
             <Leader
               first_name={network?.discipler_id.first_name}
               last_name={network?.discipler_id.last_name}
@@ -43,7 +55,7 @@ const NetowrkDetails = () => {
             <div className="px-7 flex flex-col gap-12">
               <Member />
               <Networks id={network?.id ?? ""} />
-              <Addnetwork />
+              {network?.status === "Active" && <Addnetwork />}
               <div />
             </div>
           </div>

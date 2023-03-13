@@ -108,3 +108,47 @@ export const linkExistingMember = async (
     return Promise.reject(err);
   }
 };
+
+export const removeMember = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`/link/disciple/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const unlinkMember = async (id: string) => {
+  try {
+    const { data } = await axios.patch(`/unlink/disciple/inactive`, { id });
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export type UpdateNetworkPayload = {
+  name?: string;
+  status?: "Active" | "Inactive";
+};
+
+export const updateNetwork = async (
+  id: string,
+  payload: UpdateNetworkPayload
+) => {
+  try {
+    const { data } = await axios.patch(`/networks/${id}`, payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const markNetworkInactive = async (id: string) => {
+  try {
+    const { data } = await axios.patch(`/unlink/network/inactive`, { id });
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

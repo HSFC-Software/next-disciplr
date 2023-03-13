@@ -14,14 +14,21 @@ type AvatarProps = {
     | "text-3xl"
     | "text-4xl"
     | "5xl";
+  style?: object;
 };
 
-export default function Avatar({ children, size, fontSize }: AvatarProps) {
+export default function Avatar({
+  children,
+  size,
+  fontSize,
+  style,
+}: AvatarProps) {
   return (
     <div
       style={{
         height: size,
         width: size,
+        ...(style ?? {}),
       }}
       className={`shrink-0 bg-[#eaeaea] rounded-full z-10 flex justify-center items-center font-bold uppercase ${
         fontSize ? `${fontSize}` : "text-xl"
