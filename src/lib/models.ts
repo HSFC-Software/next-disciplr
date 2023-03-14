@@ -1,11 +1,12 @@
 import { createModel } from "@rematch/core";
 import { Models } from "@rematch/core";
-import { init } from "@rematch/core";
+import { init, RematchDispatch, RematchRootState } from "@rematch/core";
 import persistPlugin from "@rematch/persist";
 import storage from "redux-persist/lib/storage";
 
 export interface RootModel extends Models<RootModel> {
   NetworkUpdates: typeof NetworkUpdates;
+  Networks: typeof Networks;
 }
 
 type NetworkUpdateState = {};
@@ -16,7 +17,13 @@ export const NetworkUpdates = createModel<RootModel>()({
   effects: (dispatch) => ({}),
 });
 
-export const models: RootModel = { NetworkUpdates };
+export const Networks = createModel<RootModel>()({
+  state: {},
+  reducers: {},
+  effects: (dispatch) => ({}),
+});
+
+export const models: RootModel = { NetworkUpdates, Networks };
 
 const persistConfig = {
   key: "root",
@@ -36,3 +43,7 @@ export const store = init({
     rootReducers: { "Authentication/signout": () => undefined },
   },
 });
+
+export type Store = typeof store;
+export type Dispatch = RematchDispatch<RootModel>;
+export type State = RematchRootState<RootModel>;

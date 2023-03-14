@@ -13,6 +13,7 @@ import {
   UpdateNetworkPayload,
 } from "@/lib/api";
 import { Network } from "@/types/networks";
+import { useGetProfile } from "./queries";
 
 export const useOpenNetwork = (network_id: string) => {
   const queryClient = useQueryClient();
@@ -72,7 +73,7 @@ export const useUnlinkMember = (netowrkId: string) => {
 export const useRemoveMember = (netowrkId: string) => {
   const queryClient = useQueryClient();
 
-  return useMutation<unknown, unknown, string>((id) => removeMember(id), {
+  return useMutation<Network, unknown, string>((id) => removeMember(id), {
     onSuccess: () => {
       queryClient.invalidateQueries(["getNetworkMembers", { id: netowrkId }]);
     },
@@ -80,26 +81,44 @@ export const useRemoveMember = (netowrkId: string) => {
 };
 
 export const useUpdateNetwork = (id: string) => {
+  const { data } = useGetProfile();
   const queryClient = useQueryClient();
 
   return useMutation<Network, unknown, UpdateNetworkPayload>(
     (payload) => updateNetwork(id, payload),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries(["getNetworkDetails", { id }]);
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: data?.id },
+        ]);
+        queryClient.invalidateQueries([
+          "getSubNetworks",
+          { id: response.main_network_id },
+        ]);
       },
     }
   );
 };
 
 export const useMarkInactiveNetwork = () => {
+  const { data } = useGetProfile();
   const queryClient = useQueryClient();
 
   return useMutation<Network, unknown, string>(
     (id) => markNetworkInactive(id),
     {
-      onSuccess: (_, id) => {
+      onSuccess: (response, id) => {
         queryClient.invalidateQueries(["getNetworkDetails", { id }]);
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: data?.id },
+        ]);
+        queryClient.invalidateQueries([
+          "getSubNetworks",
+          { id: response.main_network_id },
+        ]);
       },
     }
   );

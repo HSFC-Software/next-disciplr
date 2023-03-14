@@ -7,6 +7,7 @@ export type Network = {
   member_count: number;
   created_at: string;
   is_deleted: boolean;
+  main_network_id?: string;
   discipler_id: {
     id: string;
     first_name: string;
