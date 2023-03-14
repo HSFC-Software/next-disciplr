@@ -21,4 +21,5 @@ export type SubNetwork = {
   main_network_id: string;
   networks_id: Network;
   status: Status;
+  member_count: number;
 };

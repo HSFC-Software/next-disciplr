@@ -18,7 +18,7 @@ export const Networks = (props: { id: string }) => {
               key={network.id}
               alias={network.networks_id.name}
               created_at={moment(network.created_at).format("MMM DD, YYYY")}
-              member_count={network.networks_id.member_count ?? 0}
+              member_count={network.member_count ?? 0}
               status={network.networks_id.status}
             />
           );

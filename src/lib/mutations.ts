@@ -45,16 +45,27 @@ export const useLinkNewMember = (network_id: string) => {
 };
 
 export const useLinkExistingMember = (network_id: string) => {
+  const { data } = useGetProfile();
   const queryClient = useQueryClient();
 
   return useMutation<Network, unknown, LinkExistingMemberPayload>(
     (payload: LinkExistingMemberPayload) => linkExistingMember(payload),
     {
-      onSuccess: () => {
+      onSuccess: (response) => {
         queryClient.invalidateQueries([
           "getNetworkMembers",
           { id: network_id },
         ]);
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: data?.id },
+        ]);
+        if (response.main_network_id) {
+          queryClient.invalidateQueries([
+            "getSubNetworks",
+            { id: response.main_network_id },
+          ]);
+        }
       },
     }
   );
@@ -71,11 +82,21 @@ export const useUnlinkMember = (netowrkId: string) => {
 };
 
 export const useRemoveMember = (netowrkId: string) => {
+  const { data } = useGetProfile();
   const queryClient = useQueryClient();
 
   return useMutation<Network, unknown, string>((id) => removeMember(id), {
-    onSuccess: () => {
+    onSuccess: (response) => {
+      queryClient.invalidateQueries(["getNetworkDetails", { id: netowrkId }]);
       queryClient.invalidateQueries(["getNetworkMembers", { id: netowrkId }]);
+      queryClient.invalidateQueries([
+        "getNetworksByDiscipler",
+        { id: data?.id },
+      ]);
+      queryClient.invalidateQueries([
+        "getSubNetworks",
+        { id: response.main_network_id },
+      ]);
     },
   });
 };
