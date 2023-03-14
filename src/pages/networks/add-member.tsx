@@ -26,8 +26,10 @@ const AddMember = () => {
   const [last_name, setLastname] = useState("");
 
   // mutations
-  const { mutate: linkExistingMember } = useLinkExistingMember(networkId);
-  const { mutate: linkNewMember } = useLinkNewMember(networkId);
+  const { mutate: linkExistingMember, isLoading: isLinking } =
+    useLinkExistingMember(networkId);
+  const { mutate: linkNewMember, isLoading: isLinkingNew } =
+    useLinkNewMember(networkId);
 
   useEffect(() => {
     if (network && !initialized) {
@@ -85,7 +87,7 @@ const AddMember = () => {
 
   let disableButton = false;
 
-  if (!network) disableButton = true;
+  if (!network || isLinking || isLinkingNew) disableButton = true;
 
   return (
     <>
