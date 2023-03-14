@@ -32,17 +32,18 @@ export default function Member() {
           MEMBERS({members?.length ?? 0})
         </header>
 
-        {network?.status === "Active" && (
-          <button
-            onClick={handleOnAddMember}
-            className="text-[#686777] font-light text-sm"
-          >
-            ADD NEW
-            <span className="ml-2 px-2 bg-[#554AF0] text-white rounded-lg text-lg">
-              +
-            </span>
-          </button>
-        )}
+        {network?.status === "Active" &&
+          router.pathname === "/networks/[id]/update" && (
+            <button
+              onClick={handleOnAddMember}
+              className="text-[#686777] font-light text-sm"
+            >
+              ADD NEW
+              <span className="ml-2 px-2 bg-[#554AF0] text-white rounded-lg text-lg">
+                +
+              </span>
+            </button>
+          )}
       </div>
 
       {(activeMembers?.length ?? 0) > 0 && (
