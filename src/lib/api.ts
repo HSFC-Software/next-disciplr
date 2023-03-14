@@ -111,7 +111,7 @@ export const linkExistingMember = async (
 
 export const removeMember = async (id: string) => {
   try {
-    const { data } = await axios.delete(`/link/disciple/${id}`);
+    const { data } = await axios.delete(`/unlink/disciple/${id}`);
     return data;
   } catch (err) {
     return Promise.reject(err);
