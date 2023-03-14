@@ -27,7 +27,6 @@ functions.interceptors.response.use(
     return response;
   },
   (error) => {
-    console.log(error.response.status);
     if (error.response.status === 401) {
       // redirect to sign-in page
       window.location.href = "/sign-in?token=expired";
