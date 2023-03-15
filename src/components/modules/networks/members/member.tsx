@@ -29,7 +29,7 @@ export default function Member() {
     <div className={style.member_main}>
       <div className={style.member_nav}>
         <header className="text-[#686777] uppercase font-semibold">
-          MEMBERS({members?.length ?? 0})
+          MEMBERS({activeMembers?.length ?? 0})
         </header>
 
         {network?.status === "Active" &&
