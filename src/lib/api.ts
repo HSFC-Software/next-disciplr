@@ -152,3 +152,18 @@ export const markNetworkInactive = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export type SignUpPayload = {
+  first_name: string;
+  last_name: string;
+  email: string;
+};
+
+export const signUp = async (payload: SignUpPayload) => {
+  try {
+    const { data } = await axios.post(`/profile`, payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

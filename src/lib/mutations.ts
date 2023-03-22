@@ -8,6 +8,8 @@ import {
   openNetwork,
   OpenNetworkPayload,
   removeMember,
+  signUp,
+  SignUpPayload,
   unlinkMember,
   updateNetwork,
   UpdateNetworkPayload,
@@ -142,5 +144,11 @@ export const useMarkInactiveNetwork = () => {
         ]);
       },
     }
+  );
+};
+
+export const useSignUp = () => {
+  return useMutation<unknown, unknown, SignUpPayload>((payload) =>
+    signUp(payload)
   );
 };
