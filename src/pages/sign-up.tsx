@@ -12,8 +12,6 @@ export function SignUp() {
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
 
-  console.log(enableAlphaUsersRegistration);
-
   const handleOnSubmit = () => {
     mutate(
       { first_name: firstname, last_name: lastname, email },
@@ -74,7 +72,7 @@ export function SignUp() {
                 disabled={!firstname || !lastname || !email || isLoading}
                 className="bg-[#6474dc] disabled:bg-[#e0e9f1] hover:bg-[#4c55dc] text-white px-7 py-3 rounded-lg hover:shadow-md"
               >
-                Absolutely! I'm a discplr
+                Absolutely! I&apos;m a discplr
               </button>
             </div>
           </div>
