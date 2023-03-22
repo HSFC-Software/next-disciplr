@@ -4,16 +4,23 @@ import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
 import { Provider as Store } from "react-redux";
 import { store } from "@/lib/models";
+import LauncharklyProvider, {
+  LauncharklyConsumer,
+} from "@/components/modules/launchdarkly";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
   return (
-    <QueryClientProvider client={queryClient}>
-      <Hydrate state={pageProps.dehydratedState}>
-        <Store store={store}>
-          <Component {...pageProps} />
-        </Store>
-      </Hydrate>
-    </QueryClientProvider>
+    <LauncharklyProvider>
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Store store={store}>
+            <LauncharklyConsumer>
+              <Component {...pageProps} />
+            </LauncharklyConsumer>
+          </Store>
+        </Hydrate>
+      </QueryClientProvider>
+    </LauncharklyProvider>
   );
 }
