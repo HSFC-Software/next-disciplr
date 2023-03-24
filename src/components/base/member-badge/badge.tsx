@@ -9,10 +9,14 @@ type Props = {
   editable?: boolean;
   onRemove?: () => void;
   status?: "Active" | "Inactive";
+  onSetActive?: () => void;
 };
 
 export default function MemberBadge(props: Props) {
-  const { first_name, last_name, editable, onRemove, status } = props;
+  const { first_name, last_name, editable, onRemove, status, onSetActive } =
+    props;
+
+  console.log(onSetActive);
 
   return (
     <div className="flex items-center bg-transparent">
@@ -28,6 +32,9 @@ export default function MemberBadge(props: Props) {
       >
         {first_name} {last_name}
       </div>
+      <button onClick={() => onSetActive?.()} className="mr-3">
+        ✅
+      </button>
       {editable && (
         <button
           onClick={() => onRemove?.()}

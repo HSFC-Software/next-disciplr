@@ -4,7 +4,11 @@ import { useGetNetworkDetails, useGetNetworkMembers } from "@/lib/queries";
 import { useRouter } from "next/router";
 import { useModalContext } from "@/components/base/modal/Provider";
 import { TbSquareRoundedXFilled } from "react-icons/tb";
-import { useRemoveMember, useUnlinkMember } from "@/lib/mutations";
+import {
+  useLinkExistingMember,
+  useRemoveMember,
+  useUnlinkMember,
+} from "@/lib/mutations";
 
 export default function Member() {
   const router = useRouter();
@@ -13,6 +17,7 @@ export default function Member() {
   const { data: members } = useGetNetworkMembers(networkId);
   const { mutate: unlink } = useUnlinkMember(networkId);
   const { mutate: remove } = useRemoveMember(networkId);
+  const { mutate: active } = useLinkExistingMember(networkId);
 
   const { showModal, closeModal } = useModalContext();
 
@@ -24,6 +29,13 @@ export default function Member() {
   const inactiveMembers = members?.filter(
     (member) => member.status === "Inactive"
   );
+
+  const handleSetToActive = (id: string) => {
+    active({
+      disciple_id: id,
+      network_id: networkId,
+    });
+  };
 
   return (
     <div className={style.member_main}>
@@ -68,6 +80,7 @@ export default function Member() {
                 <MemberBadge
                   status={member.status}
                   editable={router.pathname === "/networks/[id]/update"}
+                  onSetActive={() => handleSetToActive(member.disciples.id)}
                   onRemove={() =>
                     showModal(
                       <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
@@ -139,6 +152,7 @@ export default function Member() {
               return (
                 <MemberBadge
                   editable={router.pathname === "/networks/[id]/update"}
+                  onSetActive={() => handleSetToActive(member.disciples.id)}
                   onRemove={() =>
                     showModal(
                       <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
