@@ -10,7 +10,7 @@ export default function index() {
     const [gender, setGender] = useState("")
     const [mobile, setMobile] = useState("")
     const [email, setEmail] = useState("")
-    const [address, setAddress] = useState()
+    const [address, setAddress] = useState("")
 
     const handleUpdate =  () => {
         
@@ -22,18 +22,20 @@ export default function index() {
             <title>Disciplr</title>
             <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
-        
+        <Layout>
             <section className="px-7 grow overflow-y-auto h-full">
                 <div className="flex justify-center py-5 mb-4">
                     <div  className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
-                        firstname
+                        -
                     </div>
                 </div>
                 <label className={`${styles.label} uppercase font-medium`}>
                 General Information
                 </label>
                 <div className="py-5 flex flex-col gap-2">
-                    <label className={styles.label}>Name</label>
+                    <label className={styles.label}>
+                            Name
+                    </label>
                     <input className={styles.input} type="text" placeholder='Full Name' />
                 </div>
                 <div className="py-5 flex flex-col gap-2">
@@ -66,12 +68,12 @@ export default function index() {
                 </div>
                 <button 
                     onClick={handleUpdate}
-                    className="py-3 px-12 rounded-lg bg-[#554AF0] text-white"
+                    className="py-3 px-12 rounded-md bg-[#554AF0] text-white"
                     >
                     Update
                 </button>
             </section>   
-        
-        </>
+        </Layout>
+    </>
     )
 }

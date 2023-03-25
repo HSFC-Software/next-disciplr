@@ -15,6 +15,10 @@ export default function Home() {
   if (profile?.middle_name) name += ` ${profile?.middle_name}`;
   if (profile?.last_name) name += ` ${profile?.last_name}`;
 
+  const handleUpdateProfile = () => {
+    window.location.href = "/update-profile";
+  }
+
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
     window.location.href = "/sign-in";
@@ -40,7 +44,9 @@ export default function Home() {
               inline
               arrowIcon={null!}
             >
-              <Dropdown.Item className={styles.dropdownItem}>
+              <Dropdown.Item 
+              onClick={handleUpdateProfile}
+              className={styles.dropdownItem}>
                 Update Profile
               </Dropdown.Item>
               <Dropdown.Item
