@@ -89,6 +89,12 @@ const AddMember = () => {
 
   if (!network || isLinking || isLinkingNew) disableButton = true;
 
+  if (addType === "Search") {
+    if (!selected) {
+      disableButton = true;
+    }
+  }
+
   return (
     <>
       <Head>
@@ -141,20 +147,14 @@ const AddMember = () => {
                   onChange={handleChange}
                   className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
                 />
-                {q && searchResult?.length === 0 && (
-                  <div className="max-h-[180px] overflow-y-auto py-2">
-                    <button
-                      onClick={handleClickAddInstead}
-                      className="text-[#6474dc] text-xs w-full"
-                    >
-                      Didn&apos;t find member? Create new member instead.
-                    </button>
-                  </div>
-                )}
+
                 <div
                   style={{
                     marginTop: -8,
-                    display: selected || !q ? "none" : "block",
+                    display:
+                      selected || !q || searchResult?.length === 0
+                        ? "none"
+                        : "block",
                   }}
                   className="max-h-[180px] overflow-y-auto py-2"
                 >
@@ -173,6 +173,16 @@ const AddMember = () => {
                     );
                   })}
                 </div>
+              </div>
+            )}
+            {!!q && (
+              <div className="max-h-[180px] overflow-y-auto py-2">
+                <button
+                  onClick={handleClickAddInstead}
+                  className="text-[#6474dc] text-xs w-full"
+                >
+                  Didn&apos;t find member? Create new member instead.
+                </button>
               </div>
             )}
             <Button disabled={disableButton} onClick={handleSubmit}>
