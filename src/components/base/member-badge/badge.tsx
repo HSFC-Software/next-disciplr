@@ -16,8 +16,6 @@ export default function MemberBadge(props: Props) {
   const { first_name, last_name, editable, onRemove, status, onSetActive } =
     props;
 
-  console.log(onSetActive);
-
   return (
     <div className="flex items-center bg-transparent">
       <span style={{ opacity: status === "Active" ? 1 : 0.5 }} className="z-10">
