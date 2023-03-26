@@ -1,5 +1,5 @@
 import Header from "@/components/base/header";
-import Layout from "@/components/templates/layout";
+import Layout from "@/components/templates/page";
 import Head from "next/head";
 import NetworkCard from "@/components/modules/network-card";
 import { useGetNetworksByDiscipler, useGetProfile } from "@/lib/queries";

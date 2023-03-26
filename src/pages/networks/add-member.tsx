@@ -1,5 +1,5 @@
 import Header from "@/components/base/header";
-import Layout from "@/components/templates/layout";
+import Layout from "@/components/templates/page";
 import { useGetNetworkDetails, useSearchLeaders } from "@/lib/queries";
 import Head from "next/head";
 import { useRouter } from "next/router";

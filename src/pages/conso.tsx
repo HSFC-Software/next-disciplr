@@ -1,4 +1,4 @@
-import Layout from "@/components/templates/layout";
+import Layout from "@/components/templates/page";
 import Head from "next/head";
 
 export default function Home() {
