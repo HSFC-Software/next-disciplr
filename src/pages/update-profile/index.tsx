@@ -2,13 +2,17 @@ import Layout from '@/components/templates/Layout'
 import styles from "./update-profile.module.scss";
 import Head from 'next/head'
 import React, { useState } from 'react'
+import { useGetProfile } from '@/lib/queries';
 
 export default function index() {
 
-    const [firstname, setFirstName] = useState("")
+    const { data: profile } = useGetProfile();
+
+    const [firstName, setFirstName] = useState("")
+    const [lastName, setLastName] = useState("")
     const [birthday, setBirthday] = useState("")
     const [gender, setGender] = useState("")
-    const [mobile, setMobile] = useState("")
+    const [contact, setContact] = useState("")
     const [email, setEmail] = useState("")
     const [address, setAddress] = useState("")
 
@@ -34,18 +38,37 @@ export default function index() {
                 </label>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>
-                            Name
+                            First Name
                     </label>
-                    <input className={styles.input} type="text" placeholder='Full Name' />
+                    <input 
+                        className={styles.input} 
+                        type="text" placeholder={profile?.first_name ?? "First Name"}
+                        onChange={(e) => setFirstName(e.target.value)}
+                    />
+                </div>
+                <div className="py-5 flex flex-col gap-2">
+                    <label className={styles.label}>
+                            Last Name
+                    </label>
+                    <input 
+                        className={styles.input} 
+                        type="text" placeholder={profile?.last_name ?? "Last Name"}
+                        onChange={(e) => setLastName(e.target.value)}
+                    />
                 </div>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>Birthday</label>
-                    <input className={styles.input} type="date" />
+                    <input 
+                        className={styles.input} 
+                        type="date" 
+                        placeholder={profile?.birthday}
+                        onChange={(e) => setBirthday(e.target.value)}
+                    />
                 </div>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>Gender</label>
                     <select className={styles.dropdownItem} id="gender">
-                        <option value="">-Select-</option>
+                        <option value="">{profile?.gender ?? "-Select-"}</option>
                         <option value="Male">Male</option>
                         <option value="Female">Female</option>
                     </select>
@@ -56,15 +79,30 @@ export default function index() {
                 </label>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>Mobile</label>
-                    <input className={styles.input} type="text" placeholder='Mobile Number' />
+                    <input 
+                        className={styles.input} 
+                        type="text" 
+                        placeholder={profile?.contact_number ?? "Contact Number"} 
+                        onChange={(e) => setContact( e.target.value )}
+                    />
                 </div>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>Email Address</label>
-                    <input className={styles.input} type="email" placeholder='Email Adress'/>
+                    <input 
+                        className={styles.input} 
+                        type="email" 
+                        placeholder={profile?.email ?? "Email Address"}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
                 </div>
                 <div className="py-5 flex flex-col gap-2">
                     <label className={styles.label}>Address</label>
-                    <input className={styles.input} type="text" placeholder='Address' />
+                    <input 
+                        className={styles.input} 
+                        type="text" 
+                        placeholder={profile?.address ?? "Adress"} 
+                        onChange={(e) => setAddress(e.target.value)}
+                    />
                 </div>
                 <button 
                     onClick={handleUpdate}
