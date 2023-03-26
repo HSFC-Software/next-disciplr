@@ -12,7 +12,7 @@ type Props = {
   editable?: boolean;
   onRemove?: () => void;
   status?: "Active" | "Inactive";
-  onSetActive?: () => void;
+  onSetActive?: (e?: any) => void;
 };
 
 export default function MemberBadge(props: Props) {
@@ -36,10 +36,12 @@ export default function MemberBadge(props: Props) {
 
       {editable && status === "Inactive" && (
         <button
-          onClick={() => onSetActive?.()}
-          className="ml-[-8px] mr-3 text-green-500 z-10"
+          onClick={(e) => onSetActive?.(e)}
+          className="disabled:opacity-50 ml-[-8px] mr-3 text-green-500 z-10"
         >
-          <TbSquareRoundedCheckFilled size={24} />
+          <span className="pointer-events-none">
+            <TbSquareRoundedCheckFilled size={24} />
+          </span>
         </button>
       )}
 
