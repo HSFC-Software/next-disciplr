@@ -7,6 +7,7 @@ import { Dropdown } from "flowbite-react";
 import { useGetProfile } from "@/lib/queries";
 import moment from "moment";
 import Body from "@/components/base/body";
+import { store } from "@/lib/models";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -16,8 +17,9 @@ export default function Home() {
   if (profile?.last_name) name += ` ${profile?.last_name}`;
 
   const handleUpdateProfile = () => {
+    store.dispatch.Profile.setUpdateReference(profile?.id ?? "");
     window.location.href = "/update-profile";
-  }
+  };
 
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
@@ -44,9 +46,10 @@ export default function Home() {
               inline
               arrowIcon={null!}
             >
-              <Dropdown.Item 
-              onClick={handleUpdateProfile}
-              className={styles.dropdownItem}>
+              <Dropdown.Item
+                onClick={handleUpdateProfile}
+                className={styles.dropdownItem}
+              >
                 Update Profile
               </Dropdown.Item>
               <Dropdown.Item
