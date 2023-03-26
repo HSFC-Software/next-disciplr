@@ -13,6 +13,8 @@ import {
   unlinkMember,
   updateNetwork,
   UpdateNetworkPayload,
+  updateUser,
+  UpdateUserPaypload,
 } from "@/lib/api";
 import { Network } from "@/types/networks";
 import { useGetProfile } from "./queries";
@@ -150,5 +152,20 @@ export const useMarkInactiveNetwork = () => {
 export const useSignUp = () => {
   return useMutation<unknown, unknown, SignUpPayload>((payload) =>
     signUp(payload)
+  );
+};
+
+export const useUpdateUser = () => {
+  const queryClient = useQueryClient();
+  return useMutation<unknown, unknown, UpdateUserPaypload>(
+    (payload) => updateUser(payload),
+    {
+      onSuccess: (response: any) => {
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: response.id },
+        ]);
+      },
+    }
   );
 };
