@@ -66,7 +66,7 @@ const AddMember = () => {
   };
 
   const handleSelectLeader = (leader: SearchedLeader) => {
-    setQ(leader.first_name ?? "" + leader.last_name ?? "");
+    setQ(`${leader.first_name} ${leader.last_name}`);
     setSelected(leader);
   };
 
