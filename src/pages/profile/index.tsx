@@ -1,5 +1,5 @@
 import Header from "@/components/base/header";
-import Layout from "@/components/templates/layout";
+import Layout from "@/components/templates/page";
 import Head from "next/head";
 import styles from "./profile.module.scss";
 import { HiOutlineCog6Tooth } from "react-icons/hi2";

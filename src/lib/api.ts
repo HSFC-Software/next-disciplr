@@ -70,7 +70,7 @@ export const searchLeaders = async (
   keyword: string
 ): Promise<SearchedLeader[]> => {
   try {
-    const { data } = await axios.post(`/profile?q=${keyword}`);
+    const { data } = await axios.get(`/profile?q=${keyword}`);
     return data;
   } catch (err) {
     return Promise.reject(err);
