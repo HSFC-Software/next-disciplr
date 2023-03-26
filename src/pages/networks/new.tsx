@@ -53,7 +53,7 @@ const NewNetwork = () => {
   };
 
   const handleSelectLeader = (leader: SearchedLeader) => {
-    setLeaderQ(leader.first_name ?? "" + leader.last_name ?? "");
+    setLeaderQ(`${leader.first_name} ${leader.last_name ?? ""}`.trim());
     setSelectedLeader(leader);
     setName(leader.first_name + "'s Network");
     inputRef.current?.focus();

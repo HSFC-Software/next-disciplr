@@ -4,15 +4,20 @@ import { useGetNetworkDetails, useGetNetworkMembers } from "@/lib/queries";
 import { useRouter } from "next/router";
 import { useModalContext } from "@/components/base/modal/Provider";
 import { TbSquareRoundedXFilled } from "react-icons/tb";
-import { useRemoveMember, useUnlinkMember } from "@/lib/mutations";
+import {
+  useLinkExistingMember,
+  useRemoveMember,
+  useUnlinkMember,
+} from "@/lib/mutations";
 
 export default function Member() {
   const router = useRouter();
   const networkId = String(router.query.id);
   const { data: network } = useGetNetworkDetails(networkId);
   const { data: members } = useGetNetworkMembers(networkId);
-  const { mutate: unlink } = useUnlinkMember(networkId);
+  const { mutate: unlink, isLoading: isUnlinking } = useUnlinkMember(networkId);
   const { mutate: remove } = useRemoveMember(networkId);
+  const { mutate: active } = useLinkExistingMember(networkId);
 
   const { showModal, closeModal } = useModalContext();
 
@@ -24,6 +29,21 @@ export default function Member() {
   const inactiveMembers = members?.filter(
     (member) => member.status === "Inactive"
   );
+
+  const handleSetToActive = (id: string, e?: any) => {
+    e.target.disabled = true;
+    active(
+      {
+        disciple_id: id,
+        network_id: networkId,
+      },
+      {
+        onSettled() {
+          e.target.disabled = false;
+        },
+      }
+    );
+  };
 
   return (
     <div className={style.member_main}>
@@ -58,9 +78,13 @@ export default function Member() {
                 </>
               );
 
-              const handleConfirm = () => {
+              const handleConfirm = (e: any) => {
+                e.target.disabled = true;
                 unlink(member.id, {
                   onSuccess: closeModal,
+                  onSettled: () => {
+                    e.target.disabled = false;
+                  },
                 });
               };
 
@@ -68,6 +92,9 @@ export default function Member() {
                 <MemberBadge
                   status={member.status}
                   editable={router.pathname === "/networks/[id]/update"}
+                  onSetActive={(e) =>
+                    handleSetToActive(member.disciples.id ?? "", e)
+                  }
                   onRemove={() =>
                     showModal(
                       <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
@@ -79,8 +106,9 @@ export default function Member() {
                         </button>
                         <div className="mb-3">{warning}</div>
                         <button
+                          disabled={isUnlinking}
                           onClick={handleConfirm}
-                          className="bg-[#E22134] text-white py-3 px-7 rounded-lg"
+                          className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
                         >
                           Confirm
                         </button>
@@ -130,15 +158,22 @@ export default function Member() {
                   </>
                 );
 
-              const handleConfirm = () => {
+              const handleConfirm = (e: any) => {
+                e.target.disabled = true;
                 remove(member.id, {
                   onSuccess: closeModal,
+                  onSettled() {
+                    e.target.disabled = false;
+                  },
                 });
               };
 
               return (
                 <MemberBadge
                   editable={router.pathname === "/networks/[id]/update"}
+                  onSetActive={(e) =>
+                    handleSetToActive(member.disciples.id ?? "", e)
+                  }
                   onRemove={() =>
                     showModal(
                       <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
@@ -151,7 +186,7 @@ export default function Member() {
                         <div className="mb-3">{warning}</div>
                         <button
                           onClick={handleConfirm}
-                          className="bg-[#E22134] text-white py-3 px-7 rounded-lg"
+                          className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
                         >
                           Confirm
                         </button>

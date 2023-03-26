@@ -11,5 +11,5 @@ export type Profile = {
   is_deleted?: boolean;
   email: string;
   sex?: string;
-  status?: string;
+  status?: "Active" | "Inactive";
 };

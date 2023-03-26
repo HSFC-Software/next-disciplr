@@ -7,13 +7,23 @@ import { Dropdown } from "flowbite-react";
 import { useGetProfile } from "@/lib/queries";
 import moment from "moment";
 import Body from "@/components/base/body";
+import { store } from "@/lib/models";
+import { useFlags } from "launchdarkly-react-client-sdk";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
+  const { enableUpdateProfile } = useFlags();
 
   let name = profile?.first_name ?? "-";
   if (profile?.middle_name) name += ` ${profile?.middle_name}`;
   if (profile?.last_name) name += ` ${profile?.last_name}`;
+
+  const handleUpdateProfile = () => {
+    if (!enableUpdateProfile) return;
+
+    store.dispatch.Profile.setUpdateReference(profile?.id ?? "");
+    window.location.href = "/update-profile";
+  };
 
   const handleSignOut = () => {
     localStorage.removeItem("access_token");
@@ -40,7 +50,12 @@ export default function Home() {
               inline
               arrowIcon={null!}
             >
-              <Dropdown.Item className={styles.dropdownItem}>
+              <Dropdown.Item
+                onClick={handleUpdateProfile}
+                className={`${
+                  !enableUpdateProfile ? "pointer-events-none opacity-25" : ""
+                } ${styles.dropdownItem}`}
+              >
                 Update Profile
               </Dropdown.Item>
               <Dropdown.Item

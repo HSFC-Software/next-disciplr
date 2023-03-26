@@ -1,6 +1,9 @@
 import Avatar from "@/components/base/avatar";
 import style from "./badge.module.scss";
-import { TbSquareRoundedXFilled } from "react-icons/tb";
+import {
+  TbSquareRoundedXFilled,
+  TbSquareRoundedCheckFilled,
+} from "react-icons/tb";
 
 type Props = {
   first_name: string;
@@ -9,10 +12,12 @@ type Props = {
   editable?: boolean;
   onRemove?: () => void;
   status?: "Active" | "Inactive";
+  onSetActive?: (e?: any) => void;
 };
 
 export default function MemberBadge(props: Props) {
-  const { first_name, last_name, editable, onRemove, status } = props;
+  const { first_name, last_name, editable, onRemove, status, onSetActive } =
+    props;
 
   return (
     <div className="flex items-center bg-transparent">
@@ -28,6 +33,18 @@ export default function MemberBadge(props: Props) {
       >
         {first_name} {last_name}
       </div>
+
+      {editable && status === "Inactive" && (
+        <button
+          onClick={(e) => onSetActive?.(e)}
+          className="disabled:opacity-50 ml-[-8px] mr-3 text-green-500 z-10"
+        >
+          <span className="pointer-events-none">
+            <TbSquareRoundedCheckFilled size={24} />
+          </span>
+        </button>
+      )}
+
       {editable && (
         <button
           onClick={() => onRemove?.()}

@@ -167,3 +167,28 @@ export const signUp = async (payload: SignUpPayload) => {
     return Promise.reject(err);
   }
 };
+
+export type UpdateUserPaypload = {
+  first_name: string;
+  last_name: string;
+  middle_name: string;
+  address: string;
+  contact_number: string;
+  birthday: string;
+  email: string;
+  sex: "Male" | "Female";
+  status: "Active" | "Inactive";
+  id?: string;
+};
+
+export const updateUser = async (payload: UpdateUserPaypload) => {
+  try {
+    const _payload = { ...payload };
+    delete _payload.id;
+
+    const { data } = await axios.patch(`/profile/${payload.id}`, _payload);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
