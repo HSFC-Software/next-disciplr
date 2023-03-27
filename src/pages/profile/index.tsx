@@ -9,6 +9,7 @@ import moment from "moment";
 import Body from "@/components/base/body";
 import { store } from "@/lib/models";
 import { useFlags } from "launchdarkly-react-client-sdk";
+import { supabase } from "@/lib/supabase";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -25,7 +26,11 @@ export default function Home() {
     window.location.href = "/update-profile";
   };
 
-  const handleSignOut = () => {
+  const handleSignOut = async () => {
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      // TODO: handle unable to sign out session
+    }
     localStorage.removeItem("access_token");
     window.location.href = "/sign-in";
   };
