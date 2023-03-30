@@ -1,10 +1,13 @@
 import { ReactNode, useEffect } from "react";
+import { parseCookies, destroyCookie } from "nookies";
 
 export default function Auth({ children }: { children?: ReactNode }) {
   useEffect(() => {
-    let token = localStorage.getItem("access_token") ?? "";
+    const cookie = parseCookies();
+    let token = cookie.token;
 
     if (!token) {
+      destroyCookie(null, "token");
       window.location.href = "/sign-in";
     }
   }, []);

@@ -18,7 +18,7 @@ export function SignUp() {
       {
         onSuccess: () => {
           // redirect to sign-in page
-          window.location.href = "/sign-in?token=expired";
+          window.location.href = "/sign-in";
         },
       }
     );

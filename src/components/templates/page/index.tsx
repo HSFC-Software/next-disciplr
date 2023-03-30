@@ -4,6 +4,7 @@ import GroupIcon from "@/components/base/icons/Group";
 import NotificationIcon from "@/components/base/icons/Notification";
 import UserIcon from "@/components/base/icons/User";
 import { ModalProvider } from "@/components/base/modal/Provider";
+import { useToken } from "@/lib/hooks";
 import Link from "next/link";
 import { ReactNode, useEffect } from "react";
 
@@ -13,6 +14,9 @@ export default function Layout(props: {
   header?: ReactNode;
 }) {
   const { activeRoute } = props;
+  const token = useToken();
+
+  if (!token) return <Auth></Auth>;
 
   return (
     <ModalProvider>

@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { parseCookies } from "nookies";
 
 export const useToken = () => {
   const [token, setToken] = useState("");
   useEffect(() => {
-    setToken(localStorage.getItem("access_token") ?? "");
+    const cookie = parseCookies();
+    setToken(cookie.token);
   }, []);
 
   return token;

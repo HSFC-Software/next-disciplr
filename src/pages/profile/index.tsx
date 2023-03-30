@@ -10,6 +10,7 @@ import Body from "@/components/base/body";
 import { store } from "@/lib/models";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { supabase } from "@/lib/supabase";
+import { destroyCookie } from "nookies";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -31,7 +32,7 @@ export default function Home() {
     if (error) {
       // TODO: handle unable to sign out session
     }
-    localStorage.removeItem("access_token");
+    destroyCookie(null, "token");
     window.location.href = "/sign-in";
   };
 
