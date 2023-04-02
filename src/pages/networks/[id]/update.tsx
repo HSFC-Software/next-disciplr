@@ -84,7 +84,7 @@ const UpdateNetworkDetails = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout activeRoute="networks">
-        <Header>
+        <Header showBackArrrow onBack={() => router.back()}>
           <div className="flex w-full justify-between items-center">
             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
               Update Network

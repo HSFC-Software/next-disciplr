@@ -1,7 +1,15 @@
-import { useEffect } from "react";
-import { ReactNode } from "react";
+import { useEffect, ReactNode } from "react";
+import { RiArrowLeftLine } from "react-icons/ri";
 
-export default function Header({ children }: { children?: ReactNode }) {
+export default function Header({
+  children,
+  showBackArrrow,
+  onBack,
+}: {
+  children?: ReactNode;
+  showBackArrrow?: boolean;
+  onBack?: () => void;
+}) {
   useEffect(() => {
     const filler = document.getElementById("header-filler");
     const header = document.getElementById("header");
@@ -14,8 +22,13 @@ export default function Header({ children }: { children?: ReactNode }) {
   return (
     <header
       id="header"
-      className="p-7 border-b fixed top-0 w-screen bg-white z-10"
+      className="p-7 fixed top-0 w-screen bg-white z-10 flex flex-col gap-7"
     >
+      {showBackArrrow && (
+        <button onClick={() => onBack?.()}>
+          <RiArrowLeftLine size={38} />
+        </button>
+      )}
       <span className="text-[#04021D] text-2xl font-semibold">{children}</span>
     </header>
   );
