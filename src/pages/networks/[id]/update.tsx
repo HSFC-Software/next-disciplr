@@ -91,7 +91,7 @@ const UpdateNetworkDetails = () => {
             </span>
             <button
               onClick={handleSave}
-              className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]"
+              className="pl-4 shrink-0 text-sm font-medium text-[#6e7ac5]"
             >
               Save
             </button>
@@ -104,7 +104,7 @@ const UpdateNetworkDetails = () => {
             </span>
             <button
               onClick={handleMakeActive}
-              className="text-xs text-[#554AF0]"
+              className="text-xs text-[#6e7ac5]"
             >
               Want to set this network active?
             </button>

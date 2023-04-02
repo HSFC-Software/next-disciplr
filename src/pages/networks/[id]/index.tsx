@@ -27,7 +27,7 @@ const NetowrkDetails = () => {
               {network?.name}
             </span>
             <Link href={`/networks/${String(router.query.id)}/update`}>
-              <button className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]">
+              <button className="pl-4 shrink-0 text-sm font-medium text-[#6e7ac5]">
                 Edit
               </button>
             </Link>

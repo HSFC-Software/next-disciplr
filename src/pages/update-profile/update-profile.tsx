@@ -56,7 +56,7 @@ export default function UpdateProfile() {
             </span>
             <button
               onClick={handleUpdate}
-              className="pl-4 shrink-0 text-sm font-medium text-[#554AF0]"
+              className="pl-4 shrink-0 text-sm font-medium text-[#6e7ac5]"
             >
               Save
             </button>
@@ -72,28 +72,33 @@ export default function UpdateProfile() {
             General Information
           </label>
           <div className="py-5 flex flex-col gap-2">
-            <label className={styles.label}>First Name</label>
+            <label className={styles.label}>Name</label>
             <input
+              className="border-0 px-0 outline-0"
               id="first_name"
               name="first_name"
               type="text"
               onChange={formik.handleChange}
               value={formik.values.first_name}
+              placeholder="First Name"
             />
           </div>
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Middle Name</label>
             <input
+              className="border-0 px-0 outline-0"
               id="middle_name"
               name="middle_name"
               type="text"
               onChange={formik.handleChange}
               value={formik.values.middle_name}
+              placeholder="Middle Name"
             />
           </div>
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Last Name</label>
             <input
+              className="border-0 px-0 outline-0"
               id="last_name"
               name="last_name"
               type="text"
@@ -103,13 +108,17 @@ export default function UpdateProfile() {
           </div>
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Birthday</label>
-            <input
-              id="birthday"
-              name="birthday"
-              type="date"
-              onChange={formik.handleChange}
-              value={formik.values.birthday}
-            />
+            <div className="relative items-center flex">
+              <input
+                className="border-0 text-white w-full outline-0 select-none"
+                id="birthday"
+                name="birthday"
+                type="date"
+                onChange={formik.handleChange}
+                value={formik.values.birthday}
+              />
+              <div className="absolute left-0">{formik.values.birthday}</div>
+            </div>
           </div>
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Gender</label>
@@ -131,6 +140,7 @@ export default function UpdateProfile() {
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Mobile</label>
             <input
+              className="border-0 px-0 outline-0"
               id="contact_number"
               name="contact_number"
               type="text"
@@ -141,6 +151,7 @@ export default function UpdateProfile() {
           <div className="py-5 flex flex-col gap-2">
             <label className={styles.label}>Email Address</label>
             <input
+              className="border-0 px-0 outline-0"
               id="email"
               name="email"
               type="email"

@@ -116,7 +116,7 @@ export default function Home() {
               <div className="text-lg">{profile?.address ?? "-"}</div>
             </div>
             {/* <div className="mt-12 mb-10 text-center">
-              <button className="py-3 px-12 rounded-lg bg-[#554AF0] text-white">
+              <button className="py-3 px-12 rounded-lg bg-[#6e7ac5] text-white">
                 Logout
               </button>
             </div> */}

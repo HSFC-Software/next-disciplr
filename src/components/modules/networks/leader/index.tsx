@@ -25,10 +25,10 @@ export const Leader = (props: Partial<Profile>) => {
               {first_name} {last_name}
             </span>
             <div className="mt-[-5px] flex gap-1">
-              <span className="text-xs bg-[#1DB954] text-white px-3 py-[3px] rounded-full">
+              <span className="text-xs bg-[#6e7ac5] text-white px-3 py-[3px] rounded-full">
                 SDL-[X]
               </span>
-              <span className="text-xs bg-[#1DB954] text-white px-3 py-[3px] rounded-full">
+              <span className="text-xs bg-[#6e7ac5] text-white px-3 py-[3px] rounded-full">
                 Soon
               </span>
             </div>
