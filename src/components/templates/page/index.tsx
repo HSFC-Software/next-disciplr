@@ -24,7 +24,7 @@ export default function Layout(props: {
       <Auth>
         <main className="w-screen h-screen flex flex-col bg-white relative text-gray-900">
           <div id="header-filler" />
-          <div id="content-area" className="grow flex-col flex overflow-y-auto">
+          <div id="content-area" className="grow flex-col flex relative">
             {props?.header}
             {props.children}
             <div id="footer-filler" />
@@ -89,63 +89,6 @@ function Nav(props: { activeRoute?: string }) {
           />
         </Link>
       </div>
-    </nav>
-  );
-
-  return (
-    <nav
-      id="nav"
-      className="shrink-0 flex border-t px-7 py-5 justify-between fixed bottom-0 w-screen bg-white z-10"
-    >
-      <Link href="/networks">
-        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
-          <GroupIcon
-            width={30}
-            height={30}
-            isActive={activeRoute === "networks"}
-          />
-          <span className="text-xs text-[#686777]">Networks</span>
-        </div>
-      </Link>
-
-      <Link href="/conso">
-        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor relative">
-          <DocumentIcon
-            width={30}
-            height={30}
-            isActive={activeRoute === "conso"}
-          />
-          <span className="text-[8px] absolute bg-[#FB5D64] text-white px-2 rounded-lg top-0 ml-8">
-            Soon
-          </span>
-          <span className="text-xs text-[#686777]">Consolidations</span>
-        </div>
-      </Link>
-
-      <Link href="/">
-        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor relative">
-          <NotificationIcon
-            width={30}
-            height={30}
-            isActive={activeRoute === "/"}
-          />
-          <span className="text-[8px] absolute bg-[#FB5D64] text-white px-2 rounded-lg top-0 ml-8">
-            Soon
-          </span>
-          <span className="text-xs text-[#686777]">Notifcations</span>
-        </div>
-      </Link>
-
-      <Link href="/profile">
-        <div className="flex flex-col items-center gap-2 shrink-0 pointer-cursor">
-          <UserIcon
-            width={30}
-            height={30}
-            isActive={activeRoute === "profile"}
-          />
-          <span className="text-xs text-[#686777]">Profile</span>
-        </div>
-      </Link>
     </nav>
   );
 }

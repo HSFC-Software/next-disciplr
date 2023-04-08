@@ -58,9 +58,9 @@ export default function Home() {
             >
               <Dropdown.Item
                 onClick={handleUpdateProfile}
-                className={`${
-                  !enableUpdateProfile ? "pointer-events-none opacity-25" : ""
-                } ${styles.dropdownItem}`}
+                className={`
+                ${!enableUpdateProfile ? "pointer-events-none opacity-25" : ""}
+                ${styles.dropdownItem}`}
               >
                 Update Profile
               </Dropdown.Item>

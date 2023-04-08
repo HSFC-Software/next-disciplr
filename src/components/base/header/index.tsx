@@ -10,19 +10,19 @@ export default function Header({
   showBackArrrow?: boolean;
   onBack?: () => void;
 }) {
-  useEffect(() => {
-    const filler = document.getElementById("header-filler");
-    const header = document.getElementById("header");
+  // useEffect(() => {
+  //   const filler = document.getElementById("header-filler");
+  //   const header = document.getElementById("header");
 
-    if (filler && header) {
-      filler.style.marginTop = `${header.offsetHeight}px`;
-    }
-  });
+  //   if (filler && header) {
+  //     filler.style.marginTop = `${header.offsetHeight}px`;
+  //   }
+  // });
 
   return (
     <header
       id="header"
-      className="p-7 fixed top-0 w-screen bg-white z-10 flex flex-col gap-7"
+      className="p-7 sticky top-0 w-screen bg-white z-[100] flex flex-col gap-7"
     >
       {showBackArrrow && (
         <button onClick={() => onBack?.()}>
