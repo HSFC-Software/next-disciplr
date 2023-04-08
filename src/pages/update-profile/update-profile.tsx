@@ -1,7 +1,7 @@
 import Layout from "@/components/templates/page";
 import styles from "./update-profile.module.scss";
 import Head from "next/head";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useGetProfile } from "@/lib/queries";
 import Header from "@/components/base/header";
 import { useFormik } from "formik";
@@ -11,9 +11,9 @@ import { UpdateUserPaypload } from "@/lib/api";
 import { useSelector } from "react-redux";
 import { State } from "@/lib/models";
 import { useRouter } from "next/router";
-import debounce from "lodash.debounce";
 import moment from "moment";
 import DatePicker from "@/components/modules/datepicker";
+import SelectPicker from "@/components/modules/selectpicker";
 
 export default function UpdateProfile() {
   const router = useRouter();
@@ -21,6 +21,7 @@ export default function UpdateProfile() {
   const { mutate: updateUser } = useUpdateUser();
   const id = useSelector((state: State) => state.Profile.updateReference);
   const [showDatePicker, setShowDatePicker] = useState(false);
+  const [showSexPicker, setShowSexPicker] = useState(false);
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -67,6 +68,18 @@ export default function UpdateProfile() {
             </button>
           </div>
         </Header>
+        <SelectPicker
+          label="Sex"
+          isVisible={showSexPicker}
+          value={formik.values.sex}
+          onConfirm={(value) => {
+            formik.setFieldValue("sex", value);
+          }}
+          onClose={() => setShowSexPicker(false)}
+        >
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </SelectPicker>
         <DatePicker
           isVisible={showDatePicker}
           onClose={() => setShowDatePicker(false)}
@@ -139,21 +152,15 @@ export default function UpdateProfile() {
               </button>
             </div>
           </section>
-          <section className="px-7 py-3 bg-white">
+          <button
+            onClick={() => setShowSexPicker(true)}
+            className="px-7 py-3 bg-white text-left"
+          >
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Sex</label>
-              <select
-                name="sex"
-                onChange={formik.handleChange}
-                value={formik.values.sex}
-                className={styles.dropdownItem}
-                id="gender"
-              >
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-              </select>
+              {formik.values.sex}
             </div>
-          </section>
+          </button>
           <section className="px-7 py-3 bg-white">
             <label
               className={`${styles.label} uppercase font-medium mt-7 mb-4`}
