@@ -67,7 +67,7 @@ function Nav(props: { activeRoute?: string }) {
             height={38}
             isActive={activeRoute === "conso"}
           />
-          <span className="text-[8px] absolute bg-[#FB5D64] text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
+          <span className="text-[8px] absolute bg-primary text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
             Soon
           </span>
         </Link>
@@ -77,7 +77,7 @@ function Nav(props: { activeRoute?: string }) {
             height={38}
             isActive={activeRoute === "/"}
           />
-          <span className="text-[8px] absolute bg-[#FB5D64] text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
+          <span className="text-[8px] absolute bg-primary text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
             Soon
           </span>
         </Link>

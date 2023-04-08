@@ -114,3 +114,8 @@ a {
 .hide-scrollbar-webkit::-webkit-scrollbar {
   display: none; /* Safari and Chrome */
 }
+
+.bg-primary {
+  background: linear-gradient(90deg, #6e7ac5 -14.56%, #fb5d64 114.56%);
+  border-radius: 12px;
+}

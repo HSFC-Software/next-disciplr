@@ -26,7 +26,7 @@ export default function Home() {
           </h1>
           <button
             onClick={handleClick}
-            className="bg-[#6474dc] hover:bg-[#4c55dc] text-white px-7 py-3 rounded-lg hover:shadow-md"
+            className="bg-primary text-white px-7 py-3 rounded-lg hover:shadow-md"
           >
             Sign in with Google
           </button>
