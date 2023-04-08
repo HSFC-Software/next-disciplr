@@ -12,13 +12,14 @@ import { useSelector } from "react-redux";
 import { State } from "@/lib/models";
 import { useRouter } from "next/router";
 import debounce from "lodash.debounce";
+import moment from "moment";
 
-let now = new Date();
 export default function UpdateProfile() {
   const router = useRouter();
   const { data: profile } = useGetProfile();
   const { mutate: updateUser } = useUpdateUser();
   const id = useSelector((state: State) => state.Profile.updateReference);
+  const [showDatePicker, setShowDatePicker] = useState(false);
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -51,7 +52,7 @@ export default function UpdateProfile() {
         <title>Disciplr</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Layout>
+      <Layout activeRoute="profile">
         <Header showBackArrrow onBack={() => router.back()}>
           <div className="flex w-full justify-between items-center">
             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
@@ -65,6 +66,15 @@ export default function UpdateProfile() {
             </button>
           </div>
         </Header>
+        <DatePicker
+          isVisible={showDatePicker}
+          onClose={() => setShowDatePicker(false)}
+          onConfirm={(value) => {
+            const date = String(value.date).padStart(2, "0");
+            const month = String(value.month).padStart(2, "0");
+            formik.setFieldValue("birthday", `${value.year}-${month}-${date}`);
+          }}
+        />
         <section className={`grow overflow-y-auto h-full ${styles.content}`}>
           <div className="flex justify-center py-5 mb-4">
             <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
@@ -89,9 +99,8 @@ export default function UpdateProfile() {
               />
             </div>
           </section>
-          <div className="border-b" />
-          <section className="px-7 py-3">
-            <div className="py-5 flex flex-col gap-2">
+          <section className="px-7">
+            <div className="flex flex-col gap-2">
               <label className={styles.label}>Middle Name</label>
               <input
                 className="border-0 px-0 outline-0"
@@ -104,7 +113,6 @@ export default function UpdateProfile() {
               />
             </div>
           </section>
-          <div className="border-b" />
           <section className="px-7 py-3">
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Last Name</label>
@@ -115,27 +123,21 @@ export default function UpdateProfile() {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.last_name}
+                placeholder="Last Name"
               />
             </div>
           </section>
-          <div className="border-b" />
           <section className="px-7 py-3">
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Birthday</label>
-              <div className="relative items-center flex">
-                {/* <input
-                  className="border-0 text-white w-full outline-0 select-none"
-                  id="birthday"
-                  name="birthday"
-                  type="date"
-                  onChange={formik.handleChange}
-                  value={formik.values.birthday}
-                /> */}
-                {/* <div className="absolute left-0">{formik.values.birthday}</div> */}
-              </div>
+              <button
+                onClick={() => setShowDatePicker(true)}
+                className="text-left"
+              >
+                {moment(formik.values.birthday).format("LL")}
+              </button>
             </div>
           </section>
-          <div className="border-b" />
           <section className="px-7 py-3 bg-white">
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Sex</label>
@@ -151,7 +153,6 @@ export default function UpdateProfile() {
               </select>
             </div>
           </section>
-          <div className="border-b" />
           <section className="px-7 py-3 bg-white">
             <label
               className={`${styles.label} uppercase font-medium mt-7 mb-4`}
@@ -170,14 +171,12 @@ export default function UpdateProfile() {
               />
             </div>
           </section>
-          <div className="border-b" />
           <section className="px-7 py-3 bg-white">
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Email Address</label>
               <div className="opacity-50">{formik.values.email}</div>
             </div>
           </section>
-          <div className="border-b" />
 
           <section className="px-7 py-3 bg-white">
             <div className="py-5 flex flex-col gap-2">
@@ -188,11 +187,11 @@ export default function UpdateProfile() {
                 rows={7}
                 onChange={formik.handleChange}
                 value={formik.values.address}
+                className="border-0 px-0"
               />
             </div>
           </section>
         </section>
-        <DatePicker />
       </Layout>
     </>
   );
@@ -228,51 +227,138 @@ const months: Month[] = [
 ];
 
 const dates = Array.from({ length: 31 }, (_, i) => i + 1);
-const years = Array.from({ length: 100 }, (_, i) => 2000 + i);
+const years = Array.from({ length: 2000 }, (_, i) => 1800 + i);
 
-const handleScrollDebounced = debounce((e) => {
-  const scrollTop = e.target?.scrollTop;
-  const optionEl = e?.target?.children?.[1];
+type DateValue = {
+  month: Month;
+  date: number;
+  year: number;
+  monthIndex: number;
+};
 
-  const elIndex = Math.floor(scrollTop / optionEl.offsetHeight);
-  const maxIndex = e?.target?.children?.length - 3; // -3 because of the first and last element
+type DatePickerProps = {
+  onConfirm: (value: DateValue) => void;
+  onClose: () => void;
+};
 
-  const centerEl = e?.target?.children?.[elIndex + 1];
-
-  let selectedEl: HTMLElement;
-
-  if (elIndex >= maxIndex) {
-    const lastEl = e?.target?.children?.[e?.target?.children?.length - 2];
-    selectedEl = lastEl;
-  } else {
-    selectedEl = centerEl;
+function DatePicker(props: { isVisible: boolean } & DatePickerProps) {
+  if (props.isVisible) {
+    return <Picker onConfirm={props.onConfirm} onClose={props.onClose} />;
   }
 
-  selectedEl.scrollIntoView({ behavior: "smooth", block: "center" });
+  return null;
+}
 
-  const children = e?.target?.children;
-  Array.from(children).forEach((el: any) => {
-    if (el === selectedEl) return; // skip selected element (to avoid unnecessary re-rendering
-    el?.classList.remove("text-gray-800");
-    el?.classList.add("text-gray-400");
+function Picker(props: DatePickerProps) {
+  const [value, setValue] = useState({
+    month: months[new Date().getMonth()],
+    date: new Date().getDate(),
+    year: new Date().getFullYear(),
+    monthIndex: new Date().getMonth(),
   });
 
-  // apply styles to selected element
-  selectedEl.classList.remove("text-gray-400");
-  selectedEl.classList.add("text-gray-800");
-}, 300);
+  const handleScrollDebounced = debounce((e) => {
+    const scrollTop = e.target?.scrollTop;
+    const optionEl = e?.target?.children?.[1];
 
-function DatePicker(props: { minDate?: Date; maxDate?: Date }) {
-  const [month, setMonth] = useState<Month | null>(null);
-  const [date, setDate] = useState<number | null>(null);
-  const [year, setYear] = useState<number | null>(null);
+    const elIndex = Math.floor(scrollTop / optionEl.offsetHeight);
+    const maxIndex = e?.target?.children?.length - 3; // -3 because of the first and last element
 
+    const centerEl = e?.target?.children?.[elIndex + 1];
+
+    let selectedEl: HTMLElement;
+
+    if (elIndex >= maxIndex) {
+      const lastEl = e?.target?.children?.[e?.target?.children?.length - 2];
+      selectedEl = lastEl;
+    } else {
+      selectedEl = centerEl;
+    }
+
+    selectedEl?.scrollIntoView({ behavior: "smooth", block: "center" });
+
+    const children = e?.target?.children;
+    Array.from(children).forEach((el: any) => {
+      if (el === selectedEl) return; // skip selected element (to avoid unnecessary re-rendering
+      el?.classList.remove("text-gray-800");
+      el?.classList.add("text-gray-400");
+    });
+
+    // apply styles to selected element
+    selectedEl?.classList.remove("text-gray-400");
+    selectedEl?.classList.add("text-gray-800");
+
+    // apply values
+    const key = e.target.id.split("-container").join("");
+
+    const payload = {
+      [key]: selectedEl?.innerText,
+    };
+
+    if (key === "month") {
+      (payload as any).monthIndex = months.indexOf(
+        selectedEl?.innerText as Month
+      );
+    }
+
+    setValue((prev) => ({ ...prev, ...payload }));
+  }, 300);
+
+  function handleConfirm() {
+    props.onConfirm?.(value);
+    props?.onClose?.();
+  }
+
+  // add scroll event
   useEffect(() => {
-    const containers = ["month", "dates", "years"];
+    const containers = ["month", "date", "year"];
     containers.forEach((key) => {
       const element = document.getElementById(`${key}-container`);
       element?.addEventListener("scroll", handleScrollDebounced);
     });
+  }, []);
+
+  // initialize height
+  useEffect(() => {
+    const datePickerEl = document.getElementById("date-picker");
+    if (datePickerEl) {
+      datePickerEl.style.height = `${window.innerHeight / 2.5}px`;
+    }
+  }, []);
+
+  // initialize view
+  useEffect(() => {
+    const defaultMonth = months[new Date().getMonth()];
+    const monthEl = document.getElementById("month-container");
+
+    for (let i = 0; i < months.length; i++) {
+      const month = months[i];
+      if (month === defaultMonth) {
+        monthEl?.children[i + 1].scrollIntoView({ block: "center" });
+        monthEl?.children[i + 1].classList.add("text-gray-800");
+        break;
+      }
+    }
+
+    const dateEl = document.getElementById("date-container");
+    for (let i = 0; i < dates.length; i++) {
+      const date = dates[i];
+      if (date === new Date().getDate()) {
+        dateEl?.children[i + 1].scrollIntoView({ block: "center" });
+        dateEl?.children[i + 1].classList.add("text-gray-800");
+        break;
+      }
+    }
+
+    const yearEl = document.getElementById("year-container");
+    for (let i = 0; i < years.length; i++) {
+      const year = years[i];
+      if (year === new Date().getFullYear()) {
+        yearEl?.children[i + 1].scrollIntoView({ block: "center" });
+        yearEl?.children[i + 1].classList.add("text-gray-800");
+        break;
+      }
+    }
   }, []);
 
   return (
@@ -280,59 +366,74 @@ function DatePicker(props: { minDate?: Date; maxDate?: Date }) {
       style={{
         zIndex: 200,
       }}
-      id="date-picker"
-      className="fixed bottom-0 bg-[#F8F8F9] w-screen h-[30%] flex justify-center gap-4"
+      className="fixed h-screen w-screen top-0 left-0 bg-black bg-opacity-50 flex flex-col justify-end"
     >
-      <div
-        id="month-container"
-        className="month overflow-y-auto hide-scrollbar hide-scrollbar-webkit"
-      >
-        <div className="h-[50%]" />
-        {months.map((m, i) => {
-          return (
-            <div
-              className="py-2 text-gray-400 text-xl"
-              key={m}
-              id={`month-${i}`}
-            >
-              {m}
-            </div>
-          );
-        })}
-        <div className="h-[50%]" />
+      <div className="flex items-center p-5 bg-[#F8F8F9] rounded-t-2xl border-[#EBEAED] border-b">
+        <button onClick={() => props?.onClose()} className="text-gray-400">
+          Cancel
+        </button>
+        <div className="grow text-center font-medium">Select Date</div>
+        <button onClick={handleConfirm} className="text-[#6474dc]">
+          Confirm
+        </button>
       </div>
-      <div
-        id="dates-container"
-        className="date overflow-y-auto hide-scrollbar hide-scrollbar-webkit"
-      >
-        <div className="h-[50%]" />
-        {dates.map((d) => {
-          return (
-            <div className="py-2 text-gray-400 text-xl" key={d}>
-              {d}
-            </div>
-          );
-        })}
-        <div className="h-[50%]" />
+      <div className="bg-[#F8F8F9]">
+        <div
+          id="date-picker"
+          className={`relative w-screen flex justify-center gap-4 ml-[-28px]`}
+        >
+          <div
+            id="month-container"
+            className="month overflow-y-auto hide-scrollbar hide-scrollbar-webkit"
+          >
+            <div className="h-[50%]" />
+            {months.map((m, i) => {
+              return (
+                <div
+                  className="py-2 text-gray-400 text-xl text-right"
+                  key={m}
+                  id={`month-${i}`}
+                >
+                  {m}
+                </div>
+              );
+            })}
+            <div className="h-[50%]" />
+          </div>
+          <div
+            id="date-container"
+            className="date overflow-y-auto hide-scrollbar hide-scrollbar-webkit px-4"
+          >
+            <div className="h-[50%]" />
+            {dates.map((d) => {
+              return (
+                <div className="py-2 text-gray-400 text-center text-xl" key={d}>
+                  {d}
+                </div>
+              );
+            })}
+            <div className="h-[50%]" />
+          </div>
+          <div
+            id="year-container"
+            className="year overflow-y-auto hide-scrollbar hide-scrollbar-webkit"
+          >
+            <div className="h-[50%]" />
+            {years.map((y) => {
+              return (
+                <div className="py-2 text-gray-400 text-xl" key={y}>
+                  {y}
+                </div>
+              );
+            })}
+            <div className="h-[50%]" />
+          </div>
+          <div
+            id="select-area"
+            className={`h-[60px] w-full border-t border-b absolute border-[#EBEAED] top-0 bottom-0 my-auto pointer-events-none left-[28px]`}
+          />
+        </div>
       </div>
-      <div
-        id="years-container"
-        className="year overflow-y-auto hide-scrollbar hide-scrollbar-webkit"
-      >
-        <div className="h-[50%]" />
-        {years.map((y) => {
-          return (
-            <div className="py-2 text-gray-400 text-xl" key={y}>
-              {y}
-            </div>
-          );
-        })}
-        <div className="h-[50%]" />
-      </div>
-      <div
-        id="select-area"
-        className="h-[60px] w-full border-t border-b absolute border-[#EBEAED] top-0 bottom-0 my-auto pointer-events-none"
-      />
     </div>
   );
 }

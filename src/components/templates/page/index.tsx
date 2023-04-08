@@ -27,7 +27,7 @@ export default function Layout(props: {
           <div id="content-area" className="grow flex-col flex relative">
             {props?.header}
             {props.children}
-            <div id="footer-filler" />
+            <div id="footer-filler" className="bg-white" />
           </div>
           <Nav activeRoute={activeRoute} />
         </main>

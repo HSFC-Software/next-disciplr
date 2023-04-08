@@ -20,7 +20,8 @@
 }
 
 .content {
-  input {
+  input,
+  textarea {
     &:focus {
       --tw-ring-color: transparent;
     }
