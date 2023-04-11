@@ -1,5 +1,5 @@
 import Auth from "@/components/base/auth";
-import DocumentIcon from "@/components/base/icons/Document";
+import ConsolidationIcon from "@/components/base/icons/Consolidation";
 import GroupIcon from "@/components/base/icons/Group";
 import NotificationIcon from "@/components/base/icons/Notification";
 import UserIcon from "@/components/base/icons/User";
@@ -62,7 +62,7 @@ function Nav(props: { activeRoute?: string }) {
           />
         </Link>
         <Link href="/conso" className="relative flex items-center">
-          <DocumentIcon
+          <ConsolidationIcon
             width={38}
             height={38}
             isActive={activeRoute === "conso"}

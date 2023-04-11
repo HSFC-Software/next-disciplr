@@ -263,3 +263,55 @@ export const getConsolidationDetails = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export type ConsolidateResponse = {
+  id: string;
+  lesson_code: {
+    code: LessonCodes;
+    name: string;
+  };
+};
+
+export const consolidate = async (
+  disciple_id: string,
+  consolidator_id: string
+): Promise<ConsolidateResponse> => {
+  try {
+    const { data } = await axios.post(`/consolidations`, {
+      disciple_id,
+      consolidator_id,
+    });
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+type GetConsolidationByIdResponse = {
+  id: string;
+  created_at: string;
+  disciple_id: {
+    id: string;
+    first_name: string;
+    last_name: string;
+  };
+  consolidator_id: {
+    id: string;
+    first_name: string;
+    last_name: string;
+  };
+  lesson_code: {
+    code: LessonCodes;
+    name: string;
+    title: string;
+  };
+};
+
+export const getConsolidationById = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/consolidations?id=${id}`);
+    return data as GetConsolidationByIdResponse;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
