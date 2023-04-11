@@ -67,7 +67,7 @@ export default function ConsolidationDetails() {
             Consolidated last {moment(data?.recent.created_at).fromNow()}
           </div>
         </div>
-        <div className="px-14 z-10 mt-10">
+        <div className="px-7 z-10 mt-10">
           <header className="font-semibold text-[#686777] text-xl">
             HISTORY
           </header>
@@ -85,7 +85,7 @@ export default function ConsolidationDetails() {
                     />
                   </div>
                   <span className="text-sm text-[#686777]">
-                    Last {moment(conso.created_at).fromNow()} (
+                    {moment(conso.created_at).fromNow()} (
                     {moment(conso.created_at).format("MM DD, YYYY")})
                   </span>
                 </div>
