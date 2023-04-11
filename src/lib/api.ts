@@ -192,3 +192,28 @@ export const updateUser = async (payload: UpdateUserPaypload) => {
     return Promise.reject(err);
   }
 };
+
+type Consoliations = {
+  id: string;
+  created_at: string;
+  disciple_id: {
+    id: string;
+    first_name: string;
+    last_name: string;
+  };
+  lesson_code: {
+    code: "L1" | "L2" | "L3" | "L4" | "L5" | "L6" | "L7" | "L8" | "L9" | "L10";
+    name: string;
+  };
+};
+
+export const getConsolidations = async (consolidatorId: string) => {
+  try {
+    const { data } = await axios.get(
+      `/consolidations?consolidator=${consolidatorId}&client=disciplr`
+    );
+    return data as Consoliations[];
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

@@ -10,6 +10,7 @@ import {
   getSubNetworks,
   getNetworkMembers,
   searchLeaders,
+  getConsolidations,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -99,6 +100,19 @@ export const useSearchLeaders = (keyword: string) => {
   return useQuery(
     ["searchLeaders", { id: keyword }],
     async () => await searchLeaders(keyword),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useGetConsolidations = () => {
+  const { data } = useGetProfile();
+
+  return useQuery(
+    ["getConsolidations", { id: data?.id }],
+    async () => await getConsolidations(data?.id ?? ""),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,
