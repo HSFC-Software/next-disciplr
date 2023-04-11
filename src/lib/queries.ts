@@ -11,6 +11,7 @@ import {
   getNetworkMembers,
   searchLeaders,
   getConsolidations,
+  getConsolidationDetails,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -113,6 +114,17 @@ export const useGetConsolidations = () => {
   return useQuery(
     ["getConsolidations", { id: data?.id }],
     async () => await getConsolidations(data?.id ?? ""),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+};
+
+export const useGetConsolidationDetails = (id: string) => {
+  return useQuery(
+    ["getConsolidationDetails", { id }],
+    async () => await getConsolidationDetails(id),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,

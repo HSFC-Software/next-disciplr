@@ -117,7 +117,7 @@ a {
 
 .bg-primary {
   background: linear-gradient(90deg, #6e7ac5 -14.56%, #fb5d64 114.56%);
-  border-radius: 12px;
+  /* border-radius: 12px; */
 }
 
 .L1,

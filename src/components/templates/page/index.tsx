@@ -44,7 +44,7 @@ function Nav(props: { activeRoute?: string }) {
     const nav = document.getElementById("nav");
 
     if (filler && nav) {
-      filler.style.paddingBottom = `${nav.offsetHeight}px`;
+      filler.style.paddingBottom = `${nav.offsetHeight * 1.5}px`;
     }
   });
 
@@ -67,9 +67,6 @@ function Nav(props: { activeRoute?: string }) {
             height={38}
             isActive={activeRoute === "conso"}
           />
-          <span className="text-[8px] absolute bg-primary text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
-            Soon
-          </span>
         </Link>
         <Link href="/" className="relative flex items-center">
           <NotificationIcon
