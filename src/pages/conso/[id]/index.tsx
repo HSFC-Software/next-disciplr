@@ -7,17 +7,37 @@ import Lesson from "@/components/base/lesson";
 import { useRouter } from "next/router";
 import Avatar from "@/components/base/avatar";
 import { getInitials } from "@/lib/utils";
-import { useGetConsolidationDetails } from "@/lib/queries";
+import { useGetConsolidationDetails, useGetProfile } from "@/lib/queries";
+import { useConsolidate } from "@/lib/mutations";
 
 export default function ConsolidationDetails() {
   const router = useRouter();
   const disciple_id = router.query.id;
+  const { data: user } = useGetProfile();
   const { data } = useGetConsolidationDetails(String(disciple_id));
+  const { mutate: consolidate, isLoading } = useConsolidate();
 
   const handleGoUpOneLevel = () => {
-    const currentPathname = router.pathname;
+    const currentPathname = router.asPath;
     const parentPathname = currentPathname.split("/").slice(0, -1).join("/");
     router.push(parentPathname);
+  };
+
+  const handleConsolidate = () => {
+    consolidate(
+      {
+        disciple_id: String(disciple_id),
+        consolidator_id: String(user?.id),
+      },
+      {
+        onSuccess: (response) => {
+          router.push(
+            "/conso/[id]/[lesson]",
+            `/conso/${disciple_id}/${response.id}`
+          );
+        },
+      }
+    );
   };
 
   return (
@@ -56,7 +76,11 @@ export default function ConsolidationDetails() {
             )}
           </div>
           <div className="mt-10 flex gap-3">
-            <button className="bg-primary rounded-2xl px-8 py-4 text-white">
+            <button
+              onClick={handleConsolidate}
+              disabled={isLoading}
+              className="disabled:opacity-50 bg-primary rounded-2xl px-8 py-4 text-white"
+            >
               Consolidate
             </button>
             <button className="bg-primary rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
@@ -64,10 +88,10 @@ export default function ConsolidationDetails() {
             </button>
           </div>
           <div className="text-[#B4B4B4] mt-10">
-            Consolidated last {moment(data?.recent.created_at).fromNow()}
+            Consolidated {moment(data?.recent.created_at).fromNow()}
           </div>
         </div>
-        <div className="px-14 z-10 mt-10">
+        <div className="px-7 z-10 mt-10">
           <header className="font-semibold text-[#686777] text-xl">
             HISTORY
           </header>
@@ -76,7 +100,13 @@ export default function ConsolidationDetails() {
               return (
                 <div
                   key={conso.lesson_code.code}
-                  className="flex items-center gap-5"
+                  className="flex items-center gap-5 cursor-pointer"
+                  onClick={() =>
+                    router.push(
+                      `/conso/[id]/[lesson]`,
+                      `/conso/${disciple_id}/${conso.id}`
+                    )
+                  }
                 >
                   <div className="shrink-0">
                     <Lesson
@@ -85,7 +115,7 @@ export default function ConsolidationDetails() {
                     />
                   </div>
                   <span className="text-sm text-[#686777]">
-                    Last {moment(conso.created_at).fromNow()} (
+                    {moment(conso.created_at).fromNow()} (
                     {moment(conso.created_at).format("MM DD, YYYY")})
                   </span>
                 </div>
@@ -100,23 +130,6 @@ export default function ConsolidationDetails() {
     </>
   );
 }
-
-const RelativeDate = (props: { date: any }) => {
-  const [original, setShowOriginal] = useState(false);
-
-  if (original)
-    return (
-      <button className="text-left" onClick={() => setShowOriginal(false)}>
-        {moment(props.date).format("LL")}
-      </button>
-    );
-
-  return (
-    <button className="text-left" onClick={() => setShowOriginal(true)}>
-      {moment(props.date).fromNow()}
-    </button>
-  );
-};
 
 function SoftVector() {
   return (

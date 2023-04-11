@@ -12,6 +12,7 @@ import {
   searchLeaders,
   getConsolidations,
   getConsolidationDetails,
+  getConsolidationById,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -131,3 +132,13 @@ export const useGetConsolidationDetails = (id: string) => {
     }
   );
 };
+
+export const useGetConsolidationById = (id: string) =>
+  useQuery(
+    ["getConsolidationById", { id }],
+    async () => await getConsolidationById(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
