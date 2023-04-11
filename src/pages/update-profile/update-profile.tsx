@@ -148,7 +148,11 @@ export default function UpdateProfile() {
                 onClick={() => setShowDatePicker(true)}
                 className="text-left"
               >
-                {moment(formik.values.birthday).format("LL")}
+                {formik.values.birthday ? (
+                  <>{moment(formik.values.birthday).format("LL")}</>
+                ) : (
+                  <span className="opacity-50">Tap to enter birthday</span>
+                )}
               </button>
             </div>
           </section>
@@ -159,6 +163,9 @@ export default function UpdateProfile() {
             <div className="py-5 flex flex-col gap-2">
               <label className={styles.label}>Sex</label>
               {formik.values.sex}
+              {!formik.values.sex && (
+                <span className="opacity-50">Tap to Select</span>
+              )}
             </div>
           </button>
           <section className="px-7 py-3 bg-white">
@@ -176,6 +183,7 @@ export default function UpdateProfile() {
                 type="text"
                 onChange={formik.handleChange}
                 value={formik.values.contact_number}
+                placeholder="Enter Mobile Number"
               />
             </div>
           </section>

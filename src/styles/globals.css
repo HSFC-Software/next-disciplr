@@ -117,5 +117,44 @@ a {
 
 .bg-primary {
   background: linear-gradient(90deg, #6e7ac5 -14.56%, #fb5d64 114.56%);
-  border-radius: 12px;
+  /* border-radius: 12px; */
+}
+
+.L1,
+.L10 {
+  background: linear-gradient(90deg, #d74177 -57.95%, #ffe98a 164.61%);
+}
+
+.L2,
+.L9 {
+  background: linear-gradient(90deg, #d8b5ff -57.95%, #1eae98 164.61%);
+}
+
+.L3,
+.L8 {
+  background: linear-gradient(90deg, #a9a9f1 -57.95%, #ffbbbb 164.61%);
+}
+
+.L4 {
+  background: linear-gradient(90deg, #00b7ff -57.95%, #ffffc7 164.61%);
+}
+
+.L5 {
+  background: linear-gradient(90deg, #ea8d8d -57.95%, #a890fe 164.61%);
+}
+
+.L6 {
+  background: linear-gradient(90deg, #eeaa88 -57.95%, #a890fe 164.61%);
+}
+
+.L7 {
+  background: linear-gradient(90deg, #c6ea8d -57.95%, #6fd6ff 164.61%);
+}
+
+.badge {
+  padding: 4px 21px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
 }

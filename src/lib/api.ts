@@ -192,3 +192,74 @@ export const updateUser = async (payload: UpdateUserPaypload) => {
     return Promise.reject(err);
   }
 };
+
+type LessonCodes =
+  | "L1"
+  | "L2"
+  | "L3"
+  | "L4"
+  | "L5"
+  | "L6"
+  | "L7"
+  | "L8"
+  | "L9"
+  | "L10";
+
+type Consoliations = {
+  id: string;
+  created_at: string;
+  disciple_id: {
+    id: string;
+    first_name: string;
+    last_name: string;
+  };
+  lesson_code: {
+    code: LessonCodes;
+    name: string;
+  };
+};
+
+export const getConsolidations = async (consolidatorId: string) => {
+  try {
+    const { data } = await axios.get(
+      `/consolidations?consolidator=${consolidatorId}&client=disciplr`
+    );
+    return data as Consoliations[];
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+type ConsolidationDetails = {
+  recent: {
+    id: string;
+    created_at: string;
+    lesson_code: {
+      code: LessonCodes;
+      name: string;
+    };
+  };
+  disciple: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    email: string;
+  };
+  history: {
+    id: string;
+    created_at: string;
+    lesson_code: {
+      code: LessonCodes;
+      name: string;
+    };
+  }[];
+};
+
+export const getConsolidationDetails = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/consolidations?disciple=${id}`);
+    return data as ConsolidationDetails;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
