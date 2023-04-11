@@ -8,8 +8,10 @@ import { getInitials } from "@/lib/utils";
 import moment from "moment";
 import { useState } from "react";
 import Lesson from "@/components/base/lesson";
+import { useRouter } from "next/router";
 
-export default function Home() {
+export default function Consolidations() {
+  const router = useRouter();
   const { data } = useGetConsolidations();
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
@@ -65,7 +67,7 @@ export default function Home() {
             return (
               <div
                 key={conso.id}
-                onClick={() => {}}
+                onClick={() => router.push("/conso/[id]", `/conso/${conso.id}`)}
                 className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
               >
                 <div className="relative flex justify-center">
