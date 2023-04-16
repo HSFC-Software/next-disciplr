@@ -10,6 +10,7 @@ import {
   openNetwork,
   OpenNetworkPayload,
   removeMember,
+  removeNetwork,
   signUp,
   SignUpPayload,
   unlinkMember,
@@ -149,6 +150,26 @@ export const useMarkInactiveNetwork = () => {
       },
     }
   );
+};
+
+export const useRemoveNetwork = (parentNetworkId: string) => {
+  const queryClient = useQueryClient();
+  const { data } = useGetProfile();
+
+  return useMutation<unknown, unknown, string>((id) => removeNetwork(id), {
+    onSuccess: (response: any) => {
+      // invalidate get network by disciple
+      queryClient.invalidateQueries([
+        "getNetworksByDiscipler",
+        { id: data?.id },
+      ]);
+      // invalidate get subnetwork
+      queryClient.invalidateQueries([
+        "getSubNetworks",
+        { id: response?.parent?.id },
+      ]);
+    },
+  });
 };
 
 export const useSignUp = () => {
