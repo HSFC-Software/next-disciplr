@@ -90,6 +90,7 @@ export default function Member() {
 
               return (
                 <MemberBadge
+                  id={member.disciples.id ?? ""}
                   status={member.status}
                   editable={router.pathname === "/networks/[id]/update"}
                   onSetActive={(e) =>
@@ -170,6 +171,7 @@ export default function Member() {
 
               return (
                 <MemberBadge
+                  id={member.disciples.id ?? ""}
                   editable={router.pathname === "/networks/[id]/update"}
                   onSetActive={(e) =>
                     handleSetToActive(member.disciples.id ?? "", e)

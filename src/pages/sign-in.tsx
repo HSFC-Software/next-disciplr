@@ -1,9 +1,11 @@
 import { supabase } from "@/lib/supabase";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const [isSigningIn, setIsSigningIn] = useState(false);
 
   const handleSignInWithGoogle = () => {
@@ -15,6 +17,7 @@ export default function Home() {
 
   const handleSignInByEmailPassword = () => {
     setIsSigningIn(true);
+
     supabase.auth
       .signInWithPassword({
         email: (document.getElementById("email") as HTMLInputElement)?.value ?? "", // prettier-ignore
@@ -26,6 +29,12 @@ export default function Home() {
       .catch((err) => console.log(err))
       .finally(() => setIsSigningIn(false));
   };
+
+  useEffect(() => {
+    if (router.query.provider === "google") {
+      document.getElementById("sign-in-with-google")?.click?.();
+    }
+  }, [router]);
 
   return (
     <>
@@ -83,6 +92,7 @@ export default function Home() {
           </button>
           <div />
           <button
+            id="sign-in-with-google"
             onClick={handleSignInWithGoogle}
             className="mt-14 text-base text-[#6e7ac5]"
           >

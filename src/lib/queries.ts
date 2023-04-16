@@ -13,6 +13,7 @@ import {
   getConsolidations,
   getConsolidationDetails,
   getConsolidationById,
+  getProfileById,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -144,3 +145,9 @@ export const useGetConsolidationById = (id: string) =>
       enabled: true,
     }
   );
+
+export const useGetProfileById = (id: string) =>
+  useQuery(["getProfileById", { id }], async () => await getProfileById(id), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });

@@ -192,3 +192,11 @@ a {
   width: 100%;
   height: 4px;
 }
+
+.Toastify__progress-bar {
+  background: linear-gradient(
+    90deg,
+    #6e7ac5 -14.56%,
+    #fb5d64 114.56%
+  ) !important;
+}

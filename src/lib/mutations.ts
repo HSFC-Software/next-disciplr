@@ -188,6 +188,7 @@ export const useUpdateUser = () => {
           "getNetworksByDiscipler",
           { id: response.id },
         ]);
+        queryClient.invalidateQueries(["getProfileById", { id: response.id }]);
       },
     }
   );

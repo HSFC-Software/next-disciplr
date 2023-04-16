@@ -1,0 +1,43 @@
+.label {
+  @apply text-red-500;
+  @apply text-sm;
+  @apply text-[#25252a];
+  @apply block;
+  @apply font-semibold;
+}
+
+.dropdownItem {
+  @apply font-normal;
+  @apply text-[#25252a];
+  @apply text-sm;
+  @apply rounded-md;
+}
+
+.input {
+  @apply rounded-md;
+  @apply text-sm;
+  @apply text-[#25252a];
+}
+
+.content {
+  .input,
+  input,
+  textarea {
+    &:focus {
+      --tw-ring-color: transparent;
+    }
+
+    @apply w-full;
+    @apply px-4;
+    @apply py-2;
+    @apply border-2;
+    @apply rounded-xl;
+    @apply mt-2;
+    @apply border-gray-300;
+  }
+}
+
+.content .input {
+  font-size: 16px;
+  height: 44px;
+}

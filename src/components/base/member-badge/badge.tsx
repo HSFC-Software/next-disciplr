@@ -4,6 +4,7 @@ import {
   TbSquareRoundedXFilled,
   TbSquareRoundedCheckFilled,
 } from "react-icons/tb";
+import { useRouter } from "next/router";
 
 type Props = {
   first_name: string;
@@ -13,14 +14,24 @@ type Props = {
   onRemove?: () => void;
   status?: "Active" | "Inactive";
   onSetActive?: (e?: any) => void;
+  id: string;
 };
 
 export default function MemberBadge(props: Props) {
   const { first_name, last_name, editable, onRemove, status, onSetActive } =
     props;
 
+  const router = useRouter();
+
+  const handleOnclick = () => {
+    router.push("/profile/[id]", `/profile/${props.id}`);
+  };
+
   return (
-    <div className="flex items-center bg-transparent">
+    <button
+      onClick={handleOnclick}
+      className="flex items-center bg-transparent"
+    >
       <span style={{ opacity: status === "Active" ? 1 : 0.5 }} className="z-10">
         <Avatar fontSize="text-base" size={40}>
           {`${first_name?.charAt(0) ?? ""}${last_name?.charAt(0) ?? ""}`.trim()}
@@ -53,6 +64,6 @@ export default function MemberBadge(props: Props) {
           <TbSquareRoundedXFilled size={24} />
         </button>
       )}
-    </div>
+    </button>
   );
 }
