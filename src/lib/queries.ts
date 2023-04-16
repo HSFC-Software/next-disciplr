@@ -29,15 +29,17 @@ export const useGetProfileFromToken = (token: string) => {
   };
 
   let userMetadata = {} as UserMetadata;
+  let email = "";
 
   try {
     const data = jwt.decode(token);
     userMetadata = (data as any)?.user_metadata as UserMetadata;
+    email = userMetadata?.email ?? (data as any)?.email;
   } catch (err) {}
 
   return useQuery<Profile | null>(
-    ["getProfile", { email: userMetadata?.email }],
-    async () => await getProfileByEmail(userMetadata?.email),
+    ["getProfile", { email }],
+    async () => await getProfileByEmail(email),
     {
       staleTime: 1000 * 60 * 5,
       enabled: true,
