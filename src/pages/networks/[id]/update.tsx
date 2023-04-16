@@ -8,7 +8,11 @@ import Member from "@/components/modules/networks/members/member";
 import Body from "@/components/base/body";
 import { Networks } from "@/components/modules/networks/networks";
 import { useEffect, useState } from "react";
-import { useMarkInactiveNetwork, useUpdateNetwork } from "@/lib/mutations";
+import {
+  useMarkInactiveNetwork,
+  useUpdateNetwork,
+  useRemoveNetwork,
+} from "@/lib/mutations";
 import { BiBookmarkAltMinus } from "react-icons/bi";
 import { TbSquareRoundedXFilled } from "react-icons/tb";
 import {
@@ -24,8 +28,12 @@ const UpdateNetworkDetails = () => {
   const { mutate: update } = useUpdateNetwork(networkId);
   const { mutate: markInactive, isLoading: inactivating } =
     useMarkInactiveNetwork();
+  const { mutate: removeNetwork, isLoading: isRemoving } =
+    useRemoveNetwork(networkId);
 
   const [showInactiveWarning, setShowInactiveWarning] = useState(false);
+  const [showRemoveNetowrkWarning, setShowRemoveNetworkWarning] =
+    useState(false);
 
   const [name, setName] = useState("");
 
@@ -48,7 +56,21 @@ const UpdateNetworkDetails = () => {
       onSuccess: () => setShowInactiveWarning(false),
     });
   };
-  const handleRemove = () => {};
+
+  const handleRemoveNetwork = () => {
+    removeNetwork(network?.id ?? "", {
+      onSuccess: (response: any) => {
+        setShowRemoveNetworkWarning(false);
+        if (response?.parent?.id) {
+          router.push(`/networks/${response?.parent?.id}`);
+        } else {
+          router.push("/networks");
+        }
+      },
+    });
+  };
+
+  const handleRemove = () => setShowRemoveNetworkWarning(true);
 
   const handleMakeActive = () => {
     update({ status: "Active" });
@@ -69,6 +91,29 @@ const UpdateNetworkDetails = () => {
         <button
           disabled={inactivating}
           onClick={() => handleMakeInactive()}
+          className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
+        >
+          Confirm
+        </button>
+      </div>
+    </Modal>
+  );
+
+  const markRemoveWarning = (
+    <Modal isOpen={showRemoveNetowrkWarning}>
+      <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
+        <button
+          onClick={() => setShowRemoveNetworkWarning(false)}
+          className="absolute top-0 right-0 mt-[-12px] mr-[-12px] text-[#E22134]"
+        >
+          <TbSquareRoundedXFilled size={35} />
+        </button>
+        <div className="mb-3">
+          Are you sure you want to remove this network? This cannot be undone.
+        </div>
+        <button
+          disabled={inactivating}
+          onClick={handleRemoveNetwork}
           className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
         >
           Confirm
@@ -165,6 +210,7 @@ const UpdateNetworkDetails = () => {
           </div>
         </Body>
         {markInactiveWarning}
+        {markRemoveWarning}
       </Layout>
     </>
   );

@@ -153,6 +153,15 @@ export const markNetworkInactive = async (id: string) => {
   }
 };
 
+export const removeNetwork = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`/networks/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
 export type SignUpPayload = {
   first_name: string;
   last_name: string;
