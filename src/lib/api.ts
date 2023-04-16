@@ -324,3 +324,12 @@ export const getConsolidationById = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export const getProfileById = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/profile/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

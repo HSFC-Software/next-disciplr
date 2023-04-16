@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
 import type { AppProps } from "next/app";
 import { Hydrate, QueryClient, QueryClientProvider } from "react-query";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { store } from "@/lib/models";
 import LauncharklyProvider, {
   LauncharklyConsumer,
 } from "@/components/modules/launchdarkly";
+import { ToastContainer } from "react-toastify";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -17,6 +19,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <Store store={store}>
             <LauncharklyConsumer>
               <Component {...pageProps} />
+              <ToastContainer />
             </LauncharklyConsumer>
           </Store>
         </Hydrate>

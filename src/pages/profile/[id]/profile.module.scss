@@ -1,0 +1,13 @@
+.label {
+  @apply text-red-500;
+  @apply text-sm;
+  @apply text-[#686777];
+  @apply block;
+}
+
+.dropdownItem {
+  @apply font-normal;
+  @apply text-xl;
+  @apply px-7;
+  @apply py-4;
+}
