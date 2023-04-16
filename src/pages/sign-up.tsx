@@ -1,85 +1,107 @@
+import { supabase } from "@/lib/supabase";
 import Head from "next/head";
-import { useFlags } from "launchdarkly-react-client-sdk";
-import { useState } from "react";
-import { useSignUp } from "@/lib/mutations";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
-export function SignUp() {
-  const { enableAlphaUsersRegistration } = useFlags();
+export default function Home() {
+  const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [isSigningUp, setIsSigningUp] = useState(false);
 
-  const { mutate, isLoading } = useSignUp();
+  const handleSignUp = () => {
+    if (!password) return;
+    setIsSigningUp(true);
 
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
-  const [email, setEmail] = useState("");
+    supabase.auth
+      .signUp({
+        email: router.query?.email as string,
+        password,
+      })
+      .then((res) => {
+        console.log(res);
+        // redirect to sign-in
+        if (!res.error) {
+          toast.success("Account created successfully! 🎉", {
+            autoClose: 1500,
+          });
+          setTimeout(() => {
+            return router.push(`/sign-in`);
+          }, 1500);
+        }
 
-  const handleOnSubmit = () => {
-    mutate(
-      { first_name: firstname, last_name: lastname, email },
-      {
-        onSuccess: () => {
-          // redirect to sign-in page
-          window.location.href = "/sign-in";
-        },
-      }
-    );
+        if (res.error) {
+          toast.error(res.error?.message, {
+            autoClose: 1500,
+            hideProgressBar: true,
+            position: "top-center",
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setIsSigningUp(false));
   };
 
   return (
     <>
       <Head>
-        <title>Disciplr | Sign Up</title>
-        <meta name="description" content="Consolidation for Network Leader" />
+        <title>Disciplr | Sign In</title>
+        <meta name="description" content="Disciplr | Sign In" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="w-screen w-full h-screen flex items-center justify-center">
-        <div className="w-full px-7">
-          <h1 className="text-3xl mb-6 text-slate-700 text-center">
-            <span className="font-bold">Disciplr</span>{" "}
-            <span className="font-light">Alpha</span>
-            <div className="text-base text-gray-500 mt-2">
-              Do you disciple? Join us now 🙌🏼
-            </div>
-          </h1>
-          <div className="flex flex-col gap-7">
-            <div className="flex flex-col">
-              <input
-                value={firstname}
-                onChange={(e) => setFirstname(e.target.value)}
-                autoFocus
-                className="bg-transparent border-b border-gray-300 py-3 outline-none"
-                placeholder="Firstname"
-              />
-            </div>
-            <div className="flex flex-col">
-              <input
-                value={lastname}
-                onChange={(e) => setLastname(e.target.value)}
-                className="bg-transparent border-b border-gray-300 py-3 outline-none"
-                placeholder="Surname"
-              />
-            </div>
-            <div className="flex flex-col">
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="bg-transparent border-b border-gray-300 py-3 outline-none"
-                placeholder="Gmail address"
-              />
-            </div>
-            <div className="text-center">
-              <button
-                onClick={handleOnSubmit}
-                disabled={!firstname || !lastname || !email || isLoading}
-                className="bg-[#6474dc] disabled:bg-[#e0e9f1] hover:bg-[#4c55dc] text-white px-7 py-3 rounded-lg hover:shadow-md"
-              >
-                Absolutely! I&apos;m a discplr
-              </button>
-            </div>
+        <div className="text-center">
+          {/* <h1 className="text-4xl font-bold text-slate-700 mb-2">
+            <div>Disciplr</div>
+          </h1> */}
+          <div className="flex justify-center mb-7">
+            <Image
+              src="/disciplr-logo.png"
+              alt="disciplr"
+              width="100"
+              height="100"
+            />
           </div>
+          <div className="text-base font-light text-gray-400">
+            Welcome <span className="font-bold text-primary">Disciplr</span> 🎉
+          </div>
+
+          <div className="my-7 px-7">
+            <input
+              id="email"
+              disabled
+              value={router.query?.email}
+              placeholder="Email"
+              className="opacity-50 w-full px-4 py-2 border-2 rounded-xl mt-2 border-gray-300 cursor-not-allowed"
+            />
+            <input
+              autoFocus
+              id="password"
+              disabled={isSigningUp}
+              placeholder="Password"
+              type="password"
+              onKeyUp={(e) => {
+                if (e.key === "Enter") {
+                  handleSignUp();
+                }
+              }}
+              onChange={(e) => setPassword(e?.target?.value)}
+              className="w-full px-4 py-2 border-2 rounded-xl mt-2 border-gray-300"
+            />
+          </div>
+          <button
+            disabled={isSigningUp}
+            onClick={handleSignUp}
+            className="bg-[#6e7ac5] disabled:opacity-50 text-white px-14 py-3 rounded-xl hover:shadow-md"
+          >
+            Sign up
+          </button>
+          <div />
         </div>
       </main>
     </>
   );
 }
-
-export default SignUp;

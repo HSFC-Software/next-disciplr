@@ -76,12 +76,12 @@ function L1() {
           ang pagmamahal sa atin ng Diyos.
         </div>
         <div>
-          Sa tao, sasabihin sayo “Mahal kita kasi
+          Sa tao, sasabihin sayo &quot;Mahal kita kasi
           talented/maganda/gwapo/naibibigay mo gusto ko. Pero ‘pag nalaman nila
           ang past mo, hindi ka na Mahal.Pero pag ang Diyos nagmahal, ang
-          sasabihin Niya sa’yo "Mahal kita kahit nasasaktan mo ko" / “Mahal kita
-          kahit pangit man ang nakaraan mo”. Ang pagmamahal ng Diyos ay sagad
-          hanggang kaluluwa.{" "}
+          sasabihin Niya sa’yo &quot;Mahal kita kahit nasasaktan mo ko&quot; /
+          &quot;Mahal kita kahit pangit man ang nakaraan mo”. Ang pagmamahal ng
+          Diyos ay sagad hanggang kaluluwa.{" "}
           <strong>
             His work on the cross brought redemption, renewal and restoration to
             our lives.
@@ -117,7 +117,8 @@ function L1() {
         <div>1 Juan 5:14</div>
         <i>
           14 May lakas-loob tayong lumapit sa kanya dahil alam nating ibibigay
-          niya ang anumang hingin natin kung ito'y naaayon sa kanyang kalooban.
+          niya ang anumang hingin natin kung ito&apos;y naaayon sa kanyang
+          kalooban.
         </i>
         <strong className="mt-1">
           Question: Ano ang hinihiling o ipinagdarasal mo kay Lord na magkaroon
@@ -165,14 +166,14 @@ function L1() {
         <strong>1 John 5:11-13</strong>
         <i>
           11 At ito ang patotoo: ipinagkaloob sa atin ng Diyos ang buhay na
-          walang hanggan at ito'y makakamtan natin sa pamamagitan ng kanyang
-          Anak. 12 Kung ang Anak ng Diyos ay nasa isang tao, mayroon siyang
-          buhay na walang hanggan; ngunit kung wala sa kanya ang Anak ng Diyos
-          ay wala siyang buhay na walang hanggan.
+          walang hanggan at ito&apos;y makakamtan natin sa pamamagitan ng
+          kanyang Anak. 12 Kung ang Anak ng Diyos ay nasa isang tao, mayroon
+          siyang buhay na walang hanggan; ngunit kung wala sa kanya ang Anak ng
+          Diyos ay wala siyang buhay na walang hanggan.
         </i>
         <strong>John 14:6</strong>
         <i>
-          6 Sumagot si Jesus, “Ako ang daan, ang katotohanan, at ang buhay.
+          6 Sumagot si Jesus, &quot;Ako ang daan, ang katotohanan, at ang buhay.
           Walang makakapunta sa Ama kundi sa pamamagitan ko
         </i>
         <div>

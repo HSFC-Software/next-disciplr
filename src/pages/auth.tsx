@@ -24,7 +24,7 @@ export default function Auth() {
 
   if (data === null) {
     // unauthorized
-    window.location.href = "/sign-in";
+    window.location.href = "/sign-in?user=unauthorized";
   }
 
   return (
