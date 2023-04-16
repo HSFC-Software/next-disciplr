@@ -42,8 +42,8 @@ export default function Auth() {
           <Image
             src="/disciplr-logo.png"
             alt="disciplr"
-            width="147"
-            height="147"
+            width="100"
+            height="100"
           />
 
           <div className="w-[55px]">

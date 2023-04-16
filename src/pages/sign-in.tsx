@@ -1,6 +1,7 @@
 import { supabase } from "@/lib/supabase";
 import Head from "next/head";
 import { useState } from "react";
+import Image from "next/image";
 
 export default function Home() {
   const [isSigningIn, setIsSigningIn] = useState(false);
@@ -35,13 +36,25 @@ export default function Home() {
       </Head>
       <main className="w-screen w-full h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl mb-6 font-bold text-slate-700">
+          {/* <h1 className="text-4xl font-bold text-slate-700 mb-2">
             <div>Disciplr</div>
-            <span className="text-base font-normal text-gray-400">
-              Welcome back <strong>Disciplr 🎉</strong> Sign in to continue
-            </span>
-          </h1>
-          <div className="mb-7">
+          </h1> */}
+          <div className="flex justify-center mb-7">
+            <Image
+              src="/disciplr-logo.png"
+              alt="disciplr"
+              width="100"
+              height="100"
+            />
+          </div>
+          <div className="text-base font-light text-gray-400">
+            Welcome back{" "}
+            <span className="font-bold text-primary">Disciplr</span> 🎉
+          </div>
+          <span className="text-base font-light text-gray-400">
+            Sign in to continue
+          </span>
+          <div className="my-7 px-7">
             <input
               id="email"
               disabled={isSigningIn}
