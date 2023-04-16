@@ -41,7 +41,7 @@ const UpdateNetworkDetails = () => {
     if (network) {
       setName(network.name);
     }
-  }, []);
+  }, [network]);
 
   const handleSuccess = () => {
     router.push("/networks/" + networkId);

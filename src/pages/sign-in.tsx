@@ -3,6 +3,7 @@ import Head from "next/head";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +25,14 @@ export default function Home() {
         password: (document.getElementById("password") as HTMLInputElement)?.value ?? "", // prettier-ignore
       })
       .then((res) => {
-        window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}`;
+        if (!res?.error)
+          return (window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}`);
+        else
+          toast.error(res.error?.message, {
+            autoClose: 750,
+            hideProgressBar: true,
+            position: "top-center",
+          });
       })
       .catch((err) => console.log(err))
       .finally(() => setIsSigningIn(false));
@@ -34,7 +42,29 @@ export default function Home() {
     if (router.query.provider === "google") {
       document.getElementById("sign-in-with-google")?.click?.();
     }
+
+    if (router.query.token === "expired") {
+      toast("Your session has expired. Please sign in again.", {
+        autoClose: 2500,
+      });
+    }
+
+    if (router.query.user === "unauthorized") {
+      // unauthorized login message
+      toast.warn(
+        "This email is not yet registered. Please contact your disciplr.",
+        {
+          autoClose: 3000,
+          hideProgressBar: true,
+          position: "top-center",
+        }
+      );
+    }
   }, [router]);
+
+  useEffect(() => {
+    document.getElementById("email")?.focus();
+  }, []);
 
   return (
     <>
