@@ -35,6 +35,10 @@ function Outline(props: { lessonCode: string }) {
     return <L1 />;
   }
 
+  if (props.lessonCode === "L2") {
+    return <L2 />;
+  }
+
   return null;
 }
 
@@ -225,4 +229,8 @@ function L1() {
       </div>
     </div>
   );
+}
+
+function L2() {
+  return <div>L2 out line here</div>;
 }
