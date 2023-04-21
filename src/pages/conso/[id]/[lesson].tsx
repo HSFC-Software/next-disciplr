@@ -3,6 +3,7 @@ import Head from "next/head";
 import Header from "@/components/base/header";
 import { useRouter } from "next/router";
 import { useGetConsolidationById } from "@/lib/queries";
+import { useState } from "react";
 
 export default function LessonScreen() {
   const router = useRouter();
@@ -31,6 +32,7 @@ export default function LessonScreen() {
 }
 
 function Outline(props: { lessonCode: string }) {
+
   if (props.lessonCode === "L1") {
     return <L1 />;
   }
@@ -39,19 +41,50 @@ function Outline(props: { lessonCode: string }) {
     return <L2 />;
   }
 
+  if (props.lessonCode === "L3") {
+    return <L3 />;
+  }
+
+  if (props.lessonCode === "L4") {
+    return <L4 />;
+  }
+
+  if (props.lessonCode === "L5") {
+    return <L5 />;
+  }
+
+  if (props.lessonCode === "L6") {
+    return <L6 />;
+  }
+
+  if (props.lessonCode === "L7") {
+    return <L7 />;
+  }
+
+  if (props.lessonCode === "L8") {
+    return <L8 />;
+  }
+
   return null;
 }
 
 function L1() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
   return (
     <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
       <div>
-        <strong>Flow</strong>
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>Flow</strong>
         <li>Magpakilala</li>
         <li>Kumusta ang experience mo sa gawain today?</li>
       </div>
       <div className="mt-2" />
-      <div className="font-bold">STARTING UP YOUR NEW LIFE WITH JESUS</div>
+      <div className={toggle&&"bg-yellow-300 px-1 text-black font-bold"}><strong>STARTING UP YOUR NEW LIFE WITH JESUS</strong></div>
       <div className="flex flex-col gap-3">
         <div>
           Question: Ano ang pagkakaintindi mo pag nakita mo itong title na ito?
@@ -93,12 +126,12 @@ function L1() {
           Sa starting up your new life, hindi lang basta pumasok si Hesus sa
           puso mo kundi pumasok Siya nang may katotohanan.
         </div>
-        <div className="font-bold mt-1">
+        <div className={toggle&&"bg-yellow-300 px-1 text-black font-bold mt-1"}>
           DISCOVERING THE TRUTH ABOUT YOUR NEW RELATIONSHIP WITH CHRIST
         </div>
         <div className="font-bold mt-1">4 BENEFITS OF SALVATION</div>
         <div>
-          <strong>1. FORGIVENESS</strong> - Christ forgave your sin.
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. FORGIVENESS</strong> - Christ forgave your sin.
         </div>
         <div>Colosas 1:13-14</div>
         <i>
@@ -110,7 +143,7 @@ function L1() {
           our lives.
         </i>
         <div className="mt-1">
-          <strong>2.PRIVILEGE OF SONSHIP</strong> - He made you a child of God.
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2.PRIVILEGE OF SONSHIP</strong> - He made you a child of God.
         </div>
         <div>
           Kapag sa Ibang bahay nagpapaalam muna tayo bago makigamit ng facility
@@ -136,7 +169,7 @@ function L1() {
         <li>Testimony nya</li>
         <li>Short testimony mo</li>
         <div className="mt-1">
-          <strong>3.NEW LIFE</strong> - Christ began a new life.
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>3.NEW LIFE</strong> - Christ began a new life.
         </div>
         <strong>2 Corinthians 5:17</strong>
         <i>
@@ -164,7 +197,7 @@ function L1() {
           Question: Ano ang pamumuhay (ugali) na gusto mong mabago?
         </strong>
         <div className="mt-1">
-          <strong>4.ETERNAL LIFE</strong> - God has given us eternal life and
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>4.ETERNAL LIFE</strong> - God has given us eternal life and
           THIS LIFE IS IN HIS SON.
         </div>
         <strong>1 John 5:11-13</strong>
@@ -194,7 +227,7 @@ function L1() {
           tinanggap mo na si Hesus bilang Panginoon at tagapagligtas.
         </div>
         <div className="mt-1" />
-        <strong>AFTER THE FLOW</strong>
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>AFTER THE FLOW</strong>
         <li>Review the 4 benefits of salvation.</li>
         <li>
           Ano ang gusto mong pasimulan kasama si kristo? (Hikayating SIYA ang
@@ -205,7 +238,7 @@ function L1() {
           (Consolidator ang manalangin)
         </li>
         <div className="mt-1" />
-        <strong>CONSOLIDATOR{"'"}S REMINDER</strong>
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>CONSOLIDATOR{"'"}S REMINDER</strong>
         <ul>
           <ol>1.Ipakita ang pamagat ng booklet ‘pag nagtanong</ol>
           <ol>
@@ -232,5 +265,1385 @@ function L1() {
 }
 
 function L2() {
-  return <div>L2 out line here</div>;
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+        <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+        <li>Kamustahan</li>
+        <li>Pagbibigay ng conso booklet</li>
+        <li>Short review (4 Benefits of Salvation) </li>
+      </div>
+      <div className="mt-1">
+        <p>
+          <strong>Intro:</strong> Noong nakaraan tinanong kita kung nasaan na si Kristo at sabi mo ay nasa puso.
+        </p>
+        <p>
+          <strong>Question: Ano ang bagay sa buhay mo na pumipigil sa iyo para magbago at ano ang
+          naging epekto nito?
+          </strong>
+        </p>
+      </div>
+      <div className="mt-2">
+        <div>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>KEY VERSE:</strong>
+        </div>
+        <div className="mt-1">
+          <strong>Gawa 3: 19</strong>
+        </div>
+        <p className="italic">
+          “Kaya nga magsisi kayo at manungbalik loob sa Diyos para patawarin kayo sa inyong mga
+          kasalanan.”
+        </p>
+        <li>
+            <strong>Repentance implies a change in direction, “turning away from sin” toward
+            "changing one's mind" to live for God.</strong> Kapag nagsisi tayo ay nagbabago ng
+            direksyon, tinatalikuran natin ang kasalanan at tayo ngayon ay nakaharap na sa
+            kabanalan. Sa madaling salita, ang <strong>“PAGSISI AY ISANG DESISYON AT HINDI ISANG
+            EMOSYON".</strong> Hindi dapat na puro iyak at puro pagmumukmok, puro sorry pero uulitin
+            pa rin at hindi na ginagawan ng aksyon.
+        </li>
+        <li>
+          Ikwento ang alibughang anak (Lucas15:11)
+        </li>
+        <li>
+          Pagkatapos ikuwento and Alibughang Anak <br/>
+          <p className="indent-8">
+            Ang Alibughang Anak na iyon ay ikaw Ikaw na nang iwan at pumutol ng relasyon mo
+            sa Ama, sa ating Diyos. Minsan nandoon ka na lang sa puntong ikinatutuwa mong
+            humingi ng pangangailangan at pagkatapos makuha ang gusto mo ay nakakalimutan
+            na ang ating Diyos na nagpala dahil nakafocus ka na lng sa biyaya at hindi sa taga
+            pagpala.
+          </p>
+          <p className="indent-8">
+            Sa kwento, gaano man kabigat ang nagawang kasalanan ng bunsong anak, nagkaroon
+            sya ng desisyon na magbalik-loob sa kanyang ama at open arms siyang tinangap nito.
+            Ganoon din sayo kung magdedesisyon kang iwanan ang kasalanan at magbalik loob
+            sa Diyos open arms kang tatangapin ng Diyos.
+          </p>
+        </li>
+        <div className="mt-1">
+          <strong>
+            John 3:3-5 
+          </strong>
+          <p className="italic">
+          <strong>9</strong> Subalit kung ipinapahayag natin sa Diyos ang ating mga kasalanan, maaasahan nating
+          patatawarin tayo ng Diyos sa mga ito, at lilinisin tayo sa lahat ng ating kasalanan, sapagkat
+          siya'y tapat at matuwid.
+          </p>
+          <div>
+            <strong  className={toggle&&"bg-yellow-300 px-1 text-black"}>Note:</strong> Ipasulat sa papel ang mga kasalanang nagawa naisip o nasabi at hikayating ipanalangin
+            nya ito. Magkaroon siya ng deklarasyong hindi na alipin ng kasalanan at punitin.
+          </div>
+          <div>
+            <strong>Consolidator:</strong> 
+            <p className="italic">
+              “Kukunin ko sa iyo ang mga kasalanan na yan at itatapon ko sa lugar kung saan
+              di mo na makikita at mababalikan."
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PATUNAY NG PAGSISI AT PAGTALIKOD SA KASALANAN
+          </strong>
+        </header>
+        <ol className="mt-1">
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. TUNAY NA RELASYON</strong><br/>
+            <strong>John 10:27</strong>
+            <p className="italic"><strong>27</strong> Nakikinig sa akin ang aking mga tupa; nakikilala ko sila, at sumusunod sila sa akin.</p>
+          </li>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. TUNAY NA PAGSISI SA KASALANAN</strong><br/>
+            <strong>Gawa 3:19</strong>
+            <p className="italic"><strong>19</strong> Kaya nga, magsisi kayo at magbalik-loob sa Diyos upang patawarin ang inyong mga
+              kasalanan
+            </p>
+          </li>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+              3.TUNAY NA PAGSUNOD SA BANAL NA KASULATAN
+            </strong><br/>
+            <strong>Mateo 7:24</strong>
+            <p className="italic"><strong>24</strong> “Kaya't ang bawat nakikinig at nagsasagawa ng mga salita kong ito ay maitutulad sa isang
+              taong matalino na nagtayo ng kanyang bahay na ang pundasyon ay bato.
+            </p>
+          </li>
+        </ol>
+        <li className="mt-1">
+            <strong>PERSONAL PRAYER</strong>
+        </li>
+        <div className="mt-2">
+          <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>REMINDERS</strong>
+          </header>
+          <ol>
+            <li>
+              1. Invite him/her to attend to Sunday Service next week. 
+            </li>
+            <li>
+              2. Make an advance reading of Lesson 3.
+            </li>
+            <li>
+              3. Bring the booklet next week.
+            </li>
+          </ol>
+        </div>
+        <div className="mt-2">
+          <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>CONSOLIDATOR REMINDERS</strong>
+          </header>
+          <ol>
+            <li>
+              1. Mas maganda kung naka underline na ang 4 Benefits of salvation sa lesson 1 bago ibigay
+              ang kanyang booklet.  
+            </li>
+            <li>
+              2. Sa pagreview ng 4 Benefits of Salvation, ipabukas sa page 6 ng booklet
+            </li>
+            <li>
+              3. Pwedeng gumamit ng adlib para maikonekta ang lesson1 papunta sa topic ng Lesson 2
+            </li>
+            <li>
+              4. Palaging magdala ng extra ballpen at papel.
+            </li>
+            <li>
+              5. Ipabasa sa kanya ang keyverse sa booklet
+            </li>
+            <li>
+              6. Ipasulat sa bakanteng space ng booklet ang <strong>"Ang Pagsisi ay Isang Desisyon at Hindi
+              Isang Emosyon"</strong> (Ipaulit ang katagang ito)
+            </li>
+            <li>
+              7. Paghusayang maikwento ang Alibughang Anak at maihambing sa kalagayan niya ito.
+            </li>
+            <li>
+              8. Maghanda ng worship background song na may tamang hina o lakas kapag
+              ipapanalangin na ang mga sinulat na kasalanan. Maaring pumili ng may tema ng pagsisi.
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  )
 }
+
+function L3() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return(
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+        <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+        <li>Kamustahan</li>
+        <li>Short review of Lesson 2</li>
+      </div>
+      <div className="mt-2">
+        <p>
+          <strong>Intro:</strong> Noong nakaraan, nakita natin kung gaano kahalaga na magkaroon tayo ng desisyon ng
+          totoong pagsisi at natutuwa ang Panginoon
+        </p>
+        <p className="indent-8">
+        Sa hakbang na ginawa mo. Naniniwala ako na nais ng Diyos na mas makilala mo pa sya. Paano
+        ba Siya magiging Panginoon sa buhay mo?
+        </p>
+        <p>
+          <strong>Question:</strong> Ano ba ang ibig sabihin ng Pagkapanginoon?
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>WHAT DOES LORDSHIP OF CHRIST REALLY MEANS?</strong>
+        </header>
+        <li className="mt-1"><strong>Lordship means bringing back "order" in our relationship with God.</strong></li>
+        <p className="indent-8">
+        Maaring napapasabi ka na “Lord, ang gulo ng buhay ko, parang wala sa order, parang
+        walang direksyon” ngunit alam mo ba na nais sabihin ng Diyos sa’yo, "Ibabalik ko sa ayos ang
+        nasirang relasyon mo sa akin. Bibigyan kita ng direksyon. Ipapakita ko nang malinaw ang
+        purpose ng buhay mo.”
+        </p>
+        <p>
+          Consolidator:<strong className="italic"> “Kilalanin mo ako (LORD) bilang OWNER/MASTER/AMO ng buhay mo. Dapat
+          kinikilala mo akong pinakamataas, pinaka makapangyarihan, pinakahihigit sa lahat ng
+          bagay sa buhay mo.</strong>
+        </p>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>KEY VERSE:</strong><br/>
+        <strong>Gawa 2:36</strong>
+        <p className="italic">
+          <strong>36</strong>“Kaya't dapat malaman ng buong Israel na itong si Jesus na ipinako ninyo sa krus ay siyang
+          ginawa ng Diyos na Panginoon at Cristo!”
+        </p>
+        <p className="indent-8">
+          Our creator did not only send his son to redeem his creation but to take ownership
+          over it ..
+        </p>
+      </div>
+      <div className="mt-2">
+        <strong>Question: Ano ang priority mo sa buhay o madalas na umuubos ng oras mo?</strong>
+        <p>(Pagkatapos ng sagot nya)</p>
+        <p className="indent-8">
+          Ang mga bagay na iyan na umuubos ng oras mo ay nagsisilbing diyos-diyosan sa
+          buhay mo nang hindi mo namamalayan dahil mas nagiging priority mo na iyan kesa sa
+          relasyon mo sa Diyos. Ayaw ng Diyos na maliban sa kanya ay may iba tayong pinapanginoon.
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>***BENEFITS OF LORDSHIP***</strong>
+        </header>
+        <p>Sabi sa Jeremiah 29:11, Pinangakuan ka ng Diyos ng:</p>
+        <ol>
+          <li>
+              <p>
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. KASAGANAHAN/PROSPERITY</strong>
+              <span className="ml-1">He is our provider. Kapag inuuna natin si God, hindi Niya
+              tayo pagkukulangin</span>
+            </p>
+            <p><strong>Matthew 6:33</strong></p>
+            <p className="italic"><strong>33.</strong> But seek first his kingdom and his righteousness, and all these things will be given to you as
+            well
+            </p>
+            <p className="indent-8">
+              Uunahin at hindi ipapahuli. Saka Niya ibibigay ang pagpapala. Maraming paraan ang
+              Diyos para ibuhos Niya ang lahat ng kasaganahan sa buhay mo: maaring sa physical, material,
+              Spiritual at iba pa.
+            </p>
+          </li>
+          <li>
+            <header>
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. PROTEKSYON</strong>
+            </header>
+            <p className="indent-8">
+              Protected tayo sa gawa ng kaaway: sa disgrasya o kapahamakan. Pinoprotektahan
+              Niya ang iyong puso sa maling desisyon sa pamamagitan ng gabay ng Banal na Espiritu.
+            </p>
+          </li>
+          <li>
+          <header>
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>3. PAG-ASA/HOPE</strong>
+            </header>
+            <p className="indent-8">
+              Wag mo ilagay ang pag-asa mo sa temporary things na pag nawala ang kasikatan,
+              nawala ang mga naipundar - maging edukasyon o karangyaan, ubos na rin ang pag-asa mo.
+              Kaya kang bigyan ng Diyos ng pag-asa kahit sa mga stressful situations.
+            </p>
+          </li>
+          <li>
+          <header>
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}className={toggle&&"bg-yellow-300 px-1 text-black"}>4. MAGANDANG HINAHARAP/FUTURE</strong>
+            </header>
+            <p className="indent-8">
+              Hindi masama na ihanda ang iyong kinabukasan dito sa lupa: mag-aral, magtrabaho
+              at mangarap para sa magandang kinabukasan. Pero higit pa riyan, nais ng Diyos na mag-tuon
+              ka sa eternal future. Dahil lahat ng meron doon ay tumatagal, pang-walang hanggan. Kaya
+              ngayon palang pahalagahan mo na ang gawain ng Diyos at sikaping makasunod sa kalooban
+              nya
+            </p>
+          </li>
+        </ol>
+      </div>
+      <li className="mt-1">
+        <strong>Recap:</strong> Ano ang apat na benepisyo ng Pagkapanginoon?
+        <p>Prosperity, protection, hope, future</p>
+      </li>
+      <p>
+        <strong>Question:</strong> Mula sa apat na benipisyong nabangit alin ang lubos mong nararanasan ngayon?
+      </p>
+      <p>
+        <strong>Question:</strong> Sino na ang dapat inuuna mo? sagot: ang <strong>DIYOS</strong>
+      </p>
+      <p className="indent-8 mt-1">
+            Jesus Christ is GREATER than everything. His name, His role, His plan and His
+      purpose is above all else. If we truly trust in Christ, not just as Saviour but also as LORD, we
+      are given the power and ability to live a life of fullness, distinction of character, and spiritual
+      maturity so He is glorified in our lives.
+      </p>
+      <li className="mt-1"><strong>PERSONAL PRAYER</strong></li>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+              REMINDERS
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Bring the booklet
+          </li>
+          <li>
+            2. Advance reading of lesson4
+          </li>
+          <li>
+            3. Set time and meeting place.
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            CONSOLIDATORS REMINDER
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Gamitin ang angkop na example sa sitwasyon ng kausap
+          </li>
+          <li>
+            2. Kung ang sagot sa question no.1 ay pag-aaral/ trabaho/ gawaing bahay o ano pa mang
+            bagay na mukha namang mabuti, appreciate his/her answer.
+            <p>
+              Consolidator’s response: Hindi masama ang iyong ginagawa pero dapat UNA ANG DIYOS sa
+              lahat ng bagay sa buhay mo.
+            </p>
+          </li>
+          <li>
+            3. Pumili lang ng isa sa 4 na benipisyo at magpatotoo ka patungkol dito. Isingit ito sa main
+            point na kasalukuyang ipinapaliwanag.
+          </li>
+          <li>
+            4. Pwedeng paguhitan ang 4 Benefits sa page 10 ng booklet.
+          </li>
+          <li>
+            5. Kabisaduhin ang Jeremiah 29:11 sa english para mas madaling maalala ang main points.
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function L4(){
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+        <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+        <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 3</li>
+          <p className="mt-1">
+            NotE: Give him/ her assurance na anumang mapag-uusapan niyo ay hindi makakalabas sa iba,
+            kaya huwag siyang mahiyang mag open up, para makatanggap ng kalayaa
+          </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>KEY VERSE</strong>
+        </header>
+        <p><strong>Mateo 6:14-15</strong></p>
+        <p className="italic">
+          <strong>14</strong> “Sapagkat kung pinapatawad ninyo ang mga nagkakasala sa inyo, patatawarin din kayo ng
+          inyong Ama na nasa langit. <strong>15</strong> Ngunit kung hindi ninyo pinapatawad ang inyong kapwa, hindi
+          rin patatawarin ng inyong Ama ang inyong mga kasalanan.”
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>FACILITATION QUESTIONS:</strong>
+        </header>
+        <ol>
+          <li>
+            1. Minsan, dumating ba sa puntong napatawad natin ang iba pero nakalimutan nating
+            patawarin ang sarili natin? Dumating na ba sa punto ng buhay mo na sinisi mo ang sarili mo?
+          </li>
+          <li>
+            2. Sinisi mo rin ba ang Diyos?
+            <p className="indent-8">
+              You have to get rid of any bitterness toward God. You must ask yourself, “Am I
+              blaming God?
+            </p>
+          </li>
+          <li>
+            3. Mayroon ba sa pamilya mo na nakasakit ng damdamin mo na hanggang ngayon ay hindi mo
+            pa napapatawad?
+            <p className="indent-8">
+              Forgive them to the point where you could actually feel cleansed of resentment and
+              bitterness and you are praying for them
+            </p>
+          </li>
+          <li>
+            4.Maliban sa pamilya mayroon pa bang ibang tao na nakasakit ng damdamin mo?
+            <p className="indent-8">
+              Minsan binibilang natin ang kasalanan ng Ibang tao pero nakakalimot tayo na maging
+              tayo ay hindi rin perpekto at nakasakit din ng damdamin ng iba. Kung nais mong makita ang
+              himala ng Diyos sa buhay mo, lubos na napakahalaga na ikaw ay magpatawad.
+            </p>
+          </li>
+        </ol>
+      </div>className={toggle&&"bg-yellow-300 px-1 text-black"}
+      <div className="mt-2">
+          <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>PRAKTIKAL NA PAGSASABUHAY</strong>
+          </header>
+          <p className="indent-8">
+              Kilalanin ang mga taong nakasakit sa’yo at Ipanalangin sa Diyos na linisin at buksan
+            ang iyong puso na magpatawad at tanggapin ang mga taong iyon sa iyong buhay.
+            Note: Ipasulat sa papel ang mga taong nakasakit sa kanya at ang mga kasalanang ginawa nito.
+            Gabayan siyang ipanalangin isa- isa ang kanyang isinulat. Punitin ang papel kasabay ng
+            deklarasyong pinapatawad niya isa isa ang pangalan ng mga taong ito
+          </p>
+          <p className="indent-8">
+              Ngayon, ikaw ay malaya na dahil nakapagpatawad ka at pinatawad ka rin ng Diyos.
+            Kaya kailangan mo ulit magsimula sa pamamagitan ng buhay na may panibagong panimula
+            Kay Kristo.
+          </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***WHAT IS LIFE WITH A NEW BEGINNING IN CHRIST?***
+          </strong>
+          <p>
+            (Ipabasa sa kanya ang main points p.14)
+          </p>
+        </header>
+        <ol>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. IT IS A RESTORATION OF YOUR RELATIONSHIP</strong>
+          </li>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. PAGPAPANUMBALIK NG IYONG RELASYON</strong>
+            <p className="indent-8">
+                Kapag una mong inayos ang relationship mo kay God, everything will follow.
+              Tutulungan ka Niyang ayusin ang relasyon mo sa pamilya mo at sa ibang tao at kahit pa sa
+              kaaway mo. Ang pag-talaga mo ngayon sa pag-papaconsolidate ay magandang panimula para
+              maisaayos ang iyong relasyon sa Diyos.
+            </p>
+          </li>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>  
+                3. IT DOES NOT HOLD ANY GRUDGES OR BITTERNESS (ITO'Y HINDI NAGKIKIMKIM NG SAMA
+                NG LOOB O KAPAITAN)
+            </strong>
+            <p className="indent-8">
+                Walang pag-iisip ng paghihiganti o hindi maayos na pakikitungo sa nakasakit sayo na
+              kahit pa gumawa siya ng tama, sa paningin mo pa rin ay mali pa rin.
+            </p>
+          </li>
+          <li className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+              4. IT DOES NOT ACCUSE OR CONDEMN (ITO'Y HINDI NAG-AAKUSA O HUMAHATOL)
+            </strong>
+            <p className="indent-8">
+              "Ay masama talagang tao yan" / Wala nang panunumbat. O kaya ay ganitong mindset - “Ikaw
+              ang dahilan kung bakit naging ganito na ako!".
+            </p>
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}className={toggle&&"bg-green-400 px-1 text-black"}>REMINDERS</strong>
+          <ol>
+            <li>
+              1. Advance reading of Lesson 5.
+            </li>
+            <li>
+              2. Imbitahin siya sa Church Service.
+            </li>
+            <li>
+              3. Ipaalala dalhin ang booklet.
+            </li>
+          </ol>
+        </header>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}className={toggle&&"bg-green-400 px-1 text-black"}>CONSOLIDATORS REMINDERS</strong>
+        </header>
+        <ol>
+          <li>
+            1. Maghanda ng ballpen at papel.
+          </li>
+          <li>
+            2. Ipabasa sa kanya ang keyverse sa booklet.
+          </li>
+          <li>
+            3. Magkaroon ng maiksing paliwanag sa keyverse.
+          </li>
+          <li>
+            4. Kapag matipid sumagot gaya ng oo lng at hindi, magkaroon ng follow up question para
+            mapalabas ang kanyang damdamin.
+          </li>
+          <li>
+            5. Question #3&4 pwedeng magbigay ng halimbawa sa miyembro ng pamilya o halimbawa ng
+            mga di kapamilya.
+          </li>
+          <li>
+            6. Kung sakali na may parte ng katanungan na sasabihin niyang walang nakasakit sa kanya
+            kahit nagbigay ka na ng halimbawa pwede kang dumako na susunod na katanungan.
+          </li>
+          <li>
+            7. Hayaan syang magkwento hindi kailangan na all the time ka magsasalita lalo na sa mga
+            katanungang sa kanya matutong makinig.
+          </li>
+          <li>
+            8. Kung sakaling sumagot na "Hindi pa ako handa magpatawad", pwedeng balikan mo ang key
+            verse bilang paliwanag o maghanda ng iba pang mga supporting verse na pwedeng isuporta
+            kapag sumagot siya ng hindi pa handa. Pwede ring Sabihing mong:
+            <p>
+              “Maikli lang ang buhay at hindi natin alam kung kailan tayo mawawala, kung mamatay tayo ng
+              hindi nakapagpatawad, hindi rin tayo patatawarin ng Diyos dahil kung paano natin trinato ang
+              ating kapwa yun din ang gagamitin sa atin.”
+            </p>
+            <p>
+              “Hindi ang taong nakasakit sa atin ang unang lumalaya kundi tayo kapag nagpapatawad tayo.”
+            </p>
+            <p>
+              “Gamitin natin ang ating maiksing buhay hindi bilang alipin ng galit at sama ng loob kundi may
+              kapayapaang nagmumula sa Diyos.”
+            </p>
+          </li>
+          <li>
+            9. Magpatugtog ng worship song na bagay sa topic na ito habang nagsusulat sya sa papel.
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function L5() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 4</li>
+          <p className="mt-1">
+            <strong>Intro:</strong> Maaring dumating ka na sa Punto ng buhay mo na napapapagod ka na sa paulit ulit na
+            takbo ng buhay mo, kinakaya kahit nahihirapan dahil gusto mong maging successful. 
+          </p>
+          <p className="indent-8">
+            <strong>
+              SUCCESS is dependent on the way we live our lives. We give TIME to what we
+              VALUE.
+            </strong>
+          </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>FACILITATION QUESTION</strong>
+        </header>
+        <ol>
+          <li>
+            <strong>
+              1. Ano ang takbo ng buhay mo o lifestyle mo ng wala ka pang relationship kay God?
+            </strong>
+            <p className="indent-8">
+              Pinaglalaanan mo iyan ng madalas na oras at panahon kasi mahalaga sayo
+            </p>
+          </li>
+          <li>
+            <strong>
+              2. Mahalaga ba ang relasyon mo sa Diyos?
+            </strong>
+            <p className="indent-8">
+              Kung ganoon dapat higit mong paglaanan ng oras ang relasyon mo sa Diyos kaysa sa
+              ibang bagay
+            </p>
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+          <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>KEY VERSE</strong>
+          </header>
+          <p><strong>Hebreo 10:25</strong></p>
+          <p className="italic"><strong>25</strong>  
+            Huwag nating kaliligtaan ang pagdalo sa ating mga pagtitipon, gaya ng nakasanayan ng
+            iba. Sa halip, palakasin natin ang loob ng isa't isa, lalo na ngayong nakikita nating malapit na
+            ang Araw ng Panginoon.
+          </p>
+      </div>
+      <div className="mt-2">
+        <header className="mt-1">
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***Nais ng Diyos na mag-karoon ka ng bagong LIFESTYLE***
+          </strong>
+        </header>
+        <ol>
+            <li className="mt-1">
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. DEVOTION</strong>
+              <p className="ml-5">
+                Your devotion is your everyday contact with the word of God.
+                His word is our source of FAITH and HOPE.
+                Claiming God's PROMISES for your life everyday will strenghten you in your walk with.
+              </p>
+              <p>Him</p>
+              <p className="ml-5">Palaging ginagawa ang devotion.</p>
+            </li>
+            <li className="mt-1">
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. CELL GROUP</strong>
+              <p>Binubuo ng maliit na grupo (3-12)</p>
+              <p className="indent-8"><strong>CELL LEADER</strong>- ang tumatayong spiritual na magulang.</p>
+              <p className="indent-8"><strong>CELL MEMBER</strong>  
+                  - Spiritual na kapatid o kaibigan na regular na  makaka sama mo sa  grupo
+              </p>
+              <p className="indent-8"><strong>CELL HOST</strong> 
+                - Siya ay isa myembro. Sa kanyang tahanan ginaganap ang cellgroup
+              </p>
+              <p className="indent-8"><strong>CELL GROUP</strong>  
+                - saan malaya kang makapagpuri at makapakinig ng salita ng Diyos. Dito
+                rin mapasisimulan madiskubre at magamit ang iyong abilidad. Sila ang pangalawang pamilya
+                na magmamahal at tutulong sayo kahit sa personal na problema. Pwede mo rin makasama sa
+                mga bonding, sa pagsamba at paghayo.
+              </p>
+            </li>
+            <li className="mt-1">
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+                3. SUNDAY CELL CELEBRATION o SUNDAY SERVICE
+              </strong>
+              <p className="indent-8">
+                Isang malaking pagtitipon na binuboo ng iba't - ibang cellgroup ng kananayan,
+                katatayan, o kabataan. Dito mo rin makikita ang mga ministers na may iba't Ibang
+                ginagampanan.
+              </p>
+              <p>
+                  Ito ang gawaing lahat ay sama-samang makakapagpasalamat at makakapagpuri.
+                  <strong>PASTOR</strong> - Ang tagapanguna sa buong cell leader at sa lahat ng miyembro. Siya ang pinili ng Diyos para magkaroon ang simbahan ng iisang direksyon. Siya taga-pag alaga para
+                  magpalakas, magtuwid at magbago ng ating Spiritual na buhay sa pamamagitan ng paghayag
+                  ng salita ng Diyos
+              </p>
+            </li>
+            <li className="mt-1">
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+                  4. PEPSOL/ LIFECLASS EQUIPPING AND TRAINING
+              </strong>
+              <p className="indent-8">
+                <strong>
+                  Dito sa Taytay tinatawag namin itong (SDL) o SCHOOL OF DISCIPLESHIP AND  LEADERSHIP .
+                </strong>
+              </p>
+              <p className="ml-5">- Ito ay tuloy tuloy na pag-aaral mula (lifeclass hanggang SDL 1-3)</p>
+              <p className="ml-5">- Binubuo ng TEACHERS, ADMIN at mga SDL STUDENTS.</p>
+
+              <p className="mt-1">AFTER LESSON 5 SA CONSOLIDATION: Qualified na mag-enroll sa lifeclass.</p>
+              <p className="ml-5">- Lifeclass topic 1-4 = Pre - encounter</p>
+              
+              <p className="mt-1">AFTER LESSON 6-10 NG CONSOLIDATION</p>
+              <p className="ml-5">- Lifeclass topic 5 = (Encounter Retreat)</p>
+              <p className="ml-5">- Lifeclass topic 6-10 = Post - encounter</p>
+
+              <p>
+                Kapag natapos mo ito, graduate ka na sa lifeclass at maaring magpatuloy sa susunod na yugto
+                ng pag-aaral.
+              </p>
+              <p>Ito ay isang proseso para maipagamit ang buhay mo sa sa Diyos.</p>
+              <p>Hindi ka lang basta matuto kundi maihahanda ka sa paglilingkod sa Diyos.</p>
+              <p><strong>2 Timoteo 2:2</strong></p>
+              <p className="italic">
+                <strong>2</strong> “Ang mga narinig mo sa akin sa harap ng maraming saksi ay ituro mo rin sa mga    taong mapagkakatiwalaan at may kakayahang magturo naman sa iba.”
+              </p>
+              <p className="indent-8">
+                Nakikita ng Diyos ang hidden potential mo. Gaya namin, bago kami maging leader ay
+                dumaan din kami sa proseso.
+              </p>
+            </li>
+          </ol>
+          <li><strong>Share your SHORT TESTIMONY</strong></li>
+          <li><strong>REVIEW THE 4 MAIN POINTS</strong></li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PERSONAL NA PAGSASABUHAY
+          </strong>
+        </header>
+        <p className="indent-8">
+          Magkaroon ka ng lifestyle check at maging determinado na ihanay ang iyong
+          pamumuhay sa plano ng Diyos. Alamin kung alin sa mga ito ang kailangan mong isama at
+          pagtuunan ng pansin upang patuloy na lumago sa Diyos
+        </p>
+        <p>
+          <strong>
+            Question: Mula sa 4 na Lifestyle, alin ang hindi mo pa lubos naisasagawa?
+          </strong>
+        </p>
+        <p className="indent-8">
+          Markahan ang iyong life style checklist ayon sa petsa ng paggawa mo ng devotion,
+          pagdalo ng cellgroup, Sunday service at lifeclass training. Makakatulong ito para mabantayan
+          mo ang iyong new lifestyle
+        </p>
+      </div>
+      <div className="mt-1">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            CONSOLIDATORS REMINDERS
+          </strong>
+          <ol>
+            <li>
+              1. Kung ang sagot sa question no. 1 ay pagaaral/ trabaho/ gawaing bahay o ano pa mang sagot
+              na mukha namang mabuti appreciate ang kanyang sagot pero ipagdiinang nais ng Diyos na
+              magkaroon ng pagbabago sa lifestyle niya.
+            </li>
+            <li>
+              2. Ipabasa sa kaniya ang main points
+            </li>
+            <li>
+              3. Maghanda ng larawan ng iyong cellgroup at pag attend sa sdl. Ipakita ito sa pagpapaliwanag
+              ng main points.
+            </li>
+            <li>
+              4. Bigyan ng checklist at ituro kung paano ang gagawin sa checklist
+            </li>
+            <li>
+              5 Ipadikit ang lifestyle checklist sa consolidation booklet
+            </li>
+            <li>
+              6. Lagi ito i-check tuwing consolidation kaya dapat dala niya ang kanyang booklet
+            </li>
+            <li>
+              7. Kung mapansin mo sa lumipas na araw na consistent siya sa new lifestyle niya sa checklist
+              purihin sya at doon sa mga ilang hindi masyado nagagampanan ay patuloy syang hikayatin na
+              gawin ito
+            </li>
+            <li>
+              8. Pwede mo siyang bigyan ng reward o lumabas kayo para mamasyal o kumain sa labas bilang
+              pag - appreciate sa kanyang consistent lifestyle.
+            </li>
+            <li>
+              9. Kung hindi pa ito nagsisimula dumalo ng cellgroup, hikayatin na dumalo sa darating niyong
+              cellgroup schedule.
+            </li>
+            <li>
+              10. Pwede ring hikayatin na magkaroon ng cell group sa bahay nila.
+            </li>
+          </ol>
+        </header>
+      </div>
+    </div>
+  )
+}
+
+function L6() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 5</li>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+          KEY VERSE
+        </strong>
+        <p><strong>Jeremias 7:23</strong></p>
+        <p className="italic">
+          <strong>23</strong> Subalit inutusan ko silang sumunod sa akin upang sila'y maging aking bayan at ako naman
+          ang kanilang magiging Diyos. Sinabi kong mamuhay sila ayon sa ipinag-uutos ko, at magiging
+          maayos ang kanilang buhay.
+        </p>
+        <li className="mt-1">God desires to be PART OF OUR EVERYDAY LIVES.</li>
+        <li>QUALITY TIME daily with the Lord.</li>
+        <li>Doesn't end with having written in a devotional notebook</li>
+        <li>Not limited in a single day or hour.</li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            FACILITATION QUESTION
+          </strong>
+        </header>
+        <p>
+            <strong>
+              Sa tingin mo ba sapat lang na tuwing araw lang ng simba pinapalakas ang spiritual life mo
+              o dapat araw araw?
+            </strong>
+          </p>
+      </div>
+      <div>
+        <header>
+          <strong>
+            KEY VERSE
+          </strong>
+        </header>
+        <p>
+          <strong>Josue 1:8</strong>
+        </p>
+        <p><strong>8</strong> Huwag mong kaliligtaang basahin ang aklat ng kautusan. Pagbulay-bulayan mo iyon araw
+          at gabi upang matupad mo ang lahat ng nakasaad doon. Sa ganoon, magiging masagana at
+          matagumpay ang iyong pamumuhay.
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+             ***PURPOSE OF DEVOTION***
+          </strong>
+        </header>
+        <li>To have intimate relationship with God</li>
+        <li>The father desires our daily worship</li>
+        <li>God wants you to be better</li>
+        <li>Devotion/ quiet time</li>
+      </div>
+      <div>
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***HOW TO PREPARE FOR YOUR DEVOTION***
+          </strong>
+        </header>
+        <p> (Paano maghanda para sa devotion)</p>
+        <ol>
+          <li>
+            1. Magtalaga ng oras at ipagpatuloy ito. Gawin ito bago magsimula ang iyong araw.
+            (Joshua 1:8)
+          </li>
+          <li>
+            2. Sa pagbabasa ng Scriptures, lumayo sa pinagmumulan ng gambala. (Hal. cell phone o
+            tv)
+          </li>
+          <li>
+            3. Makinig sa Diyos habang Siya’y nangungusap sayo sa pamamagitan ng Biblia. (Mga
+            Awit 46:10, Job 2:13)
+          </li>
+          <li>
+            4. Humingi ng pag-gabay ng Banal na Espiritu at maging handang sumunod anuman ang
+            sabihin sa kanyang salita. (Juan 2:5)
+          </li>
+          <li>
+            5. Lumapit sa Kaniya nang may mapagpakumbabang puso at nakikinig na tainga. (Awit
+            51:17)
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>MATERIALS</strong>
+        </header>
+        <p><strong className={toggle&&"bg-yellow-300 px-1 text-black"}>***3 B's o 4B's***</strong></p>
+        <ol className="ml-5">
+          <li>
+            1. Notebook 
+          </li>
+          <li>
+            2. Ballpen 
+          </li>
+          <li>
+            3. Bible 
+          </li>
+          <li>
+            4. Book (ODB) - para lamang sa baguhan na hindi pa delegate ng lifeclass 
+          </li>
+        </ol>
+        <p><strong>Notes:</strong></p>
+        <li>Para sa Lifeclass delegates, Lifeclass teacher ang magbibigay ng devotional guide.</li>
+        <li>Lagyan ng petsa ang devotion.</li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            DEVOTION PATTERN
+          </strong>
+        </header>
+        <p><strong>S - O - A - P</strong></p>
+        <p>SCRIPTURE - Hal. Josue 1:8</p>
+        <ul className="ml-5">
+          <li>- Book = Josue</li>
+          <li>- Chapter = 1</li>
+          <li>- Verse = 8</li>
+        </ul>
+        <p>OBSERVATION</p>
+        <ul className="ml-5">
+          <li>
+          - Ano ang na-obserbahan mo o natutunan mo sa binasang scripture.
+          </li>
+          <li>
+            - Ano yung nakita mo sa verse: maaring warning, promise of God o command.
+          </li>
+        </ul>
+        <p>APPLICATION</p>
+        <p className="ml-5">
+          - Paano mo isasapamuhay ang iyong na-obserbahan o natutunan sa salita ng Diyos.
+        </p>
+        <p>PRAYER - Ang pattern ay <strong>ACTS</strong></p>
+        <ul className="ml-5">
+          <li>- <strong>ADORATION:</strong> pagpupuri o pagtaas sa pangalan ng Diyos</li>
+          <li>- <strong>CONFESSION:</strong> paghingi ng tawad</li>
+          <li>- <strong>THANKSGIVING:</strong> pasasalamat</li>
+          <li>- <strong>SUPPLICATION:</strong> kahilingan</li>
+        </ul>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PERSONAL NA PAGSASABUHAY
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Gawing final authority ang salita ng Diyos
+          </li>
+          <li>
+            2. Magkaroon ng goal na magtuloy-tuloy sa pag-devotion.
+          </li>
+          <li>
+            3. Magkaroon ng listahan ng prayer request.
+          </li>
+          <li>
+            4. Laging mag-update sa pamamagitan ng paglagay ng tsek sa petsa ng mga devotion na iyong
+            nagawa (Lifestyle checklist).
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            CONSOLIDATORS REMINDERS
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Wag kalimutang dalhin ang sumusunod na materyales sa pagtuturo:
+            <li className="ml-5">- 4B</li>
+            <li className="ml-5">- Personal Devotion Notebook</li>
+          </li>
+          <li>
+            2. Ipasulat sa bakanteng espasyo ng booklet ang mga dapat tandaan lalo na ang <strong>SOAP at ACTS
+            pattern.</strong>
+          </li>
+          <li>
+            4. Kung hindi pa marunong mag-buklat ng Biblia, simulang ituro ang <strong>table of contents</strong> na
+            naglalaman ng pahina ng mga <strong>Books / Chapter:</strong> malaking number / <strong>Verse:</strong> maliit na numero.
+          </li>
+          <li>
+            5. Ipakita ang iyong DEVOTION NOTEBOOK bilang halimbawa.
+          </li>
+          <li>
+            6. Pwedeng bigyan agad ng 3B's: Bible, Notebook at ballpen.
+          </li>
+          <li>
+            7. Kung wala pang pisikal na biblia, pasahan pansamantala ng bible app.
+          </li>
+          <li>
+            8. Ituro ang ODB book / ODB fb page (para lamang sa baguhan na hindi delegate ng lifeclass).
+          </li>
+          <li>
+            9. Maaari ring ikaw na mismo ang magsend o magpadala ng devotion guide araw-araw
+          </li>
+          <li>
+            10. Hikayating magpasa ng devotion araw-araw (Maaaring magpasa ng larawan o ipakita sa
+            ang devotion notebook).
+          </li>
+          <li>
+            11. Maaaring pasahan ng mga worship songs sa cellphone para may magamit sa pagpupuri.
+          </li>
+          <li>
+            12. Patuloy na bisitahin ang lifestyle checklist.
+          </li>
+          <li>
+            13. Sa mga delegates para sa Encounter, sikaping maturuan siya hanggang Lesson 6, upang
+            matuto bago pa lamang magsimula ang Lifeclass sapagkat isa ito sa mga ipapasa
+          </li>
+          <li>
+            14.Kung sakali na hindi kwalipikado sa lifeclass dahil sa murang edad o hindi nakapagpalista,
+            turuan pa rin siya mag-devotion para mas mapatatag ang relasyon niya sa Diyos
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function L7() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+        <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 6</li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            KEY VERSE
+          </strong>
+        </header>
+        <p><strong>1 Tesalonica 5:17</strong></p>
+        <p className="italic"><strong>17.</strong> palagi kayong manalangin,</p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            FACILITATION QUESTIONS
+          </strong>
+        </header>
+        <p><strong>- Kumusta ang buhay panalangin mo?</strong></p>
+        <p><strong>- May mga nagiging hadlang ba para magkaroon ng kalidad ang buhay panalangin mo?</strong></p>
+      </div>
+      <div className="mt-2">
+        <p>
+          Ang <strong>Panalangin</strong> ay komunikasyon sa Diyos. Ang iyong Espiritu ay nakikipagniig sa Espiritu ng
+          Diyos.
+        </p>
+        <ul className="ml-5">
+          <li>
+            - Nilikha ng Diyos ang tao para makipag-fellowship sa Kaniya araw- araw at ito ay
+            mahalaga sa Kaniya
+          </li>
+          <li>
+            - Nais ng Diyos na makinig mula sa atin.
+          </li>
+          <li>
+            - Ang panalangin ay karanasan na kasama ang Diyos araw-araw. Ito ang susi upang
+            palaguin ang ating pag-ibig, relasyon, pagsisiwalat ng kahulugan ng kasulatan at
+            pagdidirekta ng ating buhay sa pagsunod sa Diyos.
+          </li>
+        </ul>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. HOW TO PRAY (PAANO MANALANGIN)</strong>
+        <p>Sagot: HUMINGI</p>
+        <p><strong>Mateo 7 :7</strong></p>
+        <p className="italic"><strong>7</strong> “Humingi kayo at kayo'y bibigyan; humanap kayo at kayo'y makakatagpo; kumatok kayo at
+          kayo'y pagbubuksan.
+        </p>
+        <p><strong>Juan 15:7</strong></p>
+        <p className="italic"><strong>7</strong> Kung nananatili kayo sa akin at nananatili sa inyo ang aking mga salita, hingin ninyo ang
+          anumang nais ninyo at matutupad iyon para sa inyo.
+        </p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. WHEN TO PRAY (KAILAN MANANALANGIN)</strong>
+        <p>Sagot: LAGI</p>
+        <p><strong>Mga Taga-Colosas 1:3</strong></p>
+        <p className="italic"><strong>3</strong> Tuwing ipinapanalangin namin kayo, lagi kaming nagpapasalamat sa Diyos na Ama[a] ng
+          ating Panginoong Jesu-Cristo.
+        </p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>4. WHERE TO PRAY (SAAN MANANALANGIN)</strong>
+        <p>Sagot: SA IYONG SILID O PRIBADONG LUGAR</p>
+        <p><strong>Mateo 6:6</strong></p>
+        <p className="italic"><strong>6</strong> Ngunit kapag mananalangin ka, pumasok ka sa iyong silid at isara mo ang pinto. Saka ka
+          manalangin sa iyong Ama na hindi mo nakikita, at ang iyong Ama na nakakakita ng ginagawa
+          mo nang lihim ang siyang magbibigay sa iyo ng gantimpala</p>
+        <p className="ml-5">- Madaling araw si Jesus umakyat ng bundok - ito ang Kaniyang quiet/private place
+            para makapanalangin.</p>
+        <p><strong>Marcos 1:35</strong></p>
+        <p className="italic"><strong>35</strong>  Madaling-araw pa'y bumangon na si Jesus at nagpunta sa isang lugar na walang tao at
+          doon ay nanalangin siya.</p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>5. WHAT TO PRAY FOR (ANONG IPAPANALANGIN)</strong>
+        <p>Sagot: ANUMAN/KAHIT ANO</p>
+        <p><strong>Mateo 21:22</strong></p>
+        <p className="italic"><strong>22</strong> "Anumang hingin ninyo sa panalangin ay tatanggapin ninyo kung naniniwala kayo.”</p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***PAANO MANALANGIN***
+          </strong>
+        </header>
+        <p><strong>Mateo 6:9-13 : The Lord's prayer</strong> - hindi kailangang kabisaduhin ang bawat salita kundi ito ay
+          isang modelong panalangin.
+        </p>
+        <p>Marami tayong matutunan sa "The Lord's Prayer" patungkol sa nilalaman ng ating panalangin.</p>
+        <ul className="ml-5">
+          <li>
+            - <strong>Pattern</strong> - ibig-sabihin ‘yung content o laman ng the Lord's prayer.
+          </li>
+          <li>
+            - “Ama Namin"- pagkilala kung kanino tayo nakikipag usap: SA DIYOS na ATING AMA.
+          </li>
+          <li>
+            - Itaas ang pangalan ng Diyos.
+          </li>
+          <li>
+            - Paghingi ng Provision (Bigyan mo kami ng kakanin sa araw- araw).
+          </li>
+          <li>
+            - Paghingi ng tawad (patawarin mo kami sa aming pagkakasala)
+          </li>
+        </ul>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. MAG-TALAGA NG REGULAR NA ORAS AT PUMILI NG PINAKAMAINAM NA LUGAR</strong>
+        <p className="indent-8">
+            Specific place sa iyong tahanan kung saan mo mananamnam ang presensya ng Diyos.
+            Alalahanin na ang prayer ay hindi trabaho o pabigat. Ito ay pintuan sa mapagmahal na
+            relasyon sa Diyos.
+        </p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. MAGSIMULA NG MAY PASASALAMAT AT PAGPUPURI</strong>
+        <p className="indent-8">
+          Ito ay handog ng iyong kaluluwa sa Diyos. Para itong eroplanong kailangan ng buwelo
+          bago makarating sa itaas. Ganoon din ang pagpupuri. Ito ay pinaka-buwelo mo para mas
+          lalong maramdaman ang presensya ng Diyos bago manalangin.
+        </p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>3. HAYAAN ANG IYONG PUSO NA MAKIPAG-UGNAY SA PUSO NG DIYOS</strong>
+        <p className="indent-8">Key word: ISINUSUKO KO ANG LAHAT</p>
+        <p className="indent-8">
+          Hayaan mong mangusap sa iyong puso at mag-ministeryo sa iyong kaluluwa habang
+          ibinubuhos ang iyong buong puso.
+        </p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>4. IDEKLARA ANG PAGHAYAG SA IYONG PANANAMPALATAYA</strong>
+        <p className="indent-8">Angkinin ang pangako ng Diyos.</p>
+        <p><strong>Lucas 11:9-10</strong></p>
+        <p className="italic"><strong>9</strong> Kaya't sinasabi ko sa inyo, humingi kayo at kayo'y bibigyan; humanap kayo at kayo'y
+          makakatagpo; kumatok kayo at kayo'y pagbubuksan. <strong>10</strong> Sapagkat ang bawat humihingi ay
+          tatanggap; ang bawat humahanap ay makakatagpo; at ang bawat kumakatok ay
+          pagbubuksan.
+        </p>
+        <p className="indent-8">Kung ano ang sinasabi ng Diyos, sasabihin ko at gagawin niya ito.</p>
+        <p><strong>Lucas 11:10-11</strong></p>
+        <p className="italic"><strong>10</strong> Sapagkat ang bawat humihingi ay tatanggap; ang bawat humahanap ay makakatagpo; at
+          ang bawat kumakatok ay pagbubuksan. <strong>11</strong> Kayong mga ama, bibigyan ba ninyo ng ahas ang
+          inyong anak kung ito'y humihingi ng isda?
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PERSONAL NA PAGSASABUHAY
+          </strong>
+        </header>
+        <p>
+          <strong>
+            - Sa iyong pang araw-araw na buhay, gaano karaming oras ang ibinibigay mo sa
+            panalangin?
+          </strong>
+        </p>
+        <p>
+          <strong>
+            - Sapat ba upang mapalakas ang iyong relasyon sa Kaniya? 
+          </strong>
+        </p>
+        <p>
+          <strong>
+            - Paano mo pamamahalaan ang mga gumagambala sa iyong oras ng panalangin sa
+            Panginoon?
+          </strong>
+        </p>
+      </div>
+      <div className="mt-2">
+          <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+              REMINDERS
+            </strong>
+          </header>
+          <ol>
+            <li>
+              1. Advance reading of Lesson 5.
+            </li>
+            <li>
+              2. Imbitahin siya sa Church Service.
+            </li>
+            <li>
+              3. Ipaalala dalhin ang booklet.
+            </li>
+            <li>
+              4. Mag-talaga ng oras at araw ng susunod na pagkikita.
+            </li>
+          </ol>
+        </div>
+        <div className="mt-2">
+        <header>
+            <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+              CONSOLIDATORS REMINDERS:
+            </strong>
+          </header>
+          <ol>
+            <li>
+              1. Sa pagrereview ng nakaraang aralin, tanungin siya kung nakagawa na ng devotion at
+              bisitahin ang kanyang checklist.
+            </li>
+            <li>
+              2. Ipabasa sa kausap ang mga verse sa main points. Ipaliwanag ang kahulugan ng verse at
+              ipagdiinan ang sagot.
+            </li>
+            <li>
+              3. Ipasulat ang sagot ng content part 1 (Ilagay malapit sa katanungan ng paano, kailan, sino,
+              saan, at anong ipapanalangin).
+            </li>
+            <li>
+              4. Sikaping matugunan ang kanyang problema.
+            </li>
+            <li>
+              5. Sagutan ang consolidation record sa huling pahina ng booklet.
+            </li>
+          </ol>
+        </div>
+    </div>
+  )
+}
+
+function L8() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+        <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+        <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 7</li>
+      </div>
+      <div>
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            KEY VERSE
+          </strong>
+        </header>
+        <p><strong>Roma 1O:14</strong></p>
+        <p className="italic"><strong>14</strong> 14 Paano naman sila tatawag sa kanya kung hindi sila sumasampalataya? Paano sila
+            sasampalataya kung wala pa silang napakinggan tungkol sa kanya? Paano naman sila
+            makakapakinig kung walang mangangaral sa kanila?
+        </p>
+        <p className="mt-2">
+          Mabilis natin nakikita ang maling pamumuhay ng iba pero hindi natin napapansin na
+          may pagkukulang din tayong mga Kristiyano sa ating tungkulin na abutin sila para mabago ang
+          buhay. Dapat ay hindi tayo nahihiya na abutin sila.
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            FACILITATION QUESTION
+          </strong>
+        </header>
+        <p>May tao ba na ginamit ang Diyos para mas mailapit ka sa Kaniya?</p>
+        <p>Sino ang taong iyon?</p>
+        <p>Paano ka nila inabot? </p>
+        <p><strong>Roma 1:16</strong></p>
+        <p className="italic"><strong>16</strong> Hindi ko ikinahihiya ang Magandang Balita, sapagkat ito ang kapangyarihan ng Diyos para
+          sa kaligtasan ng bawat sumasampalataya, una'y sa mga Judio at gayundin sa mga Griego.</p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            TELL THE WORLD ABOUT JESUS!
+          </strong>
+        </header>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            GREAT COMMISSION / DAKILANG TAGUBILIN
+        </strong>
+        <p><strong>Mateo 28:18-20</strong></p>
+        <p><strong>18</strong> Lumapit si Jesus at sinabi sa kanila, “Ibinigay na sa akin ang lahat ng kapangyarihan sa langit at sa lupa. <strong>19</strong> Kaya't humayo kayo, gawin ninyong alagad ko ang mga tao sa lahat ng mga bansa. Bautismuhan ninyo sila sa pangalan ng Ama, at ng Anak, at ng Espiritu Santo. <strong>20</strong> Turuan ninyo silang sumunod sa lahat ng iniutos ko sa inyo. Tandaan ninyo, ako'y laging kasama ninyo hanggang sa katapusan ng panahon.”</p>
+        <ul className="ml-5">
+          <li>
+            - Ito ang vision natin
+          </li>
+          - Binigyan tayo ng pagkakataon na maging pagpapala sa ibang tao higit sa ating
+            pamilya. 
+        </ul>
+        <li className="mt-1">Ibahagi ang iyong kuwento</li>
+        <p className="indent-8">- Testimony mo kung paano ka nakakilala at ang pagkakaiba ng buhay mo simula ng
+          binago ka ni Kristo.
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PERSONAL NA PAGSASABUHAY
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Ipasulat ang 3 kapamilya na nais madala sa Panginoon (kung wala ng pamilya, pwedeng
+            ibang tao).
+          </li>
+          <li>
+            2. Maging intensyuonal sa pananalangin araw- araw
+          </li>
+          <li>
+            3. Bumuo ng koneksyon: paglingkuran, pagpalain, at pakitaaan ng kabaitan.
+          </li>
+          <li>
+            4. Dalhin sa simbahan. Siguraduhing mapatangap sa panalangin sa pamamagitan ng One Verse Evangelism.
+            <li className="ml-5">
+              - Panalangin ang Prayer of 3
+            </li>
+            <li className="ml-5">
+              - Closing Prayer
+            </li>
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            REMINDERS
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Basahin ang Lesson 9.
+          </li>
+          <li>
+            2. Imbitahin sa susunod na Sunday Service.
+          </li>
+          <li>
+            3. Dalhin muli ang ballpen at booklet.
+          </li>
+        </ol>
+      </div>
+      <div>
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            CONSOLIDATORS REMINDERS
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Maghanda ng papel at ballpen.
+          </li>
+          <li>
+            2. Maaaring ipabasa sa kaniya ang verse sa booklet.
+          </li>
+          <li>
+            3. Laging kumustahin P3.
+          </li>
+          <li>
+            4. Kabisaduhin ang great commission verse: Matthew 28:18-20.
+          </li>
+          <li>
+            5.Kung sakaling hindi kumpleto o kulang pa ang kanyang P3, hikayatin na madagdagan pa sayo
+            ang mga kulang na pangalan kapag mayroon na.
+          </li>
+          <li>
+            5. Sagutan muli ang consolidation record sa pinakahuling pahina ng booklet.
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
