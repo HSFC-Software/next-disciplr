@@ -65,6 +65,14 @@ function Outline(props: { lessonCode: string }) {
     return <L8 />;
   }
 
+  if (props.lessonCode === "L9") {
+    return <L9 />;
+  }
+
+  if (props.lessonCode === "L10") {
+    return <L10 />;
+  }
+
   return null;
 }
 
@@ -1288,7 +1296,7 @@ function L7() {
 
   return (
     <div className="px-7 text-gray-500">
-        <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
       <div>
           <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
           <li>Kamustahan</li>
@@ -1640,6 +1648,292 @@ function L8() {
           </li>
           <li>
             5. Sagutan muli ang consolidation record sa pinakahuling pahina ng booklet.
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function L9() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 8</li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            KEY VERSE
+          </strong>
+        </header>
+        <p><strong>2 Mga Taga-Corinto 10:3-6</strong></p>
+        <p className="italic"><strong>3</strong> Kung nabubuhay man kami sa mundong ito, hindi naman kami nakikipaglaban ayon sa
+          pamamaraan ng mundong ito. <strong>4</strong> Ang sandata namin sa pakikipaglaban ay hindi makamundo,
+          kundi ang kapangyarihan ng Diyos na nakakapagpabagsak ng mga kuta. Sinisira namin ang
+          mga maling pangangatuwiran, <strong>5</strong> ginagapi namin ang lahat ng pagmamataas laban sa
+          kaalaman tungkol sa Diyos, at binibihag namin ang lahat ng isipan upang matutong sumunod
+          kay Cristo. 6 Kapag lubos na ang inyong pagsunod, nakahanda kaming parusahan ang lahat
+          ng mga ayaw sumunod.
+        </p>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+          CONFLICT BETWEEN SPIRIT AND FLESH
+        </strong>
+        <p className="indent-8">There is a silent battle between the flesh and the Spirit.</p>
+        <p><strong>Galacia 5:19-21</strong></p>
+        <p className="italic"><strong>19</strong>  Hindi maikakaila ang mga gawa ng laman: pakikiapid, kahalayan at kalaswaan; <strong>20</strong> pagsamba sa diyus-diyosan, pangkukulam, pagkapoot, pag-aaway-away, pagseselos, pagkakagalit at kasakiman, pagkakampi-kampi at pagkakabaha-bahagi, <strong>21</strong> pagkainggit, [pagpatay][a] paglalasing, walang habas na pagsasaya, at iba pang katulad nito. Muli ko kayong binabalaan: ang gumagawa ng mga ito ay hindi magkakaroon ng bahagi sa kaharian ng Diyos</p>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>FACILITATION QUESTION</strong>
+        <p>Ano ang mga tukso o maling gawain na gusto mo ng layuan ngunit nahihirapan ka?</p>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+          CHOOSING WISELY AS YOU LEARN TO OBEY CHRIST
+        </strong>
+        <p className="indent-8"> 
+          Ang ating buhay ay umiikot sa pagsunod at sa pagsuway. <strong> ANUMANG URI NG PAG-SUWAY
+          AY DAPAT MAHIGITAN NG TINDI NG PAGSUNOD SA DIYOS.</strong>
+        </p>
+        <p className="indent-8">
+        Ang pagsunod ay kailangan para mapagtagumpayan ang kagipitan at problema. Kung
+        susunod tayo kay Kristo, maitatatag ang matibay na pundasyon para di matinag sa darating na
+        problema.
+        </p>
+        <p><strong>Juan 14:15</strong></p>
+        <p className="italic"><strong>15</strong> “Kung iniibig ninyo ako, tutuparin ninyo ang aking mga utos.</p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***3 ESSENTIAL AREAS OF OBEDIENCE (Mahalagang Bahagi ng Pagsunod)***
+          </strong>
+        </header>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+          A. WE MUST BE OBEDIENT TO THE TRUTH OF GOD'S WORD
+        </strong>
+        <p>(Dapat tayong maging masunurin sa katotohanan ng Salita ng Diyos)</p>
+        <p><strong>2 Tesalonica 3:14</strong></p>
+        <p className="italic"><strong>14</strong> Maaaring mayroon sa inyo diyan na hindi susunod sa sinasabi namin sa sulat na ito. Kung magkagayon, tandaan ninyo siya at huwag kayong makisama sa kanya, upang siya'y
+        mapahiya.
+        </p>
+        <p className="indent-8">Huwag tayo makihalubilo o makisama sa mga di sumusunod. Sapagkat ilalayo  ka nila sa Diyos.</p>
+        <p><strong>John 14:21</strong></p>
+        <p className="italic"><strong>21</strong> “Ang tumatanggap sa mga utos ko at tumutupad sa mga ito ang siyang umiibig sa akin. Ang umiibig sa akin ay iibigin ng aking Ama; iibigin ko rin siya at ako'y lubusang
+        magpapakilala sa kanya.”</p>
+        <p className="indent-8">Ang tumatanggap sa Diyos at sumusunod sa utos Niya ang totoong umiibig sa kanya.
+        Hindi sapat na sinasabi lang natin ang salitang "I Love you Lord"</p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+          B. WE MUST BE OBEDIENT TO THE VOICE OF THE HOLY SPIRIT
+        </strong>
+        <p>(Dapat tayong maging masunurin sa tinig ng Banal na Espiritu)</p>
+        <p><strong>Mga Hebreo 3:7-8</strong></p>
+        <p className="italic"><strong>7</strong> Kaya't tulad ng sinabi ng Espiritu Santo, “Kapag ngayon ang tinig ng Diyos ay narinig ninyo, <strong>8</strong> huwag patigasin ang inyong mga puso, tulad noong maghimagsik ang inyong mga ninuno, doon sa ilang nang subukin nila ako.</p>
+        <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            C. THERE MUST BE WILLINGNESS TO OBEY
+        </strong>
+        <p>(Dapat mayroong kagustuhang sumunod)</p>
+        <p><strong>Isaias 1:19-20</strong></p>
+        <p className="italic"><strong>19</strong> Kung susundin ninyo ang aking sinasabi, tatamasahin ninyo ang ani ng inyong lupain. <strong>20</strong> Ngunit kung susuway kayo at maghihimagsik, tiyak na kayo'y mamamatay. Ito ang
+        mensahe ni Yahweh.
+        </p>
+        <p className="indent-8">Sa pagsunod, may pagpapala at sa pagsuway ay may pagpapalo.</p>
+        <li>Review the 3 main points.</li>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+          PERSONAL NA PAGSASABUHAY
+        </strong>
+        <ol>
+          <li>
+            1. Isulat mo sa papel kung paano mo maipakikta ang pagsunod sa iyong Pastor, Leader,
+            Magulang, Amo, Guro o sino pa mang tagapangalaga niya.
+          </li>
+          <li>
+          2. Ipapanalangin sa kanya ang sinulat.
+            <li>❖ PERSONAL PRAYER</li>
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+          CONSOLIDATORS REMINDERS
+        </strong>
+        <ol> 
+          <li>
+            1. Ipaliwanag ang key verse
+          </li>
+          <li>
+            2. Ipabasa sa kanya ang mga verse o main points sa booklet.
+          </li>
+          <li>
+            3. Kung alam mo na may personal siyang problema sa pagsunod, bigyan diin ito.
+            <p>Halimbawa: Sa mga ilang gawain ng Panginoon na nakikita mo na di niya talaga naisasagawa
+              pa</p>
+          </li>
+          <li>
+            4. Sagutan sa huling pahina ang consolidation record.
+          </li>
+        </ol>
+      </div>
+    </div>
+  )
+}
+
+function L10() {
+  const [toggle, setToggle] = useState<boolean | any>(false)
+
+  const toggleIt = () => {
+      setToggle(!toggle)
+  }
+
+  return (
+    <div className="px-7 text-gray-500">
+      <strong>Hight Light:</strong>  <button onClick={toggleIt} className="text-blue-700 underline">{toggle ? "Hide" : "Show"}</button>
+      <div>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"} >Flow</strong>
+          <li>Kamustahan</li>
+          <li>Short review of Lesson 9</li>
+      </div>
+      <div className="mt-2">
+        <strong className={toggle&&"bg-green-400 px-1 text-black"}>KEY VERSE</strong>
+        <p><strong>Hebreo 10:24-25</strong></p>
+        <p className="italic"><strong>24</strong> Sikapin din nating gisingin ang damdamin ng bawat isa sa pagmamahal sa kapwa at sa paggawa ng mabuti. 25 Huwag nating kaliligtaan ang pagdalo sa ating mga pagtitipon, gaya ng nakasanayan ng iba. Sa halip, palakasin natin ang loob ng isa't isa, lalo na ngayong
+        nakikita nating malapit na ang Araw ng Panginoon.
+        </p>
+        <p><strong>Ang simbahan ay:</strong></p>
+        <ul className="ml-5">
+          <li>
+            - Hindi isang gusali kundi Espiritawal na pamilya na dapat mapabilang ka kung saan
+            ang presensya ng Diyos ay nananahan at makakatangap ka ng Espiritwal na
+            pagpapalakas.
+          </li>
+          <li>
+            - Lugar ng pagsamba sa pamamagitan pagpupuri, pakikinig sa Salita at pagbibigay.
+          </li>
+          <li>
+          - Tulad ng isang isda na inalis sa tubig o isang puno na binunot sa lupa, ang ating
+            Espiritwal na buhay ay mamatay kung ito'y hindi nakatanim sa presensya ng Diyos.
+          </li>
+        </ul>
+        <p className="mt-1"><strong className={toggle&&"bg-yellow-300 px-1 text-black"}>FINDING COMMUNITY IN A LOCAL CHURCH</strong></p>
+        <ul className="ml-5">
+          <li>
+            - Ang komunidad ni Kristo ay ang mga taong nabago ang buhay
+          </li>
+          <li>
+            - Ang koneksyon natin sa isa't-isa ay nakaugat sa pagiging bahagi natin kay Kristo.
+          </li>
+        </ul>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            ***WHY WE NEED TO GO BACK TO CHURCH***
+          </strong>
+        </header>
+          <p className="mt-1">
+            <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>1. WORSHIPING COMMUNITY</strong>
+          </p>
+          <p><strong>Roma 12:1-2</strong></p>
+          <p className="italic"><strong>1</strong> Kaya nga, mga kapatid, alang-alang sa masaganang habag ng Diyos sa atin, ako'y nakikiusap sa inyo na ialay ninyo ang inyong sarili bilang isang handog na buháy, banal at kalugud-lugod sa Diyos. Ito ang karapat-dapat na pagsamba[a] ninyo sa Diyos. <strong>2</strong> Huwag kayong makiayon sa takbo ng mundong ito. Sa halip, hayaan ninyong baguhin ng Diyos ang inyong pag-iisip upang maunawaan ninyo ang kanyang kalooban. Sa gayon, magagawa ninyo kung ano ang mabuti, kalugud-lugod at ganap na kalooban ng Diyos.
+        </p>
+        <p className="mt-1">
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>2. SERVING COMMUNITY</strong>
+        </p>
+        <p><strong>Roma 12:6-8</strong></p>
+        <p className="italic"><strong>6</strong> Tumanggap tayo ng iba't ibang kaloob ayon sa kagandahang-loob ng Diyos, kaya't gamitin natin ang mga kaloob na iyan. Kung ang ating kaloob ay pagsasalita ng pahayag mula sa Diyos, magpahayag tayo ayon sa sukat ng ating pananampalataya. <strong>7</strong> Kung paglilingkod ang ating kaloob, maglingkod tayo. Magturo ang tumanggap ng kaloob sa pagtuturo. <strong>8</strong> Magpalakas ng loob ang may kaloob sa pagpapalakas ng loob. Kung pagbibigay ang inyong kaloob, magbigay kayo nang buong puso; kung pamumuno naman, mamuno kayo nang buong sikap. Kung pagkakawanggawa ang inyong kaloob, gawin ninyo iyan nang buong galak.
+        </p>
+        <p className="indent-8">Bawat isa sa atin ay mayroong natatangi at partikular na maibabahagi sa simbahan sa
+        pamamagitan ng spiritual gifts</p>
+        <p className="mt-1">
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>3. LOVING COMMUNITY</strong>
+        </p>
+        <p><strong>Roma 12:9-13</strong></p>
+        <p className="italic"><strong>9</strong> Maging tunay ang inyong pagmamahalan. Kasuklaman ninyo ang masama at pakaibigin ang mabuti. <strong>10</strong> Magmahalan kayo bilang magkakapatid at pahalagahan ninyo ang iba nang higit sa pagpapahalaga nila sa inyo. <strong>11</strong> Magpakasipag kayo at huwag maging tamad. Buong puso kayong maglingkod sa Panginoon. <strong>12</strong> Magalak kayo dahil sa inyong pag-asa, magtiyaga kayo sa inyong kapighatian at palaging manalangin. <strong>13</strong> Tumulong kayo sa pangangailangan ng mga kapatid at patuluyin ninyo ang mga taga-ibang lugar</p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>
+            LIVING AS PART OF THE FAMILY
+          </strong>
+        </header>
+        <p className="indent-8">
+          Hindi plano ng Diyos na ikaw ay maging Espiritual orphans kaya dapat maging bahagi
+          ka ng Spiritual, serving & loving community.
+        </p>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PRAKTIKAL NA PAGSASABUHAY
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Ano ang Spiritual Gifts mo na pwede mong ipagamit para maglingkod sa simbahan?
+          </li>
+          <li>
+            2. Makiugnay sa ating church activities at services upang ikaw ay lumago kasama nila.
+          </li>
+        </ol>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            PERSONAL NA PANALANGIN
+          </strong>
+        </header>
+        <p>Ipanalangin ang ministry na nais niyang mapabilang o kinabibilangan na.</p>
+        <li className="ml-5">Pagbati</li>
+        <p>Batiin siya sa pagsisikap sa consolidation. Ipaalala sa kanya na magpatuloy sa proseso ng
+          lifeclass.
+        </p>
+        <li className="ml-5">
+          Closing Prayer
+        </li>
+      </div>
+      <div className="mt-2">
+        <header>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>
+            CONSOLIDATORS REMINDERS 
+          </strong>
+        </header>
+        <ol>
+          <li>
+            1. Ipaliwanag ang key verse.
+          </li>
+          <li>
+            2. Ipabasa ang verse ng mga main points sa kausap
+          </li>
+          <li>
+            3. Ipagdiinan na dapat siyang makilahok sa paglilingkod sa simbahan gamit ang spiritual gifts.
+            Gaya ng mga halimbawa ng spiritual gifts sa verses na ginamit sa topic na ito
+          </li>
+          <li>
+            4. Magandang matulungan rin sya na makipag ugnayan agad sa mga ministry heads para sa
+            ministry na nais niyang salihan.
+          </li>
+          <li>
+            5. Pwedeng ipagpatuloy ang pag check ng kaniyang lifestyle checklist kahit tapos na ang L-10.
+          </li>
+          <li>
+            6. Sagutan ang consolidation record sa huling pahina ng booklet.
+          </li>
+          <li>
+            7. Bilang pasasalamat sa natapos na consolidation lesson, pwedeng ipasyal o yayain kumain sa
+            labas o magbigay ng simpleng regalo.
           </li>
         </ol>
       </div>
