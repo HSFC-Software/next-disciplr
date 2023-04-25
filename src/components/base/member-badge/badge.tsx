@@ -27,6 +27,16 @@ export default function MemberBadge(props: Props) {
     router.push("/profile/[id]", `/profile/${props.id}`);
   };
 
+  const handleOnRemove = (e: any) => {
+    e?.stopPropagation?.();
+    onRemove?.();
+  };
+
+  const handleOnActivate = (e: any) => {
+    e?.stopPropagation?.();
+    onSetActive?.(e);
+  };
+
   return (
     <button
       onClick={handleOnclick}
@@ -47,7 +57,7 @@ export default function MemberBadge(props: Props) {
 
       {editable && status === "Inactive" && (
         <button
-          onClick={(e) => onSetActive?.(e)}
+          onClick={handleOnActivate}
           className="disabled:opacity-50 ml-[-8px] mr-3 text-green-500 z-10"
         >
           <span className="pointer-events-none">
@@ -58,7 +68,7 @@ export default function MemberBadge(props: Props) {
 
       {editable && (
         <button
-          onClick={() => onRemove?.()}
+          onClick={handleOnRemove}
           className="ml-[-8px] text-red-500 z-10"
         >
           <TbSquareRoundedXFilled size={24} />

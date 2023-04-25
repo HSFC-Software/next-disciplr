@@ -9,6 +9,10 @@ import Avatar from "@/components/base/avatar";
 import { getInitials } from "@/lib/utils";
 import { useGetConsolidationDetails, useGetProfile } from "@/lib/queries";
 import { useConsolidate } from "@/lib/mutations";
+import {
+  RiCheckboxCircleLine,
+  RiCheckboxBlankCircleLine,
+} from "react-icons/ri";
 
 export default function ConsolidationDetails() {
   const router = useRouter();
@@ -78,12 +82,12 @@ export default function ConsolidationDetails() {
           <div className="mt-10 flex gap-3">
             <button
               onClick={handleConsolidate}
-              disabled={isLoading}
-              className="disabled:opacity-50 bg-primary rounded-2xl px-8 py-4 text-white"
+              disabled={isLoading || data?.recent.status === "DRAFT"}
+              className="disabled:opacity-30 bg-primary rounded-2xl px-8 py-4 text-white"
             >
               Consolidate
             </button>
-            <button className="bg-primary rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
+            <button className="bg-gray-300 rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
               Contact Now
             </button>
           </div>
@@ -95,7 +99,7 @@ export default function ConsolidationDetails() {
           <header className="font-semibold text-[#686777] text-xl">
             HISTORY
           </header>
-          <div className="flex flex-col gap-7 mt-7">
+          <div className="flex flex-col gap-10 mt-7">
             {data?.history?.map((conso) => {
               return (
                 <div
@@ -108,16 +112,28 @@ export default function ConsolidationDetails() {
                     )
                   }
                 >
-                  <div className="shrink-0">
-                    <Lesson
-                      code={conso.lesson_code.code}
-                      name={conso.lesson_code.name}
-                    />
+                  <div className="flex items-center justify-between w-full">
+                    <div className="shrink-0 flex gap-5">
+                      <Lesson
+                        code={conso.lesson_code.code}
+                        name={conso.lesson_code.name}
+                      />
+                      <span className="text-sm text-[#686777]">
+                        {moment(conso.created_at).fromNow()} (
+                        {moment(conso.created_at).format("MM DD, YYYY")})
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-sm text-[#686777]">
-                    {moment(conso.created_at).fromNow()} (
-                    {moment(conso.created_at).format("MM DD, YYYY")})
-                  </span>
+                  {conso.status === "DRAFT" && (
+                    <span className="text-lg text-gray-400">
+                      <RiCheckboxBlankCircleLine />
+                    </span>
+                  )}
+                  {conso.status === "PUBLISHED" && (
+                    <span className="text-lg text-[#6e7ac5]">
+                      <RiCheckboxCircleLine />
+                    </span>
+                  )}
                 </div>
               );
             })}

@@ -247,6 +247,7 @@ type ConsolidationDetails = {
       code: LessonCodes;
       name: string;
     };
+    status: "DRAFT" | "PUBLISHED";
   };
   disciple: {
     id: string;
@@ -261,6 +262,7 @@ type ConsolidationDetails = {
       code: LessonCodes;
       name: string;
     };
+    status: "DRAFT" | "PUBLISHED";
   }[];
 };
 
