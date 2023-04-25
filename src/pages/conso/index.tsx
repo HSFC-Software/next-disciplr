@@ -9,6 +9,8 @@ import moment from "moment";
 import { useState } from "react";
 import Lesson from "@/components/base/lesson";
 import { useRouter } from "next/router";
+import ConsolidationIcon from "@/components/base/icons/Consolidation";
+import Body from "@/components/base/body";
 
 export default function Consolidations() {
   const router = useRouter();
@@ -35,68 +37,72 @@ export default function Consolidations() {
         <Header>
           <div className="flex w-full justify-between items-center">
             <span>Consolidations</span>
-            {!showSearch && (
+            {!showSearch && filteredData?.length !== 0 && (
               <button onClick={() => setShowSearch(true)}>
                 <RiSearchLine />
               </button>
             )}
           </div>
         </Header>
-        {showSearch && (
-          <div className="flex justify-between px-7 mb-7">
-            <input
-              autoFocus
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Start typing to search"
-              className="w-full outline-none py-2"
-            />
-            <button
-              onClick={() => {
-                setSearch("");
-                setShowSearch(false);
-              }}
-              className="text-3xl"
-            >
-              <RiCloseLine />
-            </button>
-          </div>
-        )}
-        <div className="h-full w-full flex flex-col gap-5">
-          {filteredData?.map((conso) => {
-            return (
-              <div
-                key={conso.id}
-                onClick={() =>
-                  router.push("/conso/[id]", `/conso/${conso.disciple_id.id}`)
-                }
-                className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
+        <Body>
+          {showSearch && (
+            <div className="flex justify-between px-7 mb-7">
+              <input
+                autoFocus
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Start typing to search"
+                className="w-full outline-none py-2"
+              />
+              <button
+                onClick={() => {
+                  setSearch("");
+                  setShowSearch(false);
+                }}
+                className="text-3xl"
               >
-                <div className="relative flex justify-center">
-                  <Avatar fontSize="text-xl" size={77}>
-                    {getInitials(
-                      `${conso.disciple_id.first_name} ${conso.disciple_id.last_name}`
-                    )}
-                  </Avatar>
-                  <div className="absolute bottom-0 whitespace-nowrap z-50">
-                    <Lesson
-                      code={conso.lesson_code.code}
-                      name={conso.lesson_code.name}
-                    />
+                <RiCloseLine />
+              </button>
+            </div>
+          )}
+          {filteredData?.length === 0 && <EmptyScreen />}
+          <div className="h-full w-full flex flex-col gap-5">
+            {filteredData?.map((conso) => {
+              return (
+                <div
+                  key={conso.id}
+                  onClick={() =>
+                    router.push("/conso/[id]", `/conso/${conso.disciple_id.id}`)
+                  }
+                  className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
+                >
+                  <div className="relative flex justify-center">
+                    <Avatar fontSize="text-xl" size={77}>
+                      {getInitials(
+                        `${conso.disciple_id.first_name} ${conso.disciple_id.last_name}`
+                      )}
+                    </Avatar>
+                    <div className="absolute bottom-0 whitespace-nowrap z-50">
+                      <Lesson
+                        code={conso.lesson_code.code}
+                        name={conso.lesson_code.name}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col">
+                    <span>
+                      {conso.disciple_id.first_name}{" "}
+                      {conso.disciple_id.last_name}
+                    </span>
+                    <span className="text-sm text-[#686777]">
+                      <RelativeDate date={conso.created_at} />
+                    </span>
                   </div>
                 </div>
-                <div className="flex flex-col">
-                  <span>
-                    {conso.disciple_id.first_name} {conso.disciple_id.last_name}
-                  </span>
-                  <span className="text-sm text-[#686777]">
-                    <RelativeDate date={conso.created_at} />
-                  </span>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        </Body>
       </Layout>
     </>
   );
@@ -116,5 +122,17 @@ const RelativeDate = (props: { date: any }) => {
     <button className="text-left" onClick={() => setShowOriginal(true)}>
       {moment(props.date).fromNow()}
     </button>
+  );
+};
+
+export const EmptyScreen = () => {
+  return (
+    <div className="h-full w-full flex flex-col items-center justify-center">
+      <ConsolidationIcon width={147} height={147} />
+
+      <div className="text-xl text-gray-500 mt-7 text-center max-w-[380px]">
+        No consolidation has been assigned yet.
+      </div>
+    </div>
   );
 };
