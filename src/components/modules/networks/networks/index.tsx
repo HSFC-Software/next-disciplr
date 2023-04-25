@@ -104,7 +104,7 @@ const EmptyScreen = () => {
         </svg>
       </div>
       <div className="text-sm text-gray-500">
-        There are no members in this network yet
+        There are no cellgroups in this network yet
       </div>
     </div>
   );
