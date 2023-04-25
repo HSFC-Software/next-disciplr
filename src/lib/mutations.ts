@@ -196,16 +196,17 @@ export const useUpdateUser = () => {
 
 export const useConsolidate = () => {
   const queryClient = useQueryClient();
+
   return useMutation<
     ConsolidateResponse,
     unknown,
     { disciple_id: string; consolidator_id: string }
   >((payload) => consolidate(payload.disciple_id, payload.consolidator_id), {
-    onSuccess: (_, { disciple_id, consolidator_id }) => {
+    onSuccess: (_, { disciple_id }) => {
       queryClient.invalidateQueries(["getConsolidations", { id: disciple_id }]);
       queryClient.invalidateQueries([
         "getConsolidationDetails",
-        { id: consolidator_id },
+        { id: disciple_id },
       ]);
     },
   });
