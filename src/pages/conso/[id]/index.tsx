@@ -83,11 +83,11 @@ export default function ConsolidationDetails() {
             <button
               onClick={handleConsolidate}
               disabled={isLoading || data?.recent.status === "DRAFT"}
-              className="disabled:opacity-50 bg-primary rounded-2xl px-8 py-4 text-white"
+              className="disabled:opacity-30 bg-primary rounded-2xl px-8 py-4 text-white"
             >
               Consolidate
             </button>
-            <button className="bg-primary rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
+            <button className="bg-gray-300 rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
               Contact Now
             </button>
           </div>
