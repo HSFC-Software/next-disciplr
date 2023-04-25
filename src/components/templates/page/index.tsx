@@ -68,11 +68,11 @@ function Nav(props: { activeRoute?: string }) {
             isActive={activeRoute === "conso"}
           />
         </Link>
-        <Link href="/" className="relative flex items-center">
+        <Link href="/events" className="relative flex items-center">
           <NotificationIcon
             width={38}
             height={38}
-            isActive={activeRoute === "/"}
+            isActive={activeRoute === "/events"}
           />
           <span className="text-[8px] absolute bg-primary text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
             Soon
