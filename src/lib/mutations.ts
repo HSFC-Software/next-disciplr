@@ -21,6 +21,7 @@ import {
 } from "@/lib/api";
 import { Network } from "@/types/networks";
 import { useGetProfile } from "./queries";
+import { supabase } from "./supabase";
 
 export const useOpenNetwork = (network_id: string) => {
   const queryClient = useQueryClient();
@@ -210,4 +211,50 @@ export const useConsolidate = () => {
       ]);
     },
   });
+};
+
+export const useUpdateProfilePicture = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<UpdateUserPaypload, unknown, any>(
+    async function (file) {
+      const { error } = await supabase.storage
+        .from("public")
+        .upload(`profiles/${file.name}`, file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      const publicUrl = supabase.storage
+        .from("public")
+        .getPublicUrl(`profiles/${file.name}`).data.publicUrl;
+
+      let user;
+
+      try {
+        user = await updateUser({ img_url: publicUrl, id });
+      } catch (err: any) {
+        throw new Error(err);
+      }
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return user;
+    },
+    {
+      onSuccess: (response) => {
+        queryClient.invalidateQueries(["getProfileById", { id: response?.id }]);
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: response.id },
+        ]);
+        queryClient.invalidateQueries([
+          "getProfile",
+          { email: response.email },
+        ]);
+      },
+    }
+  );
 };

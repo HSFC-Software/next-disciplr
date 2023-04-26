@@ -58,13 +58,8 @@ export default function ConsolidationDetails() {
           </div>
         </Header>
         <div className="flex items-center flex-col py-5 z-10">
-          <Avatar fontSize="text-2xl" size={100}>
-            {getInitials(
-              `${data?.disciple.first_name ?? ""} ${
-                data?.disciple.last_name ?? ""
-              }`
-            )}
-          </Avatar>
+          <Avatar fontSize="text-2xl" size={100} id={data?.disciple.id} />
+
           <div className="flex flex-col items-center gap-1 mt-5">
             <span className="text-[#8D8D8D]">
               {data?.disciple.first_name} {data?.disciple.last_name}

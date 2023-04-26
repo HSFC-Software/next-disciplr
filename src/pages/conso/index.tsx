@@ -77,11 +77,12 @@ export default function Consolidations() {
                   className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
                 >
                   <div className="relative flex justify-center">
-                    <Avatar fontSize="text-xl" size={77}>
-                      {getInitials(
-                        `${conso.disciple_id.first_name} ${conso.disciple_id.last_name}`
-                      )}
-                    </Avatar>
+                    <Avatar
+                      id={conso.disciple_id.id}
+                      fontSize="text-xl"
+                      size={77}
+                    />
+
                     <div className="absolute bottom-0 whitespace-nowrap z-50">
                       <Lesson
                         code={conso.lesson_code.code}

@@ -12,4 +12,5 @@ export type Profile = {
   email: string;
   sex?: string;
   status?: "Active" | "Inactive";
+  img_url?: string;
 };

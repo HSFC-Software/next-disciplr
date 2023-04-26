@@ -1,12 +1,12 @@
 import Layout from "@/components/templates/page";
 import styles from "./update-profile.module.scss";
 import Head from "next/head";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useGetProfileById } from "@/lib/queries";
 import Header from "@/components/base/header";
 import { useFormik } from "formik";
 import { Profile } from "@/types/profile";
-import { useUpdateUser } from "@/lib/mutations";
+import { useUpdateUser, useUpdateProfilePicture } from "@/lib/mutations";
 import { UpdateUserPaypload } from "@/lib/api";
 import { useSelector } from "react-redux";
 import { State } from "@/lib/models";
@@ -16,6 +16,8 @@ import DatePicker from "@/components/modules/datepicker";
 import SelectPicker from "@/components/modules/selectpicker";
 import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
+import Avatar from "@/components/base/avatar";
+import { TiCamera } from "react-icons/ti";
 
 export default function UpdateProfile() {
   const router = useRouter();
@@ -25,6 +27,10 @@ export default function UpdateProfile() {
   const id = useSelector((state: State) => state.Profile.updateReference);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showSexPicker, setShowSexPicker] = useState(false);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [previewURL, setPreviewURL] = useState("");
+  const { mutate: updateProfilePicture, isLoading: isUploadingProfileImage } =
+    useUpdateProfilePicture(profile?.id ?? "");
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -48,10 +54,6 @@ export default function UpdateProfile() {
     formik.handleSubmit();
   };
 
-  const initials = `${formik.values?.first_name?.charAt(0) ?? ""}${
-    formik.values?.last_name?.charAt(0) ?? ""
-  }`.trim();
-
   const handleCopyToClipBoard = (str: string) => {
     navigator.clipboard.writeText(str);
   };
@@ -65,6 +67,32 @@ export default function UpdateProfile() {
     handleCopyToClipBoard("https://app.fishgen.org/sign-up?provider=google");
     toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
   };
+
+  const handleChangeFile = (e: any) => {
+    if (e?.target?.files?.length > 0) {
+      setSelectedPhoto(e.target.files[0]);
+      updateProfilePicture(e.target.files[0], {
+        onSuccess() {
+          // show success message
+          setPreviewURL("");
+        },
+        onError() {
+          // show error message
+          setSelectedPhoto(null);
+          setPreviewURL("");
+        },
+        onSettled() {
+          setSelectedPhoto(null);
+        },
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (selectedPhoto) {
+      setPreviewURL(URL.createObjectURL(selectedPhoto!));
+    }
+  }, [selectedPhoto]);
 
   return (
     <>
@@ -106,8 +134,35 @@ export default function UpdateProfile() {
         />
         <section className={`grow overflow-y-auto h-full ${styles.content}`}>
           <div className="flex justify-center py-5 mb-4">
-            <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
-              {initials}
+            <div className="relative">
+              <span
+                className={`${
+                  (!!previewURL || isUploadingProfileImage) && "opacity-60"
+                }`}
+              >
+                <Avatar
+                  id={profileId as string}
+                  size={101}
+                  fontSize="text-4xl"
+                />
+              </span>
+              <div className="absolute right-0 bottom-0 mr-[-8px]">
+                <button
+                  onClick={() =>
+                    document.getElementById("profile-photo")?.click?.()
+                  }
+                  className="text-2xl bg-gray-300 p-2 rounded-full"
+                >
+                  <TiCamera />
+                </button>
+                <input
+                  onChange={handleChangeFile}
+                  id="profile-photo"
+                  className="hidden"
+                  type="file"
+                  accept="image/png, image/gif, image/jpeg"
+                />
+              </div>
             </div>
           </div>
           <section className="px-7 py-3">
