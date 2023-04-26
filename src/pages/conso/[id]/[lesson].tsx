@@ -1615,8 +1615,8 @@ function L7() {
           <strong>Mateo 21:22</strong>
         </p>
         <p className="italic">
-          <strong>22</strong> "Anumang hingin ninyo sa panalangin ay tatanggapin
-          ninyo kung naniniwala kayo.”
+          <strong>22</strong> &quot;Anumang hingin ninyo sa panalangin ay
+          tatanggapin ninyo kung naniniwala kayo.”
         </p>
       </div>
       <div className="mt-2">
