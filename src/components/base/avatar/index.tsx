@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import Image from "next/image";
 
 type AvatarProps = {
   children?: ReactNode;
@@ -15,6 +16,7 @@ type AvatarProps = {
     | "text-4xl"
     | "5xl";
   style?: object;
+  image?: any;
 };
 
 export default function Avatar({
@@ -22,6 +24,7 @@ export default function Avatar({
   size,
   fontSize,
   style,
+  imgSrc,
 }: AvatarProps) {
   return (
     <div
@@ -30,11 +33,23 @@ export default function Avatar({
         width: size,
         ...(style ?? {}),
       }}
-      className={`shrink-0 bg-[#eaeaea] rounded-full z-10 flex justify-center items-center font-bold uppercase ${
+      className={`shrink-0 bg-[#eaeaea] rounded-full z-10 flex justify-center items-center font-bold uppercase overflow-hidden ${
         fontSize ? `${fontSize}` : "text-xl"
       }`}
     >
-      {children}
+      {imgSrc ? (
+        <>
+          <Image
+            alt="profile"
+            src={imgSrc!}
+            className="w-full h-full rounded-full"
+            layout="fill"
+            objectFit="cover"
+          />
+        </>
+      ) : (
+        <>{children}</>
+      )}
     </div>
   );
 }

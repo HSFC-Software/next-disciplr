@@ -177,7 +177,7 @@ export const signUp = async (payload: SignUpPayload) => {
   }
 };
 
-export type UpdateUserPaypload = {
+export type UpdateUserPaypload = Partial<{
   first_name: string;
   last_name: string;
   middle_name: string;
@@ -188,7 +188,8 @@ export type UpdateUserPaypload = {
   sex: "Male" | "Female";
   status: "Active" | "Inactive";
   id?: string;
-};
+  img_url?: string;
+}>;
 
 export const updateUser = async (payload: UpdateUserPaypload) => {
   try {
