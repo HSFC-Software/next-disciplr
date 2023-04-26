@@ -12,6 +12,7 @@ export type Network = {
     id: string;
     first_name: string;
     last_name: string;
+    img_url?: string;
   };
 };
 

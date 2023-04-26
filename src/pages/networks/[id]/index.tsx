@@ -48,6 +48,7 @@ const NetowrkDetails = () => {
             className="flex flex-col gap-12"
           >
             <Leader
+              id={network?.discipler_id.id}
               first_name={network?.discipler_id.first_name}
               last_name={network?.discipler_id.last_name}
             />

@@ -18,8 +18,15 @@ type Props = {
 };
 
 export default function MemberBadge(props: Props) {
-  const { first_name, last_name, editable, onRemove, status, onSetActive } =
-    props;
+  const {
+    first_name,
+    last_name,
+    editable,
+    onRemove,
+    status,
+    onSetActive,
+    image_url,
+  } = props;
 
   const router = useRouter();
 
@@ -43,9 +50,7 @@ export default function MemberBadge(props: Props) {
       className="flex items-center bg-transparent"
     >
       <span style={{ opacity: status === "Active" ? 1 : 0.5 }} className="z-10">
-        <Avatar fontSize="text-base" size={40}>
-          {`${first_name?.charAt(0) ?? ""}${last_name?.charAt(0) ?? ""}`.trim()}
-        </Avatar>
+        <Avatar id={props.id} fontSize="text-base" size={40} />
       </span>
 
       <div

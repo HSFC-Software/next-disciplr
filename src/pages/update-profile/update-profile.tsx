@@ -29,7 +29,6 @@ export default function UpdateProfile() {
   const { mutate: updateProfilePicture, isLoading: isUploadingProfileImage } =
     useUpdateProfilePicture(profile?.id ?? "");
 
-  console.log(profile);
   const formik = useFormik<Profile>({
     enableReinitialize: true,
     initialValues: (profile as Profile) ?? {},
@@ -71,10 +70,6 @@ export default function UpdateProfile() {
       });
     }
   };
-
-  const initials = `${formik.values?.first_name?.charAt(0) ?? ""}${
-    formik.values?.last_name?.charAt(0) ?? ""
-  }`.trim();
 
   useEffect(() => {
     if (selectedPhoto) {
@@ -132,12 +127,11 @@ export default function UpdateProfile() {
                 }`}
               >
                 <Avatar
+                  id={profile?.id}
                   size={101}
                   fontSize="text-4xl"
                   imgSrc={previewURL || profile?.img_url}
-                >
-                  {initials}
-                </Avatar>
+                />
               </span>
               <div className="absolute right-0 bottom-0 mr-[-8px]">
                 <button

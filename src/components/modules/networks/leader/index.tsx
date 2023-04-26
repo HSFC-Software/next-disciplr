@@ -2,11 +2,7 @@ import Avatar from "@/components/base/avatar";
 import { Profile } from "@/types/profile";
 
 export const Leader = (props: Partial<Profile>) => {
-  const { first_name, last_name } = props;
-
-  const initials = `${first_name?.charAt(0) ?? ""}${
-    last_name?.charAt(0) ?? ""
-  }`.trim();
+  const { first_name, last_name, img_url, id } = props;
 
   return (
     <section>
@@ -16,9 +12,7 @@ export const Leader = (props: Partial<Profile>) => {
         </header>
       </div>
       <div className="flex items-center pl-[15%]">
-        <Avatar fontSize="text-xl" size={77}>
-          {initials}
-        </Avatar>
+        <Avatar id={id} imgSrc={img_url} fontSize="text-xl" size={77} />
         <div className="ml-[-38px] bg-[#F5F5F5] w-full h-20 py-16 rounded-l-[32px] flex items-center pl-14">
           <div className="flex flex-col gap-1">
             <span>

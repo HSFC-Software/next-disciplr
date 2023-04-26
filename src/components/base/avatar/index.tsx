@@ -1,5 +1,6 @@
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import Image from "next/image";
+import { useGetProfileById } from "@/lib/queries";
 
 type AvatarProps = {
   children?: ReactNode;
@@ -16,7 +17,7 @@ type AvatarProps = {
     | "text-4xl"
     | "5xl";
   style?: object;
-  image?: any;
+  id?: string;
 };
 
 export default function Avatar({
@@ -25,7 +26,23 @@ export default function Avatar({
   fontSize,
   style,
   imgSrc,
+  id,
 }: AvatarProps) {
+  const [isImageReady, setIsImageReady] = useState(false);
+  const { data, isLoading } = useGetProfileById(id ?? "");
+
+  let _imgSrc = "";
+  let _initials = "";
+
+  if (data?.img_url) _imgSrc = data?.img_url;
+  if (!_imgSrc) imgSrc = imgSrc;
+
+  if (children) _initials = children as string;
+  else
+    _initials = `${data?.first_name?.charAt(0) ?? ""}${
+      data?.last_name?.charAt(0) ?? ""
+    }`.trim();
+
   return (
     <div
       style={{
@@ -37,19 +54,21 @@ export default function Avatar({
         fontSize ? `${fontSize}` : "text-xl"
       }`}
     >
-      {imgSrc ? (
-        <>
-          <Image
-            alt="profile"
-            src={imgSrc!}
-            className="w-full h-full rounded-full"
-            layout="fill"
-            objectFit="cover"
-          />
-        </>
-      ) : (
-        <>{children}</>
+      {_imgSrc && (
+        <Image
+          onLoad={() => setIsImageReady(true)}
+          style={{
+            opacity: isImageReady ? 1 : 0,
+          }}
+          alt="profile"
+          src={_imgSrc}
+          className="w-full h-full rounded-full"
+          width={size}
+          height={size}
+          objectFit="cover"
+        />
       )}
+      {!_imgSrc && <>{_initials}</>}
     </div>
   );
 }
