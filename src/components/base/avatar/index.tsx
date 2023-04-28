@@ -62,10 +62,9 @@ export default function Avatar({
           }}
           alt="profile"
           src={_imgSrc}
-          className="w-full h-full rounded-full"
+          className="w-full h-full rounded-full object-cover"
           width={size}
           height={size}
-          objectFit="cover"
         />
       )}
       {!_imgSrc && <>{_initials}</>}

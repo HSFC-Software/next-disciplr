@@ -4,7 +4,6 @@ import Head from "next/head";
 import Header from "@/components/base/header";
 import { RiSearchLine, RiCloseLine } from "react-icons/ri";
 import Avatar from "@/components/base/avatar";
-import { getInitials } from "@/lib/utils";
 import moment from "moment";
 import { useState } from "react";
 import Lesson from "@/components/base/lesson";
@@ -66,43 +65,48 @@ export default function Consolidations() {
             </div>
           )}
           {filteredData?.length === 0 && <EmptyScreen />}
-          <div className="h-full w-full flex flex-col gap-5">
-            {filteredData?.map((conso) => {
-              return (
-                <div
-                  key={conso.id}
-                  onClick={() =>
-                    router.push("/conso/[id]", `/conso/${conso.disciple_id.id}`)
-                  }
-                  className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
-                >
-                  <div className="relative flex justify-center">
-                    <Avatar
-                      id={conso.disciple_id.id}
-                      fontSize="text-xl"
-                      size={77}
-                    />
-
-                    <div className="absolute bottom-0 whitespace-nowrap z-50">
-                      <Lesson
-                        code={conso.lesson_code.code}
-                        name={conso.lesson_code.name}
+          {!!filteredData?.length && (
+            <div className="h-full w-full flex flex-col gap-5">
+              {filteredData?.map((conso) => {
+                return (
+                  <div
+                    key={conso.id}
+                    onClick={() =>
+                      router.push(
+                        "/conso/[id]",
+                        `/conso/${conso.disciple_id.id}`
+                      )
+                    }
+                    className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
+                  >
+                    <div className="relative flex justify-center">
+                      <Avatar
+                        id={conso.disciple_id.id}
+                        fontSize="text-xl"
+                        size={77}
                       />
+
+                      <div className="absolute bottom-0 whitespace-nowrap z-50">
+                        <Lesson
+                          code={conso.lesson_code.code}
+                          name={conso.lesson_code.name}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <span>
+                        {conso.disciple_id.first_name}{" "}
+                        {conso.disciple_id.last_name}
+                      </span>
+                      <span className="text-sm text-[#686777]">
+                        <RelativeDate date={conso.created_at} />
+                      </span>
                     </div>
                   </div>
-                  <div className="flex flex-col">
-                    <span>
-                      {conso.disciple_id.first_name}{" "}
-                      {conso.disciple_id.last_name}
-                    </span>
-                    <span className="text-sm text-[#686777]">
-                      <RelativeDate date={conso.created_at} />
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+                );
+              })}
+            </div>
+          )}
         </Body>
       </Layout>
     </>
