@@ -9,6 +9,7 @@ import {
   markNetworkInactive,
   openNetwork,
   OpenNetworkPayload,
+  publishConsolidation,
   removeMember,
   removeNetwork,
   signUp,
@@ -253,6 +254,23 @@ export const useUpdateProfilePicture = (id: string) => {
         queryClient.invalidateQueries([
           "getProfile",
           { email: response.email },
+        ]);
+      },
+    }
+  );
+};
+
+export const usePublishConsolidation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ disciple_id: string }, unknown, string>(
+    (id) => publishConsolidation(id),
+    {
+      onSuccess(response, id) {
+        queryClient.invalidateQueries(["getConsolidationById", { id }]);
+        queryClient.invalidateQueries([
+          "getConsolidationDetails",
+          { id: response?.disciple_id },
         ]);
       },
     }
