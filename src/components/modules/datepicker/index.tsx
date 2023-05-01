@@ -15,7 +15,7 @@ type Month =
   | "November"
   | "December";
 
-const months: Month[] = [
+export const months: Month[] = [
   "January",
   "February",
   "March",
@@ -43,19 +43,26 @@ export type DateValue = {
 type DatePickerProps = {
   onConfirm: (value: DateValue) => void;
   onClose: () => void;
+  includeDate?: boolean;
 };
 
 export default function DatePicker(
   props: { isVisible: boolean } & DatePickerProps
 ) {
   if (props.isVisible) {
-    return <Picker onConfirm={props.onConfirm} onClose={props.onClose} />;
+    return <Picker {...props} />;
   }
 
   return null;
 }
 
 function Picker(props: DatePickerProps) {
+  let includeDate = true;
+
+  if (props.includeDate === false) {
+    includeDate = false;
+  }
+
   const [value, setValue] = useState({
     month: months[new Date().getMonth()],
     date: new Date().getDate(),
@@ -206,20 +213,25 @@ function Picker(props: DatePickerProps) {
             })}
             <div className="h-[50%]" />
           </div>
-          <div
-            id="date-container"
-            className="date overflow-y-auto hide-scrollbar hide-scrollbar-webkit px-4"
-          >
-            <div className="h-[50%]" />
-            {dates.map((d) => {
-              return (
-                <div className="py-2 text-gray-400 text-center text-xl" key={d}>
-                  {d}
-                </div>
-              );
-            })}
-            <div className="h-[50%]" />
-          </div>
+          {includeDate && (
+            <div
+              id="date-container"
+              className="date overflow-y-auto hide-scrollbar hide-scrollbar-webkit px-4"
+            >
+              <div className="h-[50%]" />
+              {dates.map((d) => {
+                return (
+                  <div
+                    className="py-2 text-gray-400 text-center text-xl"
+                    key={d}
+                  >
+                    {d}
+                  </div>
+                );
+              })}
+              <div className="h-[50%]" />
+            </div>
+          )}
           <div
             id="year-container"
             className="year overflow-y-auto hide-scrollbar hide-scrollbar-webkit"

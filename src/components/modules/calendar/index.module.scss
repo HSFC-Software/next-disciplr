@@ -1,0 +1,9 @@
+.calendar {
+  li {
+    display: block;
+    justify-self: center;
+    height: 50px;
+    width: 50px;
+    @apply flex justify-center items-center;
+  }
+}
