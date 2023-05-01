@@ -18,7 +18,9 @@ export default function ConsolidationDetails() {
   const router = useRouter();
   const disciple_id = router.query.id;
   const { data: user } = useGetProfile();
-  const { data } = useGetConsolidationDetails(String(disciple_id));
+  const { data, isLoading: isGettingData } = useGetConsolidationDetails(
+    String(disciple_id)
+  );
   const { mutate: consolidate, isLoading } = useConsolidate();
 
   const handleGoUpOneLevel = () => {
@@ -77,7 +79,9 @@ export default function ConsolidationDetails() {
           <div className="mt-10 flex gap-3">
             <button
               onClick={handleConsolidate}
-              disabled={isLoading || data?.recent.status === "DRAFT"}
+              disabled={
+                isGettingData || isLoading || data?.recent.status === "DRAFT"
+              }
               className="disabled:opacity-30 bg-primary rounded-2xl px-8 py-4 text-white"
             >
               Consolidate

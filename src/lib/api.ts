@@ -317,6 +317,7 @@ type GetConsolidationByIdResponse = {
     name: string;
     title: string;
   };
+  status: "DRAFT" | "PUBLISHED";
 };
 
 export const getConsolidationById = async (id: string) => {
@@ -331,6 +332,17 @@ export const getConsolidationById = async (id: string) => {
 export const getProfileById = async (id: string) => {
   try {
     const { data } = await axios.get(`/profile/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const publishConsolidation = async (id: string) => {
+  try {
+    const { data } = await axios.patch(`/consolidations?id=${id}`, {
+      status: "PUBLISHED",
+    });
     return data;
   } catch (err) {
     return Promise.reject(err);
