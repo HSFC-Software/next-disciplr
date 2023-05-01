@@ -9,10 +9,24 @@ import { Leader } from "@/components/modules/networks/leader";
 import { Networks } from "@/components/modules/networks/networks";
 import Addnetwork from "@/components/modules/networks/add-network";
 import Link from "next/link";
+import BreadCrumbs from "@/components/modules/breadcrumbs";
+import { useEffect } from "react";
+import { store } from "@/lib/models";
 
 const NetowrkDetails = () => {
   const router = useRouter();
   const { data: network } = useGetNetworkDetails(String(router.query.id));
+
+  useEffect(() => {
+    if (network?.id) {
+      store.dispatch.BreadCrumbs.addPage({
+        id: network.id,
+        title: network.name,
+        url: window.origin + router.asPath,
+      });
+    }
+  }, [network, router]);
+
   return (
     <>
       <Head>
@@ -33,6 +47,9 @@ const NetowrkDetails = () => {
             </Link>
           </div>
         </Header>
+        <div className="px-7">
+          <BreadCrumbs activePageId={network?.id} />
+        </div>
         {network?.status === "Inactive" && (
           <div className="bg-orange-200 w-full left-0 text-base p-4">
             <span className="text-xs font-semibold">

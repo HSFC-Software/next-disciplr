@@ -4,11 +4,13 @@ import { init, RematchDispatch, RematchRootState } from "@rematch/core";
 import persistPlugin from "@rematch/persist";
 import storage from "redux-persist/lib/storage";
 import { createMigrate } from "redux-persist";
+import { uuidv4 } from "./utils";
 
 export interface RootModel extends Models<RootModel> {
   NetworkUpdates: typeof NetworkUpdates;
   Networks: typeof Networks;
   Profile: typeof Profile;
+  BreadCrumbs: typeof BreadCrumbs;
 }
 
 type NetworkUpdateState = {};
@@ -24,6 +26,7 @@ export const Networks = createModel<RootModel>()({
   reducers: {},
   effects: (dispatch) => ({}),
 });
+
 export const Profile = createModel<RootModel>()({
   state: {
     updateReference: "",
@@ -39,7 +42,42 @@ export const Profile = createModel<RootModel>()({
   effects: (dispatch) => ({}),
 });
 
-export const models: RootModel = { NetworkUpdates, Networks, Profile };
+const BreadCrumbs = createModel<RootModel>()({
+  state: {
+    icon: "",
+    pages: [] as { url: string; title: string; id: string }[],
+  },
+  reducers: {
+    setIcon: (_, icon: string) => ({ ..._, icon }),
+    addPage: (
+      state,
+      { url, title, id }: { url: string; title: string; id?: string }
+    ) => {
+      const pages = state.pages;
+      const pageExist = !!pages.find((page) => page.id === id);
+
+      if (pageExist) return state;
+
+      return {
+        ...state,
+        pages: [...state.pages, { url, title, id: id ?? uuidv4() }],
+      };
+    },
+    goBack: (state) => ({
+      ...state,
+      pages: state.pages.slice(0, state.pages.length - 1),
+    }),
+    setPages: (state, pages) => ({ ...state, pages }),
+  },
+  effects: () => ({}),
+});
+
+export const models: RootModel = {
+  NetworkUpdates,
+  Networks,
+  Profile,
+  BreadCrumbs,
+};
 
 const migrations = {
   0: (state: any) => ({
@@ -48,13 +86,17 @@ const migrations = {
       ...state.Profile,
     },
   }),
+  1: (state: any) => ({
+    ...state,
+    BreadCrumbs: { icon: null, pages: [] },
+  }),
 };
 
 const persistConfig = {
   key: "root",
   storage,
   blacklist: [],
-  version: 0,
+  version: 1,
   migrate: createMigrate(migrations, { debug: true }),
 };
 
