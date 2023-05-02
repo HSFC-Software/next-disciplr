@@ -698,17 +698,17 @@ function L4(){
             </p>
           </li>
         </ol>
-      </div>className={toggle&&"bg-yellow-300 px-1 text-black"}
+      </div>
       <div className="mt-2">
           <header>
             <strong className={toggle&&"bg-green-400 px-1 text-black"}>PRAKTIKAL NA PAGSASABUHAY</strong>
           </header>
           <p className="indent-8">
               Kilalanin ang mga taong nakasakit sa’yo at Ipanalangin sa Diyos na linisin at buksan
-            ang iyong puso na magpatawad at tanggapin ang mga taong iyon sa iyong buhay.
-            Note: Ipasulat sa papel ang mga taong nakasakit sa kanya at ang mga kasalanang ginawa nito.
+            ang iyong puso na magpatawad at tanggapin ang mga taong iyon sa iyong buhay. {" "}
+            <span className={toggle&&"bg-green-400 px-1 text-black"}><strong>Note:</strong> Ipasulat sa papel ang mga taong nakasakit sa kanya at ang mga kasalanang ginawa nito.
             Gabayan siyang ipanalangin isa- isa ang kanyang isinulat. Punitin ang papel kasabay ng
-            deklarasyong pinapatawad niya isa isa ang pangalan ng mga taong ito
+            deklarasyong pinapatawad niya isa isa ang pangalan ng mga taong ito</span>
           </p>
           <p className="indent-8">
               Ngayon, ikaw ay malaya na dahil nakapagpatawad ka at pinatawad ka rin ng Diyos.
