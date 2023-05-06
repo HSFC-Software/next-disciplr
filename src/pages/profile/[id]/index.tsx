@@ -12,6 +12,7 @@ import { useFlags } from "launchdarkly-react-client-sdk";
 import { supabase } from "@/lib/supabase";
 import { destroyCookie } from "nookies";
 import { useRouter } from "next/router";
+import Avatar from "@/components/base/avatar";
 
 export default function Profile() {
   const router = useRouter();
@@ -50,39 +51,17 @@ export default function Profile() {
             >
               Update
             </button>
-            {/* <Dropdown
-              label={
-                <span className="text-3xl">
-                  <HiOutlineCog6Tooth />
-                </span>
-              }
-              placement="bottom-end"
-              inline
-              arrowIcon={null!}
-            >
-              <Dropdown.Item
-                onClick={handleUpdateProfile}
-                className={`
-                ${!enableUpdateProfile ? "pointer-events-none opacity-25" : ""}
-                ${styles.dropdownItem}`}
-              >
-                Update Profile
-              </Dropdown.Item>
-              <Dropdown.Item
-                onClick={handleSignOut}
-                className={styles.dropdownItem}
-              >
-                Sign out
-              </Dropdown.Item>
-            </Dropdown> */}
           </div>
         </Header>
         <Body>
           <section className="px-7 grow overflow-y-auto h-full">
             <div className="flex justify-center py-5 mb-4">
-              <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
-                {profile?.first_name[0] ?? "-"}
-              </div>
+              <Avatar
+                size={101}
+                fontSize="text-4xl"
+                imgSrc={profile?.img_url}
+                id={id as string}
+              />
             </div>
             <label className={`${styles.label} uppercase font-medium`}>
               General Information

@@ -9,6 +9,7 @@ import {
   markNetworkInactive,
   openNetwork,
   OpenNetworkPayload,
+  publishConsolidation,
   removeMember,
   removeNetwork,
   signUp,
@@ -21,6 +22,7 @@ import {
 } from "@/lib/api";
 import { Network } from "@/types/networks";
 import { useGetProfile } from "./queries";
+import { supabase } from "./supabase";
 
 export const useOpenNetwork = (network_id: string) => {
   const queryClient = useQueryClient();
@@ -196,17 +198,81 @@ export const useUpdateUser = () => {
 
 export const useConsolidate = () => {
   const queryClient = useQueryClient();
+
   return useMutation<
     ConsolidateResponse,
     unknown,
     { disciple_id: string; consolidator_id: string }
   >((payload) => consolidate(payload.disciple_id, payload.consolidator_id), {
-    onSuccess: (_, { disciple_id, consolidator_id }) => {
+    onSuccess: (_, { disciple_id }) => {
       queryClient.invalidateQueries(["getConsolidations", { id: disciple_id }]);
       queryClient.invalidateQueries([
         "getConsolidationDetails",
-        { id: consolidator_id },
+        { id: disciple_id },
       ]);
     },
   });
+};
+
+export const useUpdateProfilePicture = (id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<UpdateUserPaypload, unknown, any>(
+    async function (file) {
+      const { error } = await supabase.storage
+        .from("public")
+        .upload(`profiles/${file.name}`, file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      const publicUrl = supabase.storage
+        .from("public")
+        .getPublicUrl(`profiles/${file.name}`).data.publicUrl;
+
+      let user;
+
+      try {
+        user = await updateUser({ img_url: publicUrl, id });
+      } catch (err: any) {
+        throw new Error(err);
+      }
+
+      if (error) {
+        throw new Error(error.message);
+      }
+
+      return user;
+    },
+    {
+      onSuccess: (response) => {
+        queryClient.invalidateQueries(["getProfileById", { id: response?.id }]);
+        queryClient.invalidateQueries([
+          "getNetworksByDiscipler",
+          { id: response.id },
+        ]);
+        queryClient.invalidateQueries([
+          "getProfile",
+          { email: response.email },
+        ]);
+      },
+    }
+  );
+};
+
+export const usePublishConsolidation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ disciple_id: string }, unknown, string>(
+    (id) => publishConsolidation(id),
+    {
+      onSuccess(response, id) {
+        queryClient.invalidateQueries(["getConsolidationById", { id }]);
+        queryClient.invalidateQueries([
+          "getConsolidationDetails",
+          { id: response?.disciple_id },
+        ]);
+      },
+    }
+  );
 };

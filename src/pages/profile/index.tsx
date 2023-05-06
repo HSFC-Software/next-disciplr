@@ -11,6 +11,7 @@ import { store } from "@/lib/models";
 import { useFlags } from "launchdarkly-react-client-sdk";
 import { supabase } from "@/lib/supabase";
 import { destroyCookie } from "nookies";
+import Avatar from "@/components/base/avatar";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -35,6 +36,10 @@ export default function Home() {
     destroyCookie(null, "token");
     window.location.href = "/sign-in";
   };
+
+  const initials = `${profile?.first_name?.charAt(0) ?? ""}${
+    profile?.last_name?.charAt(0) ?? ""
+  }`.trim();
 
   return (
     <>
@@ -76,9 +81,12 @@ export default function Home() {
         <Body>
           <section className="px-7 grow overflow-y-auto h-full">
             <div className="flex justify-center py-5 mb-4">
-              <div className="w-[100px] h-[100px] bg-gray-100 rounded-full flex justify-center items-center text-4xl font-bold text-slate-700">
-                {profile?.first_name[0] ?? "-"}
-              </div>
+              <Avatar
+                size={101}
+                fontSize="text-4xl"
+                imgSrc={profile?.img_url}
+                id={profile?.id}
+              />
             </div>
             <label className={`${styles.label} uppercase font-medium`}>
               General Information

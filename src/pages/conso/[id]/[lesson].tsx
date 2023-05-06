@@ -554,7 +554,7 @@ function L3() {
           </li>
           <li>
           <header>
-              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}className={toggle&&"bg-yellow-300 px-1 text-black"}>4. MAGANDANG HINAHARAP/FUTURE</strong>
+              <strong className={toggle&&"bg-yellow-300 px-1 text-black"}>4. MAGANDANG HINAHARAP/FUTURE</strong>
             </header>
             <p className="indent-8">
               Hindi masama na ihanda ang iyong kinabukasan dito sa lupa: mag-aral, magtrabaho
@@ -761,7 +761,7 @@ function L4(){
       </div>
       <div className="mt-2">
         <header>
-          <strong className={toggle&&"bg-green-400 px-1 text-black"}className={toggle&&"bg-green-400 px-1 text-black"}>REMINDERS</strong>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>REMINDERS</strong>
           <ol>
             <li>
               1. Advance reading of Lesson 5.
@@ -777,7 +777,7 @@ function L4(){
       </div>
       <div className="mt-2">
         <header>
-          <strong className={toggle&&"bg-green-400 px-1 text-black"}className={toggle&&"bg-green-400 px-1 text-black"}>CONSOLIDATORS REMINDERS</strong>
+          <strong className={toggle&&"bg-green-400 px-1 text-black"}>CONSOLIDATORS REMINDERS</strong>
         </header>
         <ol>
           <li>

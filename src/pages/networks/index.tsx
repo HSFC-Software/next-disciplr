@@ -8,6 +8,7 @@ import Body from "@/components/base/body";
 import { Skeleton } from "@mui/material";
 import { generateNumberBetween } from "@/lib/utils";
 import { useEffect, useState } from "react";
+import GroupIcon from "@/components/base/icons/Group";
 
 const Networks = () => {
   const { data: profile } = useGetProfile();
@@ -33,24 +34,28 @@ const Networks = () => {
               <Preloader />
             </div>
           )}
-          <div className="p-7 flex flex-col gap-7">
-            {networks
-              ?.sort((network) => (network.status === "Active" ? -1 : 1))
-              .map((network) => {
-                return (
-                  <NetworkCard
-                    id={network.id}
-                    key={network.id}
-                    alias={network.name}
-                    created_at={moment(network.created_at).format(
-                      "MMM DD, YYYY"
-                    )}
-                    member_count={network.member_count ?? 0}
-                    status={network.status}
-                  />
-                );
-              })}
-          </div>
+          {networks?.length === 0 ? (
+            <EmptyScreen />
+          ) : (
+            <div className="p-7 flex flex-col gap-7">
+              {networks
+                ?.sort((network) => (network.status === "Active" ? -1 : 1))
+                .map((network) => {
+                  return (
+                    <NetworkCard
+                      id={network.id}
+                      key={network.id}
+                      alias={network.name}
+                      created_at={moment(network.created_at).format(
+                        "MMM DD, YYYY"
+                      )}
+                      member_count={network.member_count ?? 0}
+                      status={network.status}
+                    />
+                  );
+                })}
+            </div>
+          )}
         </Body>
       </Layout>
     </>
@@ -98,3 +103,15 @@ function Preloader() {
 
   return null;
 }
+
+export const EmptyScreen = () => {
+  return (
+    <div className="h-full w-full flex flex-col items-center justify-center">
+      <GroupIcon width={147} height={147} />
+
+      <div className="text-xl text-gray-500 mt-7 text-center max-w-[380px]">
+        Your <strong>Disciplr</strong> will assign you a network soon
+      </div>
+    </div>
+  );
+};

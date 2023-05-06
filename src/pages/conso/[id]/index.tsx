@@ -9,12 +9,18 @@ import Avatar from "@/components/base/avatar";
 import { getInitials } from "@/lib/utils";
 import { useGetConsolidationDetails, useGetProfile } from "@/lib/queries";
 import { useConsolidate } from "@/lib/mutations";
+import {
+  RiCheckboxCircleLine,
+  RiCheckboxBlankCircleLine,
+} from "react-icons/ri";
 
 export default function ConsolidationDetails() {
   const router = useRouter();
   const disciple_id = router.query.id;
   const { data: user } = useGetProfile();
-  const { data } = useGetConsolidationDetails(String(disciple_id));
+  const { data, isLoading: isGettingData } = useGetConsolidationDetails(
+    String(disciple_id)
+  );
   const { mutate: consolidate, isLoading } = useConsolidate();
 
   const handleGoUpOneLevel = () => {
@@ -54,13 +60,8 @@ export default function ConsolidationDetails() {
           </div>
         </Header>
         <div className="flex items-center flex-col py-5 z-10">
-          <Avatar fontSize="text-2xl" size={100}>
-            {getInitials(
-              `${data?.disciple.first_name ?? ""} ${
-                data?.disciple.last_name ?? ""
-              }`
-            )}
-          </Avatar>
+          <Avatar fontSize="text-2xl" size={100} id={data?.disciple.id} />
+
           <div className="flex flex-col items-center gap-1 mt-5">
             <span className="text-[#8D8D8D]">
               {data?.disciple.first_name} {data?.disciple.last_name}
@@ -78,12 +79,14 @@ export default function ConsolidationDetails() {
           <div className="mt-10 flex gap-3">
             <button
               onClick={handleConsolidate}
-              disabled={isLoading}
-              className="disabled:opacity-50 bg-primary rounded-2xl px-8 py-4 text-white"
+              disabled={
+                isGettingData || isLoading || data?.recent.status === "DRAFT"
+              }
+              className="disabled:opacity-30 bg-primary rounded-2xl px-8 py-4 text-white"
             >
               Consolidate
             </button>
-            <button className="bg-primary rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
+            <button className="bg-gray-300 rounded-2xl px-8 py-4 text-white opacity-50 cursor-not-allowed">
               Contact Now
             </button>
           </div>
@@ -95,7 +98,7 @@ export default function ConsolidationDetails() {
           <header className="font-semibold text-[#686777] text-xl">
             HISTORY
           </header>
-          <div className="flex flex-col gap-7 mt-7">
+          <div className="flex flex-col gap-10 mt-7">
             {data?.history?.map((conso) => {
               return (
                 <div
@@ -108,16 +111,28 @@ export default function ConsolidationDetails() {
                     )
                   }
                 >
-                  <div className="shrink-0">
-                    <Lesson
-                      code={conso.lesson_code.code}
-                      name={conso.lesson_code.name}
-                    />
+                  <div className="flex items-center justify-between w-full">
+                    <div className="shrink-0 flex gap-5">
+                      <Lesson
+                        code={conso.lesson_code.code}
+                        name={conso.lesson_code.name}
+                      />
+                      <span className="text-sm text-[#686777]">
+                        {moment(conso.created_at).fromNow()} (
+                        {moment(conso.created_at).format("MM DD, YYYY")})
+                      </span>
+                    </div>
                   </div>
-                  <span className="text-sm text-[#686777]">
-                    {moment(conso.created_at).fromNow()} (
-                    {moment(conso.created_at).format("MM DD, YYYY")})
-                  </span>
+                  {conso.status === "DRAFT" && (
+                    <span className="text-lg text-gray-400">
+                      <RiCheckboxBlankCircleLine />
+                    </span>
+                  )}
+                  {conso.status === "PUBLISHED" && (
+                    <span className="text-lg text-[#6e7ac5]">
+                      <RiCheckboxCircleLine />
+                    </span>
+                  )}
                 </div>
               );
             })}

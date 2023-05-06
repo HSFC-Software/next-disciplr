@@ -177,7 +177,7 @@ export const signUp = async (payload: SignUpPayload) => {
   }
 };
 
-export type UpdateUserPaypload = {
+export type UpdateUserPaypload = Partial<{
   first_name: string;
   last_name: string;
   middle_name: string;
@@ -188,7 +188,8 @@ export type UpdateUserPaypload = {
   sex: "Male" | "Female";
   status: "Active" | "Inactive";
   id?: string;
-};
+  img_url?: string;
+}>;
 
 export const updateUser = async (payload: UpdateUserPaypload) => {
   try {
@@ -247,6 +248,7 @@ type ConsolidationDetails = {
       code: LessonCodes;
       name: string;
     };
+    status: "DRAFT" | "PUBLISHED";
   };
   disciple: {
     id: string;
@@ -261,6 +263,7 @@ type ConsolidationDetails = {
       code: LessonCodes;
       name: string;
     };
+    status: "DRAFT" | "PUBLISHED";
   }[];
 };
 
@@ -314,6 +317,7 @@ type GetConsolidationByIdResponse = {
     name: string;
     title: string;
   };
+  status: "DRAFT" | "PUBLISHED";
 };
 
 export const getConsolidationById = async (id: string) => {
@@ -328,6 +332,17 @@ export const getConsolidationById = async (id: string) => {
 export const getProfileById = async (id: string) => {
   try {
     const { data } = await axios.get(`/profile/${id}`);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const publishConsolidation = async (id: string) => {
+  try {
+    const { data } = await axios.patch(`/consolidations?id=${id}`, {
+      status: "PUBLISHED",
+    });
     return data;
   } catch (err) {
     return Promise.reject(err);

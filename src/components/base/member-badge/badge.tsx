@@ -18,13 +18,30 @@ type Props = {
 };
 
 export default function MemberBadge(props: Props) {
-  const { first_name, last_name, editable, onRemove, status, onSetActive } =
-    props;
+  const {
+    first_name,
+    last_name,
+    editable,
+    onRemove,
+    status,
+    onSetActive,
+    image_url,
+  } = props;
 
   const router = useRouter();
 
   const handleOnclick = () => {
     router.push("/profile/[id]", `/profile/${props.id}`);
+  };
+
+  const handleOnRemove = (e: any) => {
+    e?.stopPropagation?.();
+    onRemove?.();
+  };
+
+  const handleOnActivate = (e: any) => {
+    e?.stopPropagation?.();
+    onSetActive?.(e);
   };
 
   return (
@@ -33,9 +50,7 @@ export default function MemberBadge(props: Props) {
       className="flex items-center bg-transparent"
     >
       <span style={{ opacity: status === "Active" ? 1 : 0.5 }} className="z-10">
-        <Avatar fontSize="text-base" size={40}>
-          {`${first_name?.charAt(0) ?? ""}${last_name?.charAt(0) ?? ""}`.trim()}
-        </Avatar>
+        <Avatar id={props.id} fontSize="text-base" size={40} />
       </span>
 
       <div
@@ -47,7 +62,7 @@ export default function MemberBadge(props: Props) {
 
       {editable && status === "Inactive" && (
         <button
-          onClick={(e) => onSetActive?.(e)}
+          onClick={handleOnActivate}
           className="disabled:opacity-50 ml-[-8px] mr-3 text-green-500 z-10"
         >
           <span className="pointer-events-none">
@@ -58,7 +73,7 @@ export default function MemberBadge(props: Props) {
 
       {editable && (
         <button
-          onClick={() => onRemove?.()}
+          onClick={handleOnRemove}
           className="ml-[-8px] text-red-500 z-10"
         >
           <TbSquareRoundedXFilled size={24} />

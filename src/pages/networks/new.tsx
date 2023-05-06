@@ -67,7 +67,7 @@ const NewNetwork = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout activeRoute="networks">
-        <Header>
+        <Header showBackArrrow>
           <div className="flex w-full justify-between items-center">
             New Network
           </div>
