@@ -82,6 +82,7 @@ export type LinkNewMemberPayload = {
   last_name: string;
   middle_name?: string;
   network_id: string;
+  contact_number?: string;
 };
 
 export const linkNewMember = async (payload: LinkNewMemberPayload) => {
