@@ -2,6 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useToken } from "@/lib/hooks";
 import Auth from "@/components/base/auth";
+import axios from "axios";
 
 export default function Sms() {
   const token = useToken();
@@ -15,6 +16,11 @@ export default function Sms() {
     const recipients = (recipientsEl as any)?.value;
 
     const receivers = recipients?.trim()?.split(" ");
+
+    axios
+      .post("/api/sms", { text, receivers })
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   return (
