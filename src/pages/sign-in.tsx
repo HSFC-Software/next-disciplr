@@ -12,7 +12,9 @@ export default function Home() {
   const handleSignInWithGoogle = () => {
     supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/auth` },
+      options: {
+        redirectTo: `${window.location.origin}/auth?next=${router.query.next}`,
+      },
     });
   };
 

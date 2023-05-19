@@ -4,8 +4,10 @@ import { setCookie } from "nookies";
 import Head from "next/head";
 import Script from "next/script";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 export default function Auth() {
+  const router = useRouter();
   const [token, setToken] = useState("");
   const { data } = useGetProfileFromToken(token);
 
@@ -20,7 +22,9 @@ export default function Auth() {
   if (data) {
     const params = Object.fromEntries(new URLSearchParams(location.hash));
 
-    if (params.next === "undefined") {
+    if (router.query.next && router.query.next !== "undefined") {
+      window.location.href = router.query.next as string;
+    } else if (params.next === "undefined" || !params.next) {
       window.location.href = "/networks";
     } else {
       window.location.href = params.next;
