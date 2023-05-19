@@ -132,7 +132,7 @@ export default function Sms() {
                 }
                 id="mobile-input"
                 className="outline-0"
-                onKeyPress={handlePress}
+                onKeyUp={handlePress}
                 onFocus={() => setShowInput(true)}
                 onBlur={() => {
                   if (mobileNumbers.length === 0) {
