@@ -43,7 +43,7 @@ export default function Sms() {
 
   const handlePress = (e: any) => {
     const value = e.target.value;
-    if (e.code === "Backspace" && value === "") {
+    if ((e.code === "Backspace" || e.which === 8) && value === "") {
       const _mutableMobileNumbers = [...mobileNumbers];
       _mutableMobileNumbers.pop();
 
