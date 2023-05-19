@@ -8,7 +8,7 @@ export default function Auth({ children }: { children?: ReactNode }) {
 
     if (!token) {
       destroyCookie(null, "token");
-      window.location.href = `/sign-in?next=${window.location.href}`;
+      window.location.href = `/sign-in`;
     }
   }, []);
 

@@ -13,7 +13,7 @@ export default function Home() {
     supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth?next=${router.query.next}`,
+        redirectTo: `${window.location.origin}/auth`,
       },
     });
   };
@@ -28,7 +28,7 @@ export default function Home() {
       })
       .then((res) => {
         if (!res?.error)
-          return (window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}&next=${router.query.next}`);
+          return (window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}`);
         else
           toast.error(res.error?.message, {
             autoClose: 750,
