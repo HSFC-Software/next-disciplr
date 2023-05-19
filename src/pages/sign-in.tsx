@@ -26,7 +26,7 @@ export default function Home() {
       })
       .then((res) => {
         if (!res?.error)
-          return (window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}`);
+          return (window.location.href = `${window.location.origin}/auth#access_token=${res.data.session?.access_token}&next=${router.query.next}`);
         else
           toast.error(res.error?.message, {
             autoClose: 750,

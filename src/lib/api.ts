@@ -1,4 +1,5 @@
 import axios from "@/lib/axios";
+import request from "axios";
 import { Network } from "@/types/networks";
 import { Profile } from "@/types/profile";
 
@@ -344,6 +345,15 @@ export const publishConsolidation = async (id: string) => {
     const { data } = await axios.patch(`/consolidations?id=${id}`, {
       status: "PUBLISHED",
     });
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const sendBulkSms = async (text: string, receivers: string[]) => {
+  try {
+    const { data } = await request.post("/api/sms", { text, receivers });
     return data;
   } catch (err) {
     return Promise.reject(err);
