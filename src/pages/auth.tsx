@@ -22,9 +22,7 @@ export default function Auth() {
   if (data) {
     const params = Object.fromEntries(new URLSearchParams(location.hash));
 
-    if (router.query.next && router.query.next !== "undefined") {
-      window.location.href = router.query.next as string;
-    } else if (params.next === "undefined" || !params.next) {
+    if (params.next === "undefined" || !params.next) {
       window.location.href = "/networks";
     } else {
       window.location.href = params.next;
