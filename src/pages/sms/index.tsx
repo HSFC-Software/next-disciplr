@@ -51,7 +51,12 @@ export default function Sms() {
       return;
     }
 
-    if (e.code === "Enter" || e.code === "Space") {
+    if (
+      e.code === "Enter" ||
+      e.code === "Space" ||
+      e.which === 13 ||
+      e.which === 32
+    ) {
       setMobileNumber((prev) => {
         return [...prev, value];
       });
@@ -127,7 +132,7 @@ export default function Sms() {
                 }
                 id="mobile-input"
                 className="outline-0"
-                onKeyDown={handlePress}
+                onKeyPress={handlePress}
                 onFocus={() => setShowInput(true)}
                 onBlur={() => {
                   if (mobileNumbers.length === 0) {
