@@ -12,6 +12,7 @@ import {
   publishConsolidation,
   removeMember,
   removeNetwork,
+  sendBulkSms,
   signUp,
   SignUpPayload,
   unlinkMember,
@@ -274,5 +275,11 @@ export const usePublishConsolidation = () => {
         ]);
       },
     }
+  );
+};
+
+export const useSendBulkSms = () => {
+  return useMutation<unknown, unknown, { text: string; receivers: string[] }>(
+    ({ text, receivers }) => sendBulkSms(text, receivers)
   );
 };

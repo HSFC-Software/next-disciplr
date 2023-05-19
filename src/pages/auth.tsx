@@ -18,8 +18,13 @@ export default function Auth() {
   }, []);
 
   if (data) {
-    // authenticated
-    window.location.href = "/networks";
+    const params = Object.fromEntries(new URLSearchParams(location.hash));
+
+    if (params.next === "undefined") {
+      window.location.href = "/networks";
+    } else {
+      window.location.href = params.next;
+    }
   }
 
   if (data === null) {
