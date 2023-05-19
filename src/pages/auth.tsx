@@ -20,13 +20,7 @@ export default function Auth() {
   }, []);
 
   if (data) {
-    const params = Object.fromEntries(new URLSearchParams(location.hash));
-
-    if (params.next === "undefined" || !params.next) {
-      window.location.href = "/networks";
-    } else {
-      window.location.href = params.next;
-    }
+    window.location.href = "/networks";
   }
 
   if (data === null) {
