@@ -13,7 +13,7 @@ export default function Sms() {
   const [showInput, setShowInput] = useState(false);
   const { isLoading, mutate } = useSendBulkSms();
 
-  if (!token) return <Auth />;
+
 
   const handleSubmit = () => {
     const textareaEl = document.getElementById("text-content");
