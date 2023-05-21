@@ -1,19 +1,21 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useToken } from "@/lib/hooks";
-import Auth from "@/components/base/auth";
 import { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import { useSendBulkSms } from "@/lib/mutations";
 import { toast } from "react-toastify";
+import Flagged from "@/components/modules/flagged";
 
-export default function Sms() {
-  const token = useToken();
+export default function Wrapper() {
+  <Flagged flagKey="enableSmsTextBlast">
+    <Sms />
+  </Flagged>;
+}
+
+function Sms() {
   const [mobileNumbers, setMobileNumber] = useState<string[]>([]);
   const [showInput, setShowInput] = useState(false);
   const { isLoading, mutate } = useSendBulkSms();
-
-
 
   const handleSubmit = () => {
     const textareaEl = document.getElementById("text-content");
