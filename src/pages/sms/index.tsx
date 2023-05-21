@@ -7,9 +7,11 @@ import { toast } from "react-toastify";
 import Flagged from "@/components/modules/flagged";
 
 export default function Wrapper() {
-  <Flagged flagKey="enableSmsTextBlast">
-    <Sms />
-  </Flagged>;
+  return (
+    <Flagged flagKey="enableSmsTextBlast">
+      <Sms />
+    </Flagged>
+  );
 }
 
 function Sms() {
