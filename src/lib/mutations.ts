@@ -279,7 +279,9 @@ export const usePublishConsolidation = () => {
 };
 
 export const useSendBulkSms = () => {
-  return useMutation<unknown, unknown, { text: string; receivers: string[] }>(
-    ({ text, receivers }) => sendBulkSms(text, receivers)
-  );
+  return useMutation<
+    unknown,
+    unknown,
+    { text: string; receivers: string[]; sender: string }
+  >(({ text, receivers, sender }) => sendBulkSms(text, receivers, sender));
 };

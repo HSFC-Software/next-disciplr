@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { useSendBulkSms } from "@/lib/mutations";
 import { toast } from "react-toastify";
 import Flagged from "@/components/modules/flagged";
+import SelectPicker from "@/components/modules/selectpicker";
 
 export default function Wrapper() {
   return (
@@ -18,6 +19,8 @@ function Sms() {
   const [mobileNumbers, setMobileNumber] = useState<string[]>([]);
   const [showInput, setShowInput] = useState(false);
   const { isLoading, mutate } = useSendBulkSms();
+  const [sender, setSender] = useState("");
+  const [showSenderPicker, setShowSenderPicker] = useState(false);
 
   const handleSubmit = () => {
     const textareaEl = document.getElementById("text-content");
@@ -29,6 +32,7 @@ function Sms() {
       {
         text,
         receivers: mobileNumbers,
+        sender,
       },
       {
         onSuccess() {
@@ -145,6 +149,28 @@ function Sms() {
                 }}
               />
             </div>
+
+            <SelectPicker
+              label="Sender Name"
+              isVisible={showSenderPicker}
+              value={sender}
+              onConfirm={(value) => setSender(value)}
+              onClose={() => setShowSenderPicker(false)}
+            >
+              <option value="Disciplr">Disciplr</option>
+              <option value="HSFCTaytay">HSFCTaytay</option>
+            </SelectPicker>
+
+            <input
+              disabled={isLoading}
+              onClick={() => setShowSenderPicker(true)}
+              onFocus={() => setShowSenderPicker(false)}
+              value={sender}
+              readOnly
+              type="text"
+              placeholder="Sender Name"
+              className="w-full px-4 py-2 border-2 rounded-xl mt-2 border-gray-300 cursor"
+            />
           </div>
           <button
             disabled={isLoading || mobileNumbers.length === 0}

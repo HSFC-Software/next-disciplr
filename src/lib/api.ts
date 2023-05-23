@@ -351,9 +351,17 @@ export const publishConsolidation = async (id: string) => {
   }
 };
 
-export const sendBulkSms = async (text: string, receivers: string[]) => {
+export const sendBulkSms = async (
+  text: string,
+  receivers: string[],
+  sender: string
+) => {
   try {
-    const { data } = await request.post("/api/sms", { text, receivers });
+    const { data } = await request.post("/api/sms", {
+      text,
+      receivers,
+      sender,
+    });
     return data;
   } catch (err) {
     return Promise.reject(err);

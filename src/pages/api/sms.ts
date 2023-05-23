@@ -13,8 +13,10 @@ export default function handler(
       apikey: process.env.SEMAPHORE_API_KEY,
       number: req.body.receivers?.join(","),
       message: req.body.text,
+      sendername: req.body?.sender || "SEMAPHORE",
     })
     .then((response) => {
+      // send notification to discord bot
       res.status(200).json(response.data);
     })
     .catch((err) => {
