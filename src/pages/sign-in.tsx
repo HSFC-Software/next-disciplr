@@ -125,7 +125,7 @@ export default function Home() {
           <div />
 
           <p className="mt-8 px-2 text-sm text-gray-400">
-          By clicking "Submit" or "Sign In with Google", you agree to our <a className="text-[#6e7ac5]" href="https://app.fishgen.org/privacy.html">Privacy Policy</a>
+          By clicking &quot;Submit&quot; or &quot;Sign In with Google&quot;, you agree to our <a className="text-[#6e7ac5]" href="https://app.fishgen.org/privacy.html">Privacy Policy</a>
           </p>
 
           <button
@@ -137,7 +137,7 @@ export default function Home() {
               src="/btn_google_signin_light_normal_web@2x.png"
               alt="google sign in"
               width="200"
-              height="200"
+              height="48"
             />
           </button>
 
