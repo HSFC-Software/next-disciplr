@@ -73,7 +73,9 @@ const BreadCrumbs = createModel<RootModel>()({
   effects: () => ({}),
 });
 
-type AppState = {};
+type AppState = {
+  selectedEventDate: "";
+};
 
 export const App = createModel<RootModel>()({
   state: {
