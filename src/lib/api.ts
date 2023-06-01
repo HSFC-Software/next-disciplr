@@ -376,6 +376,21 @@ export type GetEventsParams = {
   date: Date; // Must be iso string `new Date().toISOString()`
 };
 
+export type EventsResponse = {
+  id: string;
+  name: string;
+  date_time: string;
+  event_type: EventType;
+  network_id?: string;
+  consolidation_id?: string;
+  locations_id?: string;
+  attachments_id?: string[];
+  participants_id?: string[];
+  consolidations?: any;
+  event_participants: string[];
+  files?: string[];
+};
+
 export const getEvents = async (params: GetEventsParams) => {
   try {
     let url = "/events?"; //events?type=CELLGROUP&type=CLOSED_CELL&date=2023-06-28T18:04:23.665Z&network_id=ad5987f3-030e-4f0a-b343-e4bbf400ee30
@@ -390,7 +405,7 @@ export const getEvents = async (params: GetEventsParams) => {
     url += `&network_id=${params.network_id}`;
 
     const { data } = await axios.get(url);
-    return data;
+    return data as EventsResponse[];
   } catch (err) {
     return Promise.reject(err);
   }

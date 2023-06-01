@@ -1,4 +1,5 @@
 import styles from "./index.module.scss";
+import { store } from "@/lib/models";
 
 function getDaysInMonth(year: number, month: number) {
   const isLeapYear = year % 4 === 0;
@@ -17,7 +18,11 @@ function getDaysInMonth(year: number, month: number) {
   return daysInMonth;
 }
 
-const Calendar = (props: { month?: number; year?: number }) => {
+const Calendar = (props: {
+  month?: number;
+  year?: number;
+  eventDates?: string[]; // format: "MM-DD-YYYY"[]
+}) => {
   const monthIndex = props.month ?? new Date().getMonth();
   const year = props.year ?? new Date().getFullYear();
 
@@ -40,6 +45,12 @@ const Calendar = (props: { month?: number; year?: number }) => {
     (_, i) => i + 1
   );
 
+  let previousMonthIIndex = monthIndex - 1;
+  if (previousMonthIIndex < 0) previousMonthIIndex = 11;
+
+  let nextMonthIndex = monthIndex;
+  if (nextMonthIndex > 11) nextMonthIndex = 0;
+
   return (
     <div className={styles.calendar}>
       <div className="grid grid-cols-7">
@@ -50,24 +61,67 @@ const Calendar = (props: { month?: number; year?: number }) => {
         <li className="font-bold">Thu</li>
         <li className="font-bold">Fri</li>
         <li className="font-bold">Sat</li>
-        <RenderDays days={previousMonthDays} />
-        <RenderDays days={days} active />
-        <RenderDays days={nextMonthDays} />
+        <RenderDays
+          days={previousMonthDays}
+          month={previousMonthIIndex}
+          year={year}
+          eventDates={props.eventDates}
+        />
+        <RenderDays
+          days={days}
+          active
+          month={monthIndex}
+          year={year}
+          eventDates={props.eventDates}
+        />
+        <RenderDays
+          days={nextMonthDays}
+          month={nextMonthIndex}
+          year={year}
+          eventDates={props.eventDates}
+        />
       </div>
     </div>
   );
 };
 
-function RenderDays(props: { days: number[]; active?: boolean }) {
-  const { days, active } = props;
+function RenderDays(props: {
+  days: number[];
+  active?: boolean;
+  month?: number;
+  year?: number;
+  eventDates?: string[];
+}) {
+  const { days, active, month, year, eventDates = [] } = props;
 
   return (
     <>
-      {days.map((day) => (
-        <li className={active ? "" : "text-gray-200"} key={day}>
-          {day}
-        </li>
-      ))}
+      {days.map((day) => {
+        let showEventIndicator = false;
+
+        const currentDate = `${month}-${day}-${year}`;
+
+        if (eventDates.includes(currentDate)) {
+          showEventIndicator = true;
+        }
+
+        return (
+          <li
+            key={day}
+            onClick={() => store.dispatch.App.setSelectedEventDate(currentDate)}
+            className={`relative flex justify-center cursor-pointer 
+              ${active ? "" : "text-gray-200"}
+            `}
+          >
+            {day}
+            {showEventIndicator && (
+              <span className="absolute bottom-[-7px] text-lg text-[#6e7ac5] font-bold">
+                •
+              </span>
+            )}
+          </li>
+        );
+      })}
     </>
   );
 }

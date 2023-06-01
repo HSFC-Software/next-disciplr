@@ -36,6 +36,11 @@ const Events = () => {
     }
   }, [network, router]);
 
+  const eventDates = data?.map((event) => {
+    const date = new Date(event.date_time);
+    return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
+  });
+
   return (
     <>
       <DatePicker
@@ -64,7 +69,7 @@ const Events = () => {
           <div className="px-7">
             <BreadCrumbs activePageId="network-events" />
           </div>
-          <div className="text-right text-[#6e7ac5] text-lg mb-7 pr-10">
+          <div className="text-right text-[#6e7ac5] text-lg my-7 pr-10">
             <button
               onClick={() => setShowDatePicker(true)}
               className="border-b border-[#d0d5f6] "
@@ -73,7 +78,7 @@ const Events = () => {
             </button>
           </div>
           <section className="px-7">
-            <Calendar year={year} month={month} />
+            <Calendar year={year} month={month} eventDates={eventDates} />
           </section>
         </Body>
       </Layout>

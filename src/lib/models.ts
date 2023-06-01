@@ -11,6 +11,7 @@ export interface RootModel extends Models<RootModel> {
   Networks: typeof Networks;
   Profile: typeof Profile;
   BreadCrumbs: typeof BreadCrumbs;
+  App: typeof App;
 }
 
 type NetworkUpdateState = {};
@@ -72,11 +73,27 @@ const BreadCrumbs = createModel<RootModel>()({
   effects: () => ({}),
 });
 
+type AppState = {};
+
+export const App = createModel<RootModel>()({
+  state: {
+    selectedEventDate: "",
+  } as AppState,
+  reducers: {
+    setSelectedEventDate: (state, selectedEventDate) => ({
+      ...state,
+      selectedEventDate,
+    }),
+  },
+  effects: (dispatch) => ({}),
+});
+
 export const models: RootModel = {
   NetworkUpdates,
   Networks,
   Profile,
   BreadCrumbs,
+  App,
 };
 
 const migrations = {
@@ -90,13 +107,17 @@ const migrations = {
     ...state,
     BreadCrumbs: { icon: null, pages: [] },
   }),
+  2: (state: any) => ({
+    ...state,
+    App: { selectedEventDate: "" },
+  }),
 };
 
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: [],
-  version: 1,
+  blacklist: ["App"],
+  version: 2,
   migrate: createMigrate(migrations, { debug: true }),
 };
 
