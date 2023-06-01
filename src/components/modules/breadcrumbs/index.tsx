@@ -44,7 +44,12 @@ const BreadCrumbs = (props: { activePageId?: string }) => {
                 <VscChevronRight />
               </span>
             )}
-            <span className="overflow-hidden text-ellipsis whitespace-nowrap">
+            <span
+              className={`
+              overflow-hidden text-ellipsis whitespace-nowrap
+              ${activePageId === page.id ? "font-semibold" : ""}
+            `}
+            >
               {page.title}
             </span>
           </>

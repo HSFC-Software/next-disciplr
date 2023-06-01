@@ -7,7 +7,9 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Body from "@/components/base/body";
 import DatePicker, { months } from "@/components/modules/datepicker";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import BreadCrumbs from "@/components/modules/breadcrumbs";
+import { store } from "@/lib/models";
 
 const Events = () => {
   const router = useRouter();
@@ -23,6 +25,16 @@ const Events = () => {
     type: ["CELLGROUP", "CLOSED_CELL", "CONSOLIDATION", "PID"],
     date,
   });
+
+  useEffect(() => {
+    if (network?.id) {
+      store.dispatch.BreadCrumbs.addPage({
+        id: "network-events",
+        title: network.name + " Events",
+        url: window.origin + router.asPath,
+      });
+    }
+  }, [network, router]);
 
   return (
     <>
@@ -49,6 +61,9 @@ const Events = () => {
           </div>
         </Header>
         <Body>
+          <div className="px-7">
+            <BreadCrumbs activePageId="network-events" />
+          </div>
           <div className="text-right text-[#6e7ac5] text-lg mb-7 pr-10">
             <button
               onClick={() => setShowDatePicker(true)}
