@@ -14,6 +14,8 @@ import {
   getConsolidationDetails,
   getConsolidationById,
   getProfileById,
+  getEvents,
+  GetEventsParams,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -151,3 +153,13 @@ export const useGetProfileById = (id: string) =>
     staleTime: 1000 * 60 * 5,
     enabled: true,
   });
+
+export const useGetEvents = (params: GetEventsParams) =>
+  useQuery(
+    ["getEvents", { network_id: params.network_id }],
+    async () => await getEvents(params),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );

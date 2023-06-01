@@ -367,3 +367,31 @@ export const sendBulkSms = async (
     return Promise.reject(err);
   }
 };
+
+type EventType = "CELLGROUP" | "CLOSED_CELL" | "PID" | "CONSOLIDATION";
+
+export type GetEventsParams = {
+  network_id?: string;
+  type: EventType[];
+  date: Date; // Must be iso string `new Date().toISOString()`
+};
+
+export const getEvents = async (params: GetEventsParams) => {
+  try {
+    let url = "/events?"; //events?type=CELLGROUP&type=CLOSED_CELL&date=2023-06-28T18:04:23.665Z&network_id=ad5987f3-030e-4f0a-b343-e4bbf400ee30
+
+    url += `type=${params.type[0]}`;
+    params.type.forEach((type, index) => {
+      if (index === 0) return;
+      url += `&type=${type}`;
+    });
+
+    url += `&date=${params.date}`;
+    url += `&network_id=${params.network_id}`;
+
+    const { data } = await axios.get(url);
+    return data;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

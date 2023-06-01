@@ -2,7 +2,7 @@ import Calendar from "@/components/modules/calendar";
 
 import Header from "@/components/base/header";
 import Layout from "@/components/templates/page";
-import { useGetNetworkDetails } from "@/lib/queries";
+import { useGetEvents, useGetNetworkDetails } from "@/lib/queries";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Body from "@/components/base/body";
@@ -15,6 +15,14 @@ const Events = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [month, setMonth] = useState(() => new Date().getMonth());
   const [year, setYear] = useState(() => new Date().getFullYear());
+
+  const date = new Date(year, month, 1);
+
+  const { data, isLoading, isError } = useGetEvents({
+    network_id: String(router.query.id),
+    type: ["CELLGROUP", "CLOSED_CELL", "CONSOLIDATION", "PID"],
+    date,
+  });
 
   return (
     <>
