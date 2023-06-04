@@ -57,12 +57,20 @@ const AddEvent = () => {
   }, []);
 
   const handleSubmit = () => {
-    mutate({
-      network_id: networkId,
-      name: eventName,
-      event_type: eventType,
-      date_time: moment(date).utc().toISOString(),
-    });
+    mutate(
+      {
+        network_id: networkId,
+        name: eventName,
+        event_type: eventType,
+        date_time: moment(date).utc().toISOString(),
+      },
+      {
+        onSuccess: (response) => {
+          // go to event details page
+          router.push(`/networks/${networkId}/events/${response.id}`);
+        },
+      }
+    );
   };
 
   return (
