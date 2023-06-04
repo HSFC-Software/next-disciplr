@@ -135,7 +135,7 @@ const AddEvent = () => {
               disabled={isSubmiting}
               value={eventName}
               onChange={(e) => setEventName(e.target.value)}
-              placeholder="Select Event Type"
+              placeholder="Enter Event Name"
               className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
             />
             <label className="block uppercase text-sm">Date</label>
