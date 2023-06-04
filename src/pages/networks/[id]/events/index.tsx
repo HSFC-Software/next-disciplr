@@ -115,6 +115,9 @@ const Events = () => {
                 </span>
               </Link>
             </header>
+            {!todaysEvents && (
+              <div className="mt-7 text-gray-400">No event for the day</div>
+            )}
             <div className="flex flex-col gap-y-4 mt-7">
               {todaysEvents?.map((event) => {
                 const time = moment(event.date_time).format("hh:mm A");
@@ -133,6 +136,40 @@ const Events = () => {
               })}
             </div>
           </section>
+          {/* <section className="px-7 mt-7">
+            <header className="flex justify-between">
+              <span className="text-[#686777]">THIS MONTH&apos;S EVENTS</span>
+            </header>
+            <div className="flex flex-col gap-y-4 mt-7 opacity-50">
+              {eventDates?.map((event) => {
+                const todaysEvents = eventsByDate?.[event];
+                return (
+                  <div key={event}>
+                    <header className="text-xs text-gray-400 mb-4">
+                      {event}
+                    </header>
+                    <div className="flex flex-col gap-3">
+                      {todaysEvents?.map((event) => {
+                        const time = moment(event.date_time).format("hh:mm A");
+                        return (
+                          <li
+                            className="flex justify-between relative gap-4"
+                            key={event.id}
+                          >
+                            <span className="flex items-center gap-3 pl-2">
+                              <div className="h-full w-[4px] bg-[#FB5D64] shrink-0 rounded-[3px]" />
+                              <span className="grow">{event.name}</span>
+                            </span>
+                            <span className="shrink-0">{time}</span>
+                          </li>
+                        );
+                      })}
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </section> */}
         </Body>
       </Layout>
     </>
