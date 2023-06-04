@@ -2,6 +2,9 @@ import { useMutation, useQueryClient } from "react-query";
 import {
   consolidate,
   ConsolidateResponse,
+  createEvent,
+  CreateEventParams,
+  EventsResponse,
   linkExistingMember,
   LinkExistingMemberPayload,
   linkNewMember,
@@ -284,4 +287,20 @@ export const useSendBulkSms = () => {
     unknown,
     { text: string; receivers: string[]; sender: string }
   >(({ text, receivers, sender }) => sendBulkSms(text, receivers, sender));
+};
+
+export const useCreateEvent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<EventsResponse, unknown, CreateEventParams>(
+    (params) => createEvent(params),
+    {
+      onSuccess: (response) => {
+        queryClient.invalidateQueries([
+          "getEvents",
+          { network_id: response.network_id },
+        ]);
+      },
+    }
+  );
 };

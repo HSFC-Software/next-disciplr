@@ -99,7 +99,7 @@ function RenderDays(props: {
       {days.map((day) => {
         let showEventIndicator = false;
 
-        const currentDate = `${month}-${day}-${year}`;
+        const currentDate = `${(month || 0) + 1}-${day}-${year}`;
 
         if (eventDates.includes(currentDate)) {
           showEventIndicator = true;

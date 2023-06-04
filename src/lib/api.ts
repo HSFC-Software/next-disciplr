@@ -368,7 +368,7 @@ export const sendBulkSms = async (
   }
 };
 
-type EventType = "CELLGROUP" | "CLOSED_CELL" | "PID" | "CONSOLIDATION";
+export type EventType = "CELLGROUP" | "CLOSED_CELL" | "PID" | "CONSOLIDATION";
 
 export type GetEventsParams = {
   network_id?: string;
@@ -406,6 +406,22 @@ export const getEvents = async (params: GetEventsParams) => {
 
     const { data } = await axios.get(url);
     return data as EventsResponse[];
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export type CreateEventParams = {
+  event_type: EventType;
+  name: string;
+  date_time: string; // should be iso string
+  network_id: string;
+};
+
+export const createEvent = async (params: CreateEventParams) => {
+  try {
+    const { data } = await axios.post("/events", params);
+    return data as EventsResponse;
   } catch (err) {
     return Promise.reject(err);
   }

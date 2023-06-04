@@ -13,6 +13,7 @@ import { State, store } from "@/lib/models";
 import { EventsResponse } from "@/lib/api";
 import { useSelector } from "react-redux";
 import moment from "moment";
+import Link from "next/link";
 
 const Events = () => {
   const router = useRouter();
@@ -35,7 +36,9 @@ const Events = () => {
   // group events by date
   const eventsByDate = data?.reduce((acc, event) => {
     const date = new Date(event.date_time);
-    const key = `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
+    const key = `${
+      date.getMonth() + 1
+    }-${date.getDate()}-${date.getFullYear()}`;
     if (!acc[key]) {
       acc[key] = [];
     }
@@ -55,7 +58,7 @@ const Events = () => {
 
   const eventDates = data?.map((event) => {
     const date = new Date(event.date_time);
-    return `${date.getMonth()}-${date.getDate()}-${date.getFullYear()}`;
+    return `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
   });
 
   const todaysEvents = eventsByDate?.[selectedDate];
@@ -102,12 +105,15 @@ const Events = () => {
           <section className="px-7 mt-7">
             <header className="flex justify-between">
               <span className="text-[#686777]">TODAY&apos;S EVENTS</span>
-              <button className="text-[#686777]">
+              <Link
+                href={`/networks/${router.query.id}/events/create`}
+                className="text-[#686777]"
+              >
                 Add New{" "}
                 <span className="ml-2 px-2 bg-[#6e7ac5] text-white rounded-lg text-lg">
                   +
                 </span>
-              </button>
+              </Link>
             </header>
             <div className="flex flex-col gap-y-4 mt-7">
               {todaysEvents?.map((event) => {
