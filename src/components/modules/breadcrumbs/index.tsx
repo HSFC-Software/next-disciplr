@@ -25,6 +25,8 @@ const BreadCrumbs = (props: { activePageId?: string }) => {
     Icon = Icons?.[iconName];
   }
 
+  const page = pages[pages.length - 1];
+
   return (
     <div className="relative">
       <div
@@ -37,23 +39,38 @@ const BreadCrumbs = (props: { activePageId?: string }) => {
           </span>
         )}
 
-        {pages.map((page, index) => (
-          <>
-            {index !== 0 && (
-              <span className="shrink-0">
-                <VscChevronRight />
+        <span className="shrink-0">
+          <VscChevronRight />
+        </span>
+
+        <span
+          className={`
+                overflow-hidden text-ellipsis whitespace-nowrap
+                ${activePageId === page.id ? "font-semibold" : ""}
+              `}
+        >
+          {page.title}
+        </span>
+
+        {/* {pages.map((page, index) => {
+          return (
+            <>
+              {index !== 0 && (
+                <span className="shrink-0">
+                  <VscChevronRight />
+                </span>
+              )}
+              <span
+                className={`
+                overflow-hidden text-ellipsis whitespace-nowrap
+                ${activePageId === page.id ? "font-semibold" : ""}
+              `}
+              >
+                {page.title}
               </span>
-            )}
-            <span
-              className={`
-              overflow-hidden text-ellipsis whitespace-nowrap
-              ${activePageId === page.id ? "font-semibold" : ""}
-            `}
-            >
-              {page.title}
-            </span>
-          </>
-        ))}
+            </>
+          );
+        })} */}
       </div>
       {showDropdown && (
         <div className="bg-[#F9F9F9] absolute mt-2 px-7 py-4 rounded-2xl max-w-[280px] flex flex-col gap-5 shadow-sm z-20">
