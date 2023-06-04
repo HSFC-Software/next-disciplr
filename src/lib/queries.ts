@@ -16,6 +16,7 @@ import {
   getProfileById,
   getEvents,
   GetEventsParams,
+  getEvent,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -163,3 +164,9 @@ export const useGetEvents = (params: GetEventsParams) =>
       enabled: true,
     }
   );
+
+export const useGetEvent = (id: string) =>
+  useQuery(["getEvent", { id }], async () => await getEvent(id), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });

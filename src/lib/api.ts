@@ -426,3 +426,12 @@ export const createEvent = async (params: CreateEventParams) => {
     return Promise.reject(err);
   }
 };
+
+export const getEvent = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/events/${id}`);
+    return data as EventsResponse;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

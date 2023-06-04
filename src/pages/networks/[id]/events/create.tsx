@@ -15,7 +15,7 @@ import BreadCrumbs from "@/components/modules/breadcrumbs";
 import { store } from "@/lib/models";
 import { EventType } from "@/lib/api";
 
-const events = {
+export const events = {
   CELLGROUP: "Cell Group",
   CLOSED_CELL: "Closed Cell",
   CONSOLIDATION: "Consolidation",
