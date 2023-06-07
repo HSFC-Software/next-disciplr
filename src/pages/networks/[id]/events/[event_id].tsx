@@ -7,15 +7,17 @@ import BreadCrumbs from "@/components/modules/breadcrumbs";
 import { useGetEvent } from "@/lib/queries";
 import Link from "next/link";
 import { events } from "./create";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Avatar from "@/components/base/avatar";
+import MemberBadge from "@/components/base/member-badge/badge";
 
 const EventDetails = () => {
   const router = useRouter();
   const networkId = String(router.query.id);
   const eventId = String(router.query.event_id);
 
-  const { data, isLoading } = useGetEvent(eventId);
-
-  console.log(data, isLoading);
+  const { data } = useGetEvent(eventId);
 
   return (
     <>
@@ -29,11 +31,6 @@ const EventDetails = () => {
           <div className="flex w-full justify-between items-center">
             {data?.name}
           </div>
-          {data?.event_type && (
-            <span className="text-xs bg-primary text-white py-1 px-4 rounded-full">
-              {events[data.event_type]}
-            </span>
-          )}
         </Header>
         <div className="px-7">
           <BreadCrumbs activePageId="create-event" />
@@ -53,6 +50,18 @@ const EventDetails = () => {
                   </span>
                 </Link>
               </header>
+              <div className="flex gap-4 mt-3">
+                {data?.event_participants?.map((participant) => (
+                  <MemberBadge
+                    id={participant.participant_id.id}
+                    status={participant.participant_id.status}
+                    editable={false}
+                    key={participant.id}
+                    first_name={participant.participant_id.first_name}
+                    last_name={participant.participant_id.last_name}
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </Body>

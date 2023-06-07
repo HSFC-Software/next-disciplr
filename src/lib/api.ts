@@ -387,7 +387,15 @@ export type EventsResponse = {
   attachments_id?: string[];
   participants_id?: string[];
   consolidations?: any;
-  event_participants: string[];
+  event_participants: {
+    id: string;
+    participant_id: {
+      id: string;
+      first_name: string;
+      last_name: string;
+      status: "Active" | "Inactive";
+    };
+  }[];
   files?: string[];
 };
 

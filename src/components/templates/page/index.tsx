@@ -51,9 +51,11 @@ function Nav(props: { activeRoute?: string }) {
   return (
     <nav
       id="nav"
-      className="shrink-0 flex px-7 py-5 justify-center fixed bottom-7 w-screen z-10"
+      className="shrink-0 flex px-7 py-5 justify-center fixed bottom-7 w-screen z-10 pointer-events-none"
     >
-      <div className={`${styles.navigation} px-14 py-5 bg-blue-200 bg-white`}>
+      <div
+        className={`${styles.navigation} px-14 py-5 bg-blue-200 bg-white pointer-events-auto`}
+      >
         <Link href="/networks">
           <GroupIcon
             width={38}

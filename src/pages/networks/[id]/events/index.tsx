@@ -123,7 +123,12 @@ const Events = () => {
                 const time = moment(event.date_time).format("hh:mm A");
                 return (
                   <li
-                    className="flex justify-between relative gap-4"
+                    onClick={() =>
+                      router.push(
+                        `/networks/${router.query.id}/events/${event.id}`
+                      )
+                    }
+                    className="flex justify-between relative gap-4 cursor-pointer"
                     key={event.id}
                   >
                     <span className="flex items-center gap-3 pl-2">
