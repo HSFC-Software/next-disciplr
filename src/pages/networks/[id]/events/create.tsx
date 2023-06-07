@@ -29,7 +29,7 @@ const AddEvent = () => {
   const [showEventTypePicker, setShowEventTypePicker] = useState(false);
   // const [showTimeStartPicker, setShowTimeStartPicker] = useState(false);
 
-  const [eventType, setEventType] = useState<EventType>("");
+  const [eventType, setEventType] = useState<EventType>("" as EventType);
   const [date, setDate] = useState<Date | null>(null);
   const [eventName, setEventName] = useState("");
   // const [timeStart, setTimeStart] = useState("");
