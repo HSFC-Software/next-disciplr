@@ -103,7 +103,12 @@ const AddMember = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout activeRoute="networks">
-        <Header>
+        <Header
+          showBackArrrow
+          onBack={() => {
+            router.push(`/networks/${router.query.id}/update`);
+          }}
+        >
           <div className="flex w-full justify-between items-center">
             Add Member
           </div>

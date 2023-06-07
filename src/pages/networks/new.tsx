@@ -67,7 +67,12 @@ const NewNetwork = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <Layout activeRoute="networks">
-        <Header showBackArrrow>
+        <Header
+          showBackArrrow
+          onBack={() => {
+            router.push(`/networks/${router.query.id}/update`);
+          }}
+        >
           <div className="flex w-full justify-between items-center">
             New Network
           </div>
