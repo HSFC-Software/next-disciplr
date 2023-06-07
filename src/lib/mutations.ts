@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import {
+  addParticipants,
   consolidate,
   ConsolidateResponse,
   createEvent,
@@ -15,6 +16,7 @@ import {
   publishConsolidation,
   removeMember,
   removeNetwork,
+  removeParticipant,
   sendBulkSms,
   signUp,
   SignUpPayload,
@@ -303,4 +305,27 @@ export const useCreateEvent = () => {
       },
     }
   );
+};
+
+export const useAddParticipants = (event_id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, string[]>(
+    (participants) => addParticipants(event_id, participants),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["getEvent", { id: event_id }]);
+      },
+    }
+  );
+};
+
+export const useRemoveParticipant = (event_id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, string>((id) => removeParticipant(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getEvent", { id: event_id }]);
+    },
+  });
 };

@@ -376,6 +376,16 @@ export type GetEventsParams = {
   date: Date; // Must be iso string `new Date().toISOString()`
 };
 
+export type EventParticipant = {
+  id: string;
+  participant_id: {
+    id: string;
+    first_name: string;
+    last_name: string;
+    status: "Active" | "Inactive";
+  };
+};
+
 export type EventsResponse = {
   id: string;
   name: string;
@@ -387,15 +397,7 @@ export type EventsResponse = {
   attachments_id?: string[];
   participants_id?: string[];
   consolidations?: any;
-  event_participants: {
-    id: string;
-    participant_id: {
-      id: string;
-      first_name: string;
-      last_name: string;
-      status: "Active" | "Inactive";
-    };
-  }[];
+  event_participants: EventParticipant[];
   files?: string[];
 };
 
@@ -439,6 +441,33 @@ export const getEvent = async (id: string) => {
   try {
     const { data } = await axios.get(`/events/${id}`);
     return data as EventsResponse;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const addParticipants = async (
+  event_id: string,
+  participants: string[]
+) => {
+  try {
+    const { data } = await axios.post(`/events/participants`, {
+      event_id,
+      participants,
+    });
+    return data as {
+      id: string;
+      participant_id: string;
+    }[];
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const removeParticipant = async (id: string) => {
+  try {
+    const { data } = await axios.delete(`/events/participants?id=${id}`);
+    return data as {};
   } catch (err) {
     return Promise.reject(err);
   }
