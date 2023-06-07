@@ -9,6 +9,7 @@ import moment from "moment";
 import { useState } from "react";
 import { useAddParticipants, useRemoveParticipant } from "@/lib/mutations";
 import { EventParticipant } from "@/lib/api";
+import { TbCalendar } from "react-icons/tb";
 
 const EventDetails = () => {
   const router = useRouter();
@@ -96,92 +97,114 @@ const EventDetails = () => {
           <BreadCrumbs activePageId="create-event" />
         </div> */}
         <Body>
-          <div className="px-7">
-            <div>
-              {/* <header className="flex justify-between">
-                <span className="text-[#686777]">PARTICIPANTS</span>
-                <Link
-                  href={`/networks/${networkId}/events/${eventId}/participants`}
-                  className="text-[#686777]"
-                >
-                  UPDATE{" "}
-                  <span className="ml-2 px-2 bg-[#6e7ac5] text-white rounded-lg text-lg">
-                    +
-                  </span>
-                </Link>
-              </header> */}
-              <label className="block uppercase text-sm text-[#686777] mb-3">
-                Participants
-              </label>
-              <input
-                value={q}
-                onChange={(e) => setQ(e.target.value)}
-                autoFocus
-                placeholder="Search Participant"
-                className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
-              />
-              <div className="relative">
-                {q && (
-                  <div className="max-h-[180px] overflow-y-auto py-2 absolute bg-white w-full z-20">
-                    {filteredMembers?.map((member) => {
-                      const name = `${member.disciples.first_name ?? ""} ${
-                        member.disciples.last_name ?? ""
-                      }`.trim();
-                      return (
-                        <li
-                          onClick={() => handleSelectParticipant(member as any)}
-                          className="block py-2 pl-2 cursor-pointer"
-                          key={member.disciples.id}
-                        >
-                          {name}
-                        </li>
-                      );
-                    })}
+          <section className="px-7">
+            <label className="block uppercase text-sm text-[#686777] mb-3 font-semibold">
+              Participants
+            </label>
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search Participant"
+              className="bg-[#f2f2f8] w-full px-4 py-3 rounded-lg outline-none"
+            />
+            <div className="relative">
+              {q && (
+                <div className="max-h-[180px] overflow-y-auto py-2 px-4 rounded-xl absolute bg-white w-full z-20">
+                  {filteredMembers?.map((member) => {
+                    const name = `${member.disciples.first_name ?? ""} ${
+                      member.disciples.last_name ?? ""
+                    }`.trim();
+                    return (
+                      <li
+                        onClick={() => handleSelectParticipant(member as any)}
+                        className="block py-2 pl-2 cursor-pointer"
+                        key={member.disciples.id}
+                      >
+                        {name}
+                      </li>
+                    );
+                  })}
+                  <div className="text-xs text-gray-400 mb-2 mt-4">
+                    <strong>Tap</strong> on participant to select.
                   </div>
-                )}
-                {q && filteredMembers?.length === 0 && (
-                  <div className="max-h-[180px] overflow-y-auto py-2 absolute bg-white w-full z-20 py-4 text-gray-400 text-sm">
-                    No participant available.
-                  </div>
-                )}
-              </div>
-              <div className="flex gap-4 mt-3 flex-wrap gap-x-3 gap-y-2">
-                {event?.event_participants?.map((participant) => (
-                  <span
-                    style={{
-                      opacity: removeQue.includes(participant.id) ? 0.5 : 1,
-                    }}
-                    key={participant.id}
-                  >
-                    <MemberBadge
-                      editable
-                      onRemove={() => handleRemoveParticipant(participant)}
-                      id={participant.participant_id.id}
-                      status={participant.participant_id.status}
-                      first_name={participant.participant_id.first_name}
-                      last_name={participant.participant_id.last_name}
-                    />
-                  </span>
-                ))}
-                <>
-                  {que
-                    ?.filter?.((member) => {
-                      if (eventParticipants?.includes(member?.disciples?.id))
-                        return false;
-                      return true;
-                    })
-                    ?.map((member) => (
-                      <MemberBadge
-                        key={member?.disciples.id}
-                        id={member?.disciples.id}
-                        status={member?.disciples.status}
-                        first_name={member?.disciples.first_name}
-                        last_name={member?.disciples.last_name}
-                      />
-                    ))}
-                </>
-              </div>
+                </div>
+              )}
+              {q && filteredMembers?.length === 0 && (
+                <div className="max-h-[180px] overflow-y-auto py-2 absolute bg-white w-full z-20 py-4 text-gray-400 text-sm">
+                  No participant available.
+                </div>
+              )}
             </div>
+            <div className="flex gap-4 mt-3 flex-wrap gap-x-3 gap-y-2">
+              {event?.event_participants?.map((participant) => (
+                <span
+                  style={{
+                    opacity: removeQue.includes(participant.id) ? 0.5 : 1,
+                  }}
+                  key={participant.id}
+                >
+                  <MemberBadge
+                    editable
+                    onRemove={() => handleRemoveParticipant(participant)}
+                    id={participant.participant_id.id}
+                    status={participant.participant_id.status}
+                    first_name={participant.participant_id.first_name}
+                    last_name={participant.participant_id.last_name}
+                  />
+                </span>
+              ))}
+              <>
+                {que
+                  ?.filter?.((member) => {
+                    if (eventParticipants?.includes(member?.disciples?.id))
+                      return false;
+                    return true;
+                  })
+                  ?.map((member) => (
+                    <MemberBadge
+                      key={member?.disciples.id}
+                      id={member?.disciples.id}
+                      status={member?.disciples.status}
+                      first_name={member?.disciples.first_name}
+                      last_name={member?.disciples.last_name}
+                    />
+                  ))}
+              </>
+            </div>
+          </section>
+          <section className="mt-12">
+            <div className="px-7">
+              <label className="block uppercase text-sm text-[#686777] mb-3 font-semibold">
+                Location
+              </label>
+            </div>
+            <div className="bg-[#f2f2f8] h-[280px] my-7" />
+            <div className="px-7">
+              <input
+                placeholder="Search Location"
+                className="w-full py-3 rounded-lg outline-none"
+              />
+            </div>
+          </section>
+          <section className="mt-12">
+            <div className="px-7 flex items-center gap-3">
+              <label className="block uppercase text-sm text-[#686777] font-semibold">
+                Moments
+              </label>
+              <span className="px-2 bg-[#6e7ac5] text-[#F5F5F5] rounded-lg text-lg">
+                +
+              </span>
+            </div>
+            <div className="bg-[#f2f2f8] h-[280px] my-7" />
+          </section>
+
+          <div className="flex justify-center mt-12">
+            <button className="flex gap-2 rounded-xl p-3 px-5 bg-[#F5F5F5] items-center text-[#FF5A1F]">
+              <span className="text-2xl">
+                <TbCalendar />
+              </span>
+              <div className="font-semibold">REMOVE THIS EVENT</div>
+            </button>
           </div>
         </Body>
       </Layout>
