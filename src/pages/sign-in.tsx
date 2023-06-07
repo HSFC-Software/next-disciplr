@@ -120,16 +120,27 @@ export default function Home() {
             onClick={handleSignInByEmailPassword}
             className="bg-[#6e7ac5] disabled:opacity-50 text-white px-14 py-3 rounded-xl hover:shadow-md"
           >
-            Sign in
+            Submit
           </button>
           <div />
+
+          <p className="mt-8 px-2 text-sm text-gray-400">
+          By clicking &quot;Submit&quot; or &quot;Sign In with Google&quot;, you agree to our <a className="text-[#6e7ac5]" href="https://app.fishgen.org/privacy.html">Privacy Policy</a>
+          </p>
+
           <button
             id="sign-in-with-google"
             onClick={handleSignInWithGoogle}
-            className="mt-14 text-base text-[#6e7ac5]"
+            className="mt-8 text-base text-[#6e7ac5]"
           >
-            Sign in with <strong className="text-primary">Google</strong>
+            <Image 
+              src="/btn_google_signin_light_normal_web@2x.png"
+              alt="google sign in"
+              width="200"
+              height="48"
+            />
           </button>
+
         </div>
       </main>
     </>

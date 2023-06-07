@@ -1,17 +1,34 @@
 import NetworkCard from "@/components/modules/network-card";
 import moment from "moment";
-import { useGetSubNetworks } from "@/lib/queries";
+import { useGetNetworkDetails, useGetSubNetworks } from "@/lib/queries";
 import { Skeleton } from "@mui/material";
 import { useEffect, useState } from "react";
 import { generateNumberBetween } from "@/lib/utils";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 export const Networks = (props: { id: string }) => {
+  const router = useRouter();
   const { data: subNetworks, isLoading } = useGetSubNetworks(props.id);
+
+  const networkId = String(router.query.id);
+  const { data: network } = useGetNetworkDetails(networkId);
 
   return (
     <section>
-      <header className="text-[#686777] uppercase font-semibold pb-7">
+      <header className="text-[#686777] uppercase font-semibold pb-7 flex justify-between">
         Networks
+        {network?.status === "Active" &&
+          router.pathname === "/networks/[id]/update" && (
+            <Link href={`/networks/new?id=${router.query.id}`}>
+              <span className="text-[#6e7ac5] font-medium text-xs hover:underline">
+                ADD NEW
+                <span className="ml-2 px-2 bg-[#6e7ac5] text-white rounded-lg text-lg">
+                  +
+                </span>
+              </span>
+            </Link>
+          )}
       </header>
 
       {isLoading && <Preloader />}

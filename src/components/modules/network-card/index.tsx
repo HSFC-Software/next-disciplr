@@ -1,4 +1,5 @@
 import Avatar from "@/components/base/avatar";
+import { store } from "@/lib/models";
 import moment from "moment";
 import Link from "next/link";
 import styles from "./index.module.scss";
@@ -23,8 +24,18 @@ export default function NetworkCard(props: Props) {
     initials = `${words?.[0]?.charAt(0)}${words?.[1]?.charAt(0)}`;
   }
 
+  const handleClick = () => {
+    store.dispatch.BreadCrumbs.setIcon("GroupIcon");
+    store.dispatch.BreadCrumbs.setPages([
+      {
+        title: "Networks",
+        url: `${document.URL}`,
+      },
+    ]);
+  };
+
   return (
-    <Link href={`/networks/${id}`}>
+    <Link onClick={handleClick} href={`/networks/${id}`}>
       <div className={`${styles.card_main} ${status}`}>
         <div className={styles.card_body}>
           <div className="relative">

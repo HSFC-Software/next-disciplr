@@ -56,7 +56,7 @@ export default function Member() {
           router.pathname === "/networks/[id]/update" && (
             <button
               onClick={handleOnAddMember}
-              className="text-[#686777] font-light text-sm"
+              className="text-[#6e7ac5] font-medium text-xs hover:underline"
             >
               ADD NEW
               <span className="ml-2 px-2 bg-[#6e7ac5] text-white rounded-lg text-lg">

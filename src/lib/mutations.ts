@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "react-query";
 import {
+  addParticipants,
   consolidate,
   ConsolidateResponse,
+  createEvent,
+  CreateEventParams,
+  EventsResponse,
   linkExistingMember,
   LinkExistingMemberPayload,
   linkNewMember,
@@ -12,6 +16,7 @@ import {
   publishConsolidation,
   removeMember,
   removeNetwork,
+  removeParticipant,
   sendBulkSms,
   signUp,
   SignUpPayload,
@@ -284,4 +289,43 @@ export const useSendBulkSms = () => {
     unknown,
     { text: string; receivers: string[]; sender: string }
   >(({ text, receivers, sender }) => sendBulkSms(text, receivers, sender));
+};
+
+export const useCreateEvent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<EventsResponse, unknown, CreateEventParams>(
+    (params) => createEvent(params),
+    {
+      onSuccess: (response) => {
+        queryClient.invalidateQueries([
+          "getEvents",
+          { network_id: response.network_id },
+        ]);
+      },
+    }
+  );
+};
+
+export const useAddParticipants = (event_id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, string[]>(
+    (participants) => addParticipants(event_id, participants),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["getEvent", { id: event_id }]);
+      },
+    }
+  );
+};
+
+export const useRemoveParticipant = (event_id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, string>((id) => removeParticipant(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getEvent", { id: event_id }]);
+    },
+  });
 };
