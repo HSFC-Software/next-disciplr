@@ -259,10 +259,8 @@ const EventDetails = () => {
                 Location
               </label>
             </div>
-            <div className="bg-[#f2f2f8] h-[280px] my-7 flex justify-center items-center relative">
-              <LoadScript
-                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_KEY ?? ""}
-              >
+            {!!event && (
+              <div className="bg-[#f2f2f8] h-[280px] my-7 flex justify-center items-center relative">
                 <GoogleMap
                   clickableIcons={false}
                   onLoad={(map) => {
@@ -279,16 +277,16 @@ const EventDetails = () => {
                   mapContainerStyle={{ width: "100%", height: 280 }}
                   center={coordinates}
                   zoom={17}
-                ></GoogleMap>
-              </LoadScript>
-              {showIcon && (
-                <div className="absolute">
-                  <span className="text-4xl text-red-500 shadow">
-                    <RiMapPinUserFill />
-                  </span>
-                </div>
-              )}
-            </div>
+                />
+                {showIcon && (
+                  <div className="absolute">
+                    <span className="text-4xl text-red-500 shadow">
+                      <RiMapPinUserFill />
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
             <div className="px-7">
               {showSaveLocation && (
                 <div className="flex justify-between">

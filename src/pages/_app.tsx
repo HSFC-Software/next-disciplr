@@ -9,6 +9,7 @@ import LauncharklyProvider, {
   LauncharklyConsumer,
 } from "@/components/modules/launchdarkly";
 import { ToastContainer } from "react-toastify";
+import { LoadScript } from "@react-google-maps/api";
 
 export default function App({ Component, pageProps }: AppProps) {
   const [queryClient] = useState(() => new QueryClient());
@@ -18,7 +19,12 @@ export default function App({ Component, pageProps }: AppProps) {
         <Hydrate state={pageProps.dehydratedState}>
           <Store store={store}>
             <LauncharklyConsumer>
-              <Component {...pageProps} />
+              <LoadScript
+                loadingElement={<></>}
+                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_KEY ?? ""}
+              >
+                <Component {...pageProps} />
+              </LoadScript>
               <ToastContainer />
             </LauncharklyConsumer>
           </Store>
