@@ -17,12 +17,16 @@ import {
   useAddParticipants,
   useRemoveParticipant,
   useUpdateLocation,
+  useUploadMoment,
 } from "@/lib/mutations";
 import { EventParticipant } from "@/lib/api";
 import { TbCalendar } from "react-icons/tb";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { useDebounce } from "@/lib/hooks";
 import { RiCheckFill, RiMapPinUserFill } from "react-icons/ri";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import Image from "next/image";
 
 type Coordinates = {
   lat: number;
@@ -35,6 +39,7 @@ const EventDetails = () => {
   const networkId = String(router.query.id);
   const eventId = String(router.query.event_id);
 
+  const { mutate: uploadMoment } = useUploadMoment(eventId);
   const { mutate: addParticipant } = useAddParticipants(eventId);
   const { mutate: removeParticipant } = useRemoveParticipant(eventId);
   const { mutate: updateLocation, isLoading: isSavingLocation } = useUpdateLocation(); // prettier-ignore
@@ -65,6 +70,8 @@ const EventDetails = () => {
   const eventParticipants = event?.event_participants?.map(
     (participant) => participant.participant_id.id
   );
+
+  const [imageToUpload, setImageToUpload] = useState(null);
 
   const filteredMembers = members?.filter((member) => {
     const keyword = q.trim().split(" ");
@@ -157,6 +164,32 @@ const EventDetails = () => {
 
   let hasResult = locationResult?.predictions?.length > 0;
   if (geoCodeResult?.length > 0) hasResult = true;
+
+  const handleChangeImageToUpload = (e: any) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setImageToUpload(file);
+      uploadMoment(file);
+    }
+  };
+
+  const handleOnDiscard = () => {
+    setLocation(event?.location_id?.address ?? "");
+    setShowLocationResult(false);
+    setShowGeocodeResult(false);
+    setShowSaveLocation(false);
+    if (event?.location_id?.lat && event?.location_id?.lng) {
+      setCoordinates({
+        lat: event.location_id?.lat,
+        lng: event.location_id?.lng,
+      });
+    } else {
+      setCoordinates({
+        lat: 14.57869398353522,
+        lng: 121.13797599216925,
+      });
+    }
+  };
 
   return (
     <>
@@ -323,8 +356,16 @@ const EventDetails = () => {
               {(showLocationResult || showGeocodeResult) && (
                 <div className="max-h-[180px] overflow-y-auto py-2 px-4 rounded-xl absolute bg-white w-full z-20">
                   {hasResult && (
-                    <div className="text-xs text-gray-400 mb-2 px-3">
-                      Suggestions: <strong>Tap</strong> to select
+                    <div className="text-xs text-gray-400 mb-2 px-3 flex justify-between">
+                      <span>
+                        Suggestions: <strong>Tap</strong> to select
+                      </span>
+                      <button
+                        onClick={handleOnDiscard}
+                        className="text-gray-400 font-medium hover:underline"
+                      >
+                        Discard
+                      </button>
                     </div>
                   )}
                   {showLocationResult && (
@@ -381,11 +422,47 @@ const EventDetails = () => {
               <label className="block uppercase text-sm text-[#686777] font-semibold">
                 Moments
               </label>
-              <span className="px-2 bg-[#6e7ac5] text-[#F5F5F5] rounded-lg text-lg">
+              <button
+                onClick={() => document.getElementById("moment-input")?.click()}
+                className="px-2 bg-[#6e7ac5] text-[#F5F5F5] rounded-lg text-lg"
+              >
                 +
-              </span>
+              </button>
             </div>
-            <div className="bg-[#f2f2f8] h-[280px] my-7" />
+            <div className="bg-[#f2f2f8] h-[280px] my-7">
+              <Swiper
+                autoplay={{
+                  delay: 1500,
+                }}
+                slidesPerView={1}
+                spaceBetween={50}
+                // onSlideChange={() => console.log("slide change")}
+                // onSwiper={(swiper) => console.log(swiper)}
+              >
+                {event?.files?.map?.((file) => {
+                  return (
+                    <SwiperSlide key={file.id} style={{ height: 280 }}>
+                      <div>
+                        <img
+                          alt="any"
+                          src={file.url}
+                          className="h-[280px] w-full object-contain"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+                {/* <SwiperSlide style={{ height: 280 }}>Slide 2</SwiperSlide>
+                <SwiperSlide style={{ height: 280 }}>Slide 3</SwiperSlide>
+                <SwiperSlide style={{ height: 280 }}>Slide 4</SwiperSlide> */}
+              </Swiper>
+            </div>
+            <input
+              onChange={handleChangeImageToUpload}
+              id="moment-input"
+              type="file"
+              className="hidden"
+            />
           </section>
 
           <div className="flex justify-center mt-12">
