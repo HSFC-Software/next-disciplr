@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import {
+  addEventMoments,
   addParticipants,
   consolidate,
   ConsolidateResponse,
@@ -340,6 +341,32 @@ export const useUpdateLocation = () => {
     {
       onSuccess: ({ id }) => {
         queryClient.invalidateQueries(["getEvent", { id }]);
+      },
+    }
+  );
+};
+
+export const useUploadMoment = (event_id: string) => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, any>(
+    async function (file) {
+      const { error } = await supabase.storage
+        .from("public")
+        .upload(`events/eventId/${file.name}`, file, {
+          cacheControl: "3600",
+          upsert: true,
+        });
+
+      const url = supabase.storage
+        .from("public")
+        .getPublicUrl(`events/eventId/${file.name}`).data.publicUrl;
+
+      return await addEventMoments({ event_id, url });
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["getEvent", { id: event_id }]);
       },
     }
   );
