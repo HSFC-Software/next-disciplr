@@ -386,6 +386,14 @@ export type EventParticipant = {
   };
 };
 
+type Locations = {
+  address: string;
+  created_at: string;
+  id: string;
+  lat: number;
+  lng: number;
+};
+
 export type EventsResponse = {
   id: string;
   name: string;
@@ -393,7 +401,7 @@ export type EventsResponse = {
   event_type: EventType;
   network_id?: string;
   consolidation_id?: string;
-  locations_id?: string;
+  location_id?: Locations;
   attachments_id?: string[];
   participants_id?: string[];
   consolidations?: any;
@@ -468,6 +476,52 @@ export const removeParticipant = async (id: string) => {
   try {
     const { data } = await axios.delete(`/events/participants?id=${id}`);
     return data as {};
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const autocompletePlace = async (q: string) => {
+  try {
+    const { data } = await axios.get(`/v2/google/place/search?input=${q}`);
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const getPlaceDetails = async (place_id: string) => {
+  try {
+    const { data } = await axios.get(`/v2/google/place/${place_id}`);
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const getGeocode = async (lat: number, lng: number) => {
+  if (!lat || !lng) return Promise.reject("Invalid lat or lng");
+
+  try {
+    const { data } = await axios.get(
+      `/v2/google/place/geocode?lat=${lat}&lng=${lng}`
+    );
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export type UpdateLocationPayload = {
+  event_id: string;
+  address?: string;
+  lat?: number;
+  lng?: number;
+};
+export const updateLocation = async (payload: UpdateLocationPayload) => {
+  try {
+    const { data } = await axios.patch("/v2/events/locations", payload);
+    return data as any;
   } catch (err) {
     return Promise.reject(err);
   }

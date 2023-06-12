@@ -3,23 +3,42 @@ import Layout from "@/components/templates/page";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import Body from "@/components/base/body";
-import { useGetEvent, useGetNetworkMembers } from "@/lib/queries";
+import {
+  useAutocompletePlace,
+  useGetEvent,
+  useGetGeocode,
+  useGetNetworkMembers,
+  useGetPlaceDetails,
+} from "@/lib/queries";
 import MemberBadge from "@/components/base/member-badge/badge";
 import moment from "moment";
-import { useState } from "react";
-import { useAddParticipants, useRemoveParticipant } from "@/lib/mutations";
+import { useEffect, useRef, useState } from "react";
+import {
+  useAddParticipants,
+  useRemoveParticipant,
+  useUpdateLocation,
+} from "@/lib/mutations";
 import { EventParticipant } from "@/lib/api";
 import { TbCalendar } from "react-icons/tb";
+import { GoogleMap, LoadScript } from "@react-google-maps/api";
+import { useDebounce } from "@/lib/hooks";
+import { RiCheckFill, RiMapPinUserFill } from "react-icons/ri";
+
+type Coordinates = {
+  lat: number;
+  lng: number;
+};
 
 const EventDetails = () => {
+  const mapRef = useRef<any>(null);
   const router = useRouter();
   const networkId = String(router.query.id);
   const eventId = String(router.query.event_id);
 
-  const { mutate: addParticipant, isLoading: isAdding } =
-    useAddParticipants(eventId);
-  const { mutate: removeParticipant, isLoading: isRemoving } =
-    useRemoveParticipant(eventId);
+  const { mutate: addParticipant } = useAddParticipants(eventId);
+  const { mutate: removeParticipant } = useRemoveParticipant(eventId);
+  const { mutate: updateLocation, isLoading: isSavingLocation } = useUpdateLocation(); // prettier-ignore
+  const [isChangesSaved, setIsChangesSaved] = useState(false);
 
   const { data: members } = useGetNetworkMembers(networkId);
   const { data: event } = useGetEvent(eventId);
@@ -27,6 +46,21 @@ const EventDetails = () => {
   const [q, setQ] = useState("");
   const [que, setQue] = useState<any[]>([]);
   const [removeQue, setRemoveQue] = useState<string[]>([]);
+
+  // location state
+  const [location, setLocation] = useState("");
+  const [coordinates, setCoordinates] = useState<Coordinates>({ lat: 14.57869398353522, lng: 121.13797599216925}); // prettier-ignore
+  const debouncedLocation = useDebounce(location, 750);
+  const { data: locationResult } = useAutocompletePlace(debouncedLocation);
+  const [selectedLocation, setSelectedLocation] = useState<any>(null);
+  const { data: placeDetailsResult } = useGetPlaceDetails(selectedLocation?.place_id ?? ""); // prettier-ignore
+  const [showLocationResult, setShowLocationResult] = useState(false);
+  const [newCoordinates, setNewCoordinates] = useState<Coordinates | null>(null); // prettier-ignore
+  const { data: geoCodeResult, isLoading } = useGetGeocode(newCoordinates?.lat ?? 0, newCoordinates?.lng ?? 0); // prettier-ignore
+  const [showGeocodeResult, setShowGeocodeResult] = useState(false);
+  const [showIcon, setShowIcon] = useState(false);
+  const [showSaveLocation, setShowSaveLocation] = useState(false);
+  // end of location state
 
   const eventParticipants = event?.event_participants?.map(
     (participant) => participant.participant_id.id
@@ -54,7 +88,6 @@ const EventDetails = () => {
   });
 
   const handleSelectParticipant = (member: { disciples: { id: string } }) => {
-    // if(member.id)
     setQ("");
     setQue((prev) => [...prev, member]);
     addParticipant([member.disciples.id], {
@@ -75,6 +108,56 @@ const EventDetails = () => {
     });
   };
 
+  const handleSaveLocationChanges = () => {
+    const lat = mapRef?.current?.getCenter?.().lat?.();
+    const lng = mapRef?.current?.getCenter?.().lng?.();
+
+    const payload = {
+      event_id: eventId,
+      address: location,
+    };
+
+    if (lat) (payload as any).lat = lat;
+    if (lng) (payload as any).lng = lng;
+
+    updateLocation(payload, {
+      onSuccess() {
+        setIsChangesSaved(true);
+        setShowGeocodeResult(false);
+        setShowLocationResult(false);
+
+        setTimeout(() => {
+          setShowSaveLocation(false);
+          setIsChangesSaved(false);
+        }, 2500);
+      },
+    });
+  };
+
+  useEffect(() => {
+    if (!!geoCodeResult) setShowGeocodeResult(true);
+  }, [geoCodeResult]);
+
+  useEffect(() => {
+    const newCoordinates = (placeDetailsResult as any)?.result?.geometry
+      ?.location;
+    if (newCoordinates) setCoordinates(newCoordinates);
+  }, [placeDetailsResult]);
+
+  useEffect(() => {
+    if (event?.location_id) {
+      setCoordinates({
+        lat: event.location_id.lat,
+        lng: event.location_id.lng,
+      });
+
+      setLocation(event.location_id.address);
+    }
+  }, [event]);
+
+  let hasResult = locationResult?.predictions?.length > 0;
+  if (geoCodeResult?.length > 0) hasResult = true;
+
   return (
     <>
       <Head>
@@ -82,6 +165,7 @@ const EventDetails = () => {
         <meta name="description" content="Generated by create next app" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
+
       <Layout activeRoute="networks">
         <Header showBackArrrow>
           <div className="flex w-full justify-between items-center">
@@ -93,9 +177,6 @@ const EventDetails = () => {
             </span>
           )}
         </Header>
-        {/* <div className="px-7">
-          <BreadCrumbs activePageId="create-event" />
-        </div> */}
         <Body>
           <section className="px-7">
             <label className="block uppercase text-sm text-[#686777] mb-3 font-semibold">
@@ -178,12 +259,123 @@ const EventDetails = () => {
                 Location
               </label>
             </div>
-            <div className="bg-[#f2f2f8] h-[280px] my-7" />
+            <div className="bg-[#f2f2f8] h-[280px] my-7 flex justify-center items-center relative">
+              <LoadScript
+                googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_KEY ?? ""}
+              >
+                <GoogleMap
+                  clickableIcons={false}
+                  onLoad={(map) => {
+                    mapRef.current = map;
+                    setShowIcon(true);
+                  }}
+                  onDragEnd={() => {
+                    const lat = mapRef?.current?.getCenter?.().lat?.();
+                    const lng = mapRef?.current?.getCenter?.().lng?.();
+
+                    setNewCoordinates({ lat, lng });
+                    setShowSaveLocation(true);
+                  }}
+                  mapContainerStyle={{ width: "100%", height: 280 }}
+                  center={coordinates}
+                  zoom={17}
+                ></GoogleMap>
+              </LoadScript>
+              {showIcon && (
+                <div className="absolute">
+                  <span className="text-4xl text-red-500 shadow">
+                    <RiMapPinUserFill />
+                  </span>
+                </div>
+              )}
+            </div>
             <div className="px-7">
+              {showSaveLocation && (
+                <div className="flex justify-between">
+                  <span />
+                  {isChangesSaved ? (
+                    <div className="text-[#15AA2C] text-xs flex gap-2 items-center">
+                      <RiCheckFill />
+                      Changes successfully applied
+                    </div>
+                  ) : (
+                    <button
+                      disabled={isSavingLocation}
+                      onClick={handleSaveLocationChanges}
+                      className="hover:underline text-[#6e7ac5] disabled:opacity-50"
+                    >
+                      <span className="text-xs">Save Changes?</span>
+                    </button>
+                  )}
+                </div>
+              )}
               <input
-                placeholder="Search Location"
+                placeholder="Tap to Search Location"
                 className="w-full py-3 rounded-lg outline-none"
+                value={location}
+                onChange={(e) => {
+                  setLocation(e.target.value);
+                  setShowLocationResult(true);
+                  setNewCoordinates({ lat: 0, lng: 0 });
+                  setShowSaveLocation(true);
+                }}
               />
+            </div>
+            <div className="relative">
+              {(showLocationResult || showGeocodeResult) && (
+                <div className="max-h-[180px] overflow-y-auto py-2 px-4 rounded-xl absolute bg-white w-full z-20">
+                  {hasResult && (
+                    <div className="text-xs text-gray-400 mb-2 px-3">
+                      Suggestions: <strong>Tap</strong> to select
+                    </div>
+                  )}
+                  {showLocationResult && (
+                    <>
+                      {(locationResult as any)?.predictions?.map?.(
+                        (result: any) => {
+                          return (
+                            <li
+                              onClick={() => {
+                                setSelectedLocation(result);
+                                setLocation(result?.description);
+                                setShowLocationResult(false);
+                                setShowSaveLocation(true);
+                              }}
+                              key={result?.place_id}
+                              className="block py-2 px-3 cursor-pointer"
+                            >
+                              {result?.description}
+                            </li>
+                          );
+                        }
+                      )}
+                    </>
+                  )}
+                  {showGeocodeResult && (
+                    <>
+                      {geoCodeResult?.map?.((result: any) => {
+                        return (
+                          <li
+                            onClick={() => {
+                              setSelectedLocation(result);
+                              setLocation(result?.description);
+                              setShowLocationResult(false);
+                              setNewCoordinates({ lat: 0, lng: 0 });
+                              setLocation(result?.formatted_address);
+                              setShowSaveLocation(true);
+                              setShowGeocodeResult(false);
+                            }}
+                            key={`geocode-${result?.place_id}`}
+                            className="block py-2 px-3 cursor-pointer"
+                          >
+                            {result?.formatted_address}
+                          </li>
+                        );
+                      })}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </section>
           <section className="mt-12">
