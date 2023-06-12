@@ -21,6 +21,8 @@ import {
   signUp,
   SignUpPayload,
   unlinkMember,
+  updateLocation,
+  UpdateLocationPayload,
   updateNetwork,
   UpdateNetworkPayload,
   updateUser,
@@ -328,4 +330,17 @@ export const useRemoveParticipant = (event_id: string) => {
       queryClient.invalidateQueries(["getEvent", { id: event_id }]);
     },
   });
+};
+
+export const useUpdateLocation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<{ id: string }, unknown, UpdateLocationPayload>(
+    (payload) => updateLocation(payload),
+    {
+      onSuccess: ({ id }) => {
+        queryClient.invalidateQueries(["getEvent", { id }]);
+      },
+    }
+  );
 };

@@ -17,6 +17,9 @@ import {
   getEvents,
   GetEventsParams,
   getEvent,
+  autocompletePlace,
+  getPlaceDetails,
+  getGeocode,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -170,3 +173,33 @@ export const useGetEvent = (id: string) =>
     staleTime: 1000 * 60 * 5,
     enabled: true,
   });
+
+export const useAutocompletePlace = (q: string) =>
+  useQuery(
+    ["autocompletePlace", { q }],
+    async () => await autocompletePlace(q),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+
+export const useGetPlaceDetails = (place_id: string) =>
+  useQuery(
+    ["getPlaceDetails", { place_id }],
+    async () => await getPlaceDetails(place_id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+
+export const useGetGeocode = (lat: number, lng: number) =>
+  useQuery(
+    ["getGeocode", { lat, lng }],
+    async () => await getGeocode(lat, lng),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );

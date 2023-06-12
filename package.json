@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.10.6",
     "@faker-js/faker": "^7.6.0",
     "@mui/material": "^5.11.13",
+    "@react-google-maps/api": "^2.18.1",
     "@rematch/core": "^2.2.0",
     "@rematch/persist": "^2.1.2",
     "@supabase/supabase-js": "^2.10.0",

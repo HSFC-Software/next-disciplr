@@ -104,7 +104,9 @@ const Events = () => {
           </section>
           <section className="px-7 mt-7">
             <header className="flex justify-between">
-              <span className="text-[#686777]">TODAY&apos;S EVENTS</span>
+              <span className="text-[#686777]">
+                {moment(selectedDate).format("MMM DD, YYYY")}&apos;s Events
+              </span>
               <Link
                 href={`/networks/${router.query.id}/events/create`}
                 className="text-[#686777]"
