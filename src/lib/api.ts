@@ -386,12 +386,17 @@ export type EventParticipant = {
   };
 };
 
-type Locations = {
+type Location = {
   address: string;
   created_at: string;
   id: string;
   lat: number;
   lng: number;
+};
+
+type File = {
+  id: string;
+  url: string;
 };
 
 export type EventsResponse = {
@@ -401,12 +406,12 @@ export type EventsResponse = {
   event_type: EventType;
   network_id?: string;
   consolidation_id?: string;
-  location_id?: Locations;
+  location_id?: Location;
   attachments_id?: string[];
   participants_id?: string[];
   consolidations?: any;
   event_participants: EventParticipant[];
-  files?: string[];
+  files?: File[];
 };
 
 export const getEvents = async (params: GetEventsParams) => {
@@ -518,9 +523,22 @@ export type UpdateLocationPayload = {
   lat?: number;
   lng?: number;
 };
+
 export const updateLocation = async (payload: UpdateLocationPayload) => {
   try {
     const { data } = await axios.patch("/v2/events/locations", payload);
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
+
+export const addEventMoments = async (payload: {
+  event_id: string;
+  url: string;
+}) => {
+  try {
+    const { data } = await axios.post("/v2/events/moments", payload);
     return data as any;
   } catch (err) {
     return Promise.reject(err);

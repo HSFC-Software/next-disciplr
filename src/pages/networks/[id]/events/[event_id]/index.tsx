@@ -17,17 +17,24 @@ import {
   useAddParticipants,
   useRemoveParticipant,
   useUpdateLocation,
+  useUploadMoment,
 } from "@/lib/mutations";
 import { EventParticipant } from "@/lib/api";
 import { TbCalendar } from "react-icons/tb";
 import { GoogleMap, LoadScript } from "@react-google-maps/api";
 import { useDebounce } from "@/lib/hooks";
 import { RiCheckFill, RiMapPinUserFill } from "react-icons/ri";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination, Navigation } from "swiper";
+import "swiper/css";
+import Image from "next/image";
 
 type Coordinates = {
   lat: number;
   lng: number;
 };
+
+let prevFilesLength = 0;
 
 const EventDetails = () => {
   const mapRef = useRef<any>(null);
@@ -35,6 +42,8 @@ const EventDetails = () => {
   const networkId = String(router.query.id);
   const eventId = String(router.query.event_id);
 
+  const { mutate: uploadMoment, isLoading: isUploading } =
+    useUploadMoment(eventId);
   const { mutate: addParticipant } = useAddParticipants(eventId);
   const { mutate: removeParticipant } = useRemoveParticipant(eventId);
   const { mutate: updateLocation, isLoading: isSavingLocation } = useUpdateLocation(); // prettier-ignore
@@ -56,7 +65,7 @@ const EventDetails = () => {
   const { data: placeDetailsResult } = useGetPlaceDetails(selectedLocation?.place_id ?? ""); // prettier-ignore
   const [showLocationResult, setShowLocationResult] = useState(false);
   const [newCoordinates, setNewCoordinates] = useState<Coordinates | null>(null); // prettier-ignore
-  const { data: geoCodeResult, isLoading } = useGetGeocode(newCoordinates?.lat ?? 0, newCoordinates?.lng ?? 0); // prettier-ignore
+  const { data: geoCodeResult } = useGetGeocode(newCoordinates?.lat ?? 0, newCoordinates?.lng ?? 0); // prettier-ignore
   const [showGeocodeResult, setShowGeocodeResult] = useState(false);
   const [showIcon, setShowIcon] = useState(false);
   const [showSaveLocation, setShowSaveLocation] = useState(false);
@@ -65,6 +74,9 @@ const EventDetails = () => {
   const eventParticipants = event?.event_participants?.map(
     (participant) => participant.participant_id.id
   );
+
+  const [imageToUpload, setImageToUpload] = useState(null);
+  const [controlledSwiper, setControlledSwiper] = useState(null);
 
   const filteredMembers = members?.filter((member) => {
     const keyword = q.trim().split(" ");
@@ -155,8 +167,48 @@ const EventDetails = () => {
     }
   }, [event]);
 
+  // scrolls to newly added moment
+  useEffect(() => {
+    if (event?.files) {
+      const currentFilesLength = event?.files?.length;
+
+      if (currentFilesLength > prevFilesLength) {
+        (controlledSwiper as any).slideTo(currentFilesLength);
+      }
+
+      prevFilesLength = currentFilesLength;
+    }
+  }, [event, controlledSwiper]);
+
   let hasResult = locationResult?.predictions?.length > 0;
   if (geoCodeResult?.length > 0) hasResult = true;
+
+  const handleChangeImageToUpload = (e: any) => {
+    const file = e.target.files?.[0];
+
+    if (file) {
+      setImageToUpload(file);
+      uploadMoment(file);
+    }
+  };
+
+  const handleOnDiscard = () => {
+    setLocation(event?.location_id?.address ?? "");
+    setShowLocationResult(false);
+    setShowGeocodeResult(false);
+    setShowSaveLocation(false);
+    if (event?.location_id?.lat && event?.location_id?.lng) {
+      setCoordinates({
+        lat: event.location_id?.lat,
+        lng: event.location_id?.lng,
+      });
+    } else {
+      setCoordinates({
+        lat: 14.57869398353522,
+        lng: 121.13797599216925,
+      });
+    }
+  };
 
   return (
     <>
@@ -323,8 +375,16 @@ const EventDetails = () => {
               {(showLocationResult || showGeocodeResult) && (
                 <div className="max-h-[180px] overflow-y-auto py-2 px-4 rounded-xl absolute bg-white w-full z-20">
                   {hasResult && (
-                    <div className="text-xs text-gray-400 mb-2 px-3">
-                      Suggestions: <strong>Tap</strong> to select
+                    <div className="text-xs text-gray-400 mb-2 px-3 flex justify-between">
+                      <span>
+                        Suggestions: <strong>Tap</strong> to select
+                      </span>
+                      <button
+                        onClick={handleOnDiscard}
+                        className="text-gray-400 font-medium hover:underline"
+                      >
+                        Discard
+                      </button>
                     </div>
                   )}
                   {showLocationResult && (
@@ -377,15 +437,74 @@ const EventDetails = () => {
             </div>
           </section>
           <section className="mt-12">
-            <div className="px-7 flex items-center gap-3">
-              <label className="block uppercase text-sm text-[#686777] font-semibold">
-                Moments
-              </label>
-              <span className="px-2 bg-[#6e7ac5] text-[#F5F5F5] rounded-lg text-lg">
-                +
-              </span>
+            <div className="px-7 flex w-full justify-between items-center gap-4">
+              <div className="flex items-center gap-3">
+                <label className="block uppercase text-sm text-[#686777] font-semibold">
+                  Moments
+                </label>
+                <button
+                  onClick={() =>
+                    document.getElementById("moment-input")?.click()
+                  }
+                  className="px-2 bg-[#6e7ac5] text-[#F5F5F5] rounded-lg text-lg"
+                >
+                  +
+                </button>
+              </div>
+              <div>
+                {isUploading && (
+                  <div className="text-xs text-gray-400 flex gap-2 items-center">
+                    <span className="grow max-w-[170px] whitespace-nowrap overflow-hidden text-ellipsis">
+                      {(imageToUpload as any)?.name ?? ""}
+                    </span>
+                    <span className="text-gray-400 shrink-0">
+                      <Image
+                        src="/loading.svg"
+                        alt="Spinner"
+                        width={12}
+                        height={12}
+                      />
+                    </span>
+                  </div>
+                )}
+              </div>
             </div>
-            <div className="bg-[#f2f2f8] h-[280px] my-7" />
+            <div className="bg-[#f2f2f8] h-[280px] my-7">
+              <Swiper
+                onSwiper={setControlledSwiper as any}
+                autoplay={{
+                  delay: 3000,
+                  disableOnInteraction: true,
+                  reverseDirection: true,
+                }}
+                modules={[Autoplay, Pagination, Navigation]}
+                slidesPerView={1}
+                spaceBetween={50}
+              >
+                {event?.files?.map?.((file) => {
+                  return (
+                    <SwiperSlide key={file.id} style={{ height: 280 }}>
+                      <div>
+                        <img
+                          alt="any"
+                          src={file.url}
+                          className="h-[280px] w-full object-contain"
+                        />
+                      </div>
+                    </SwiperSlide>
+                  );
+                })}
+                {/* <SwiperSlide style={{ height: 280 }}>Slide 2</SwiperSlide>
+                <SwiperSlide style={{ height: 280 }}>Slide 3</SwiperSlide>
+                <SwiperSlide style={{ height: 280 }}>Slide 4</SwiperSlide> */}
+              </Swiper>
+            </div>
+            <input
+              onChange={handleChangeImageToUpload}
+              id="moment-input"
+              type="file"
+              className="hidden"
+            />
           </section>
 
           <div className="flex justify-center mt-12">
