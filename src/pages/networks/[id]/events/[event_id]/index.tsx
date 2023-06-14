@@ -488,7 +488,7 @@ const EventDetails = () => {
                         <img
                           alt="any"
                           src={file.url}
-                          className="h-[280px] w-full object-contain"
+                          className="h-[280px] w-full object-cover"
                         />
                       </div>
                     </SwiperSlide>

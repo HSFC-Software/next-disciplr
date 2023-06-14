@@ -204,3 +204,7 @@ body {
     #fb5d64 114.56%
   ) !important;
 }
+
+div[data-testid="flowbite-tooltip"] {
+  z-index: 20;
+}
