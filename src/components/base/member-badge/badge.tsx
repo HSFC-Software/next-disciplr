@@ -5,6 +5,7 @@ import {
   TbSquareRoundedCheckFilled,
 } from "react-icons/tb";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 type Props = {
   first_name: string;
@@ -15,8 +16,10 @@ type Props = {
   status?: "Active" | "Inactive";
   onSetActive?: (e?: any) => void;
   id: string;
+  onLongPress?: () => void;
 };
 
+let longPressTimer: NodeJS.Timeout;
 export default function MemberBadge(props: Props) {
   const {
     first_name,
@@ -25,7 +28,8 @@ export default function MemberBadge(props: Props) {
     onRemove,
     status,
     onSetActive,
-    image_url,
+    id,
+    onLongPress,
   } = props;
 
   const router = useRouter();
@@ -44,8 +48,22 @@ export default function MemberBadge(props: Props) {
     onSetActive?.(e);
   };
 
+  const longPressHandler = () => {
+    if (onLongPress) longPressTimer = setTimeout(onLongPress, 300);
+  };
+
+  useEffect(
+    () => () => {
+      clearTimeout(longPressTimer);
+    },
+    []
+  );
+
   return (
     <button
+      onMouseDown={longPressHandler}
+      onMouseUp={() => clearTimeout(longPressTimer)}
+      draggable
       onClick={handleOnclick}
       className="flex items-center bg-transparent"
     >

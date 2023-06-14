@@ -9,6 +9,9 @@ import {
   useRemoveMember,
   useUnlinkMember,
 } from "@/lib/mutations";
+import { useEffect, useState } from "react";
+import { IoEllipsisHorizontal } from "react-icons/io5";
+import { Dropdown } from "flowbite-react";
 
 export default function Member() {
   const router = useRouter();
@@ -18,6 +21,7 @@ export default function Member() {
   const { mutate: unlink, isLoading: isUnlinking } = useUnlinkMember(networkId);
   const { mutate: remove } = useRemoveMember(networkId);
   const { mutate: active } = useLinkExistingMember(networkId);
+  const [selectedMemberIds, setSelectedMemberIds] = useState<any[]>([]);
 
   const { showModal, closeModal } = useModalContext();
 
@@ -66,62 +70,150 @@ export default function Member() {
           )}
       </div>
 
+      {router.pathname === "/networks/[id]/update" && (
+        <>
+          {selectedMemberIds.length > 0 && (
+            <div className="mb-4">
+              <div className="flex justify-between items-center">
+                <header className="text-[#686777] font-semibold mb-4">
+                  Selected
+                </header>
+
+                <Dropdown
+                  label={
+                    <button className="text-2xl pl-4 pr-1 text-[#6e7ac5]">
+                      <IoEllipsisHorizontal />
+                    </button>
+                  }
+                  placement="bottom-end"
+                  inline
+                  arrowIcon={null!}
+                >
+                  <Dropdown.Item className="font-normal text-xs px-7 py-4">
+                    Move to another network
+                  </Dropdown.Item>
+                  <Dropdown.Item className="font-normal text-xs px-7 py-4">
+                    Make Inactive
+                  </Dropdown.Item>
+                </Dropdown>
+              </div>
+              <div className={style.member_list}>
+                {selectedMemberIds
+                  .map((id) =>
+                    members?.find((member) => member.disciples.id === id)
+                  )
+                  ?.filter((member) => !selectedMemberIds.includes(member?.id))
+                  ?.map((member) => {
+                    const warning = (
+                      <>
+                        Are you sure you want to make{" "}
+                        {member?.disciples.first_name} <strong>Inactive</strong>
+                        ?{" "}
+                      </>
+                    );
+
+                    const handleConfirm = (e: any) => {
+                      e.target.disabled = true;
+                      unlink(member?.id ?? "", {
+                        onSuccess: closeModal,
+                        onSettled: () => {
+                          e.target.disabled = false;
+                        },
+                      });
+                    };
+
+                    return (
+                      <MemberBadge
+                        id={member?.disciples.id ?? ""}
+                        status={member?.status}
+                        editable
+                        onSetActive={(e) =>
+                          handleSetToActive(member?.disciples.id ?? "", e)
+                        }
+                        onRemove={() =>
+                          setSelectedMemberIds((prev) =>
+                            prev.filter((item) => item !== member?.disciples.id)
+                          )
+                        }
+                        key={member?.id}
+                        first_name={member?.disciples.first_name ?? ""}
+                        last_name={member?.disciples.last_name ?? ""}
+                      />
+                    );
+                  })}
+              </div>
+            </div>
+          )}
+        </>
+      )}
+
       {(activeMembers?.length ?? 0) > 0 && (
         <div className="mb-4">
           <header className="text-[#686777] font-semibold mb-4">Active</header>
           <div className={style.member_list}>
-            {activeMembers?.map((member) => {
-              const warning = (
-                <>
-                  Are you sure you want to make {member.disciples.first_name}{" "}
-                  <strong>Inactive</strong>?{" "}
-                </>
-              );
+            {activeMembers
+              ?.filter(
+                (member) => !selectedMemberIds.includes(member.disciples.id)
+              )
+              ?.map((member) => {
+                const warning = (
+                  <>
+                    Are you sure you want to make {member.disciples.first_name}{" "}
+                    <strong>Inactive</strong>?{" "}
+                  </>
+                );
 
-              const handleConfirm = (e: any) => {
-                e.target.disabled = true;
-                unlink(member.id, {
-                  onSuccess: closeModal,
-                  onSettled: () => {
-                    e.target.disabled = false;
-                  },
-                });
-              };
+                const handleConfirm = (e: any) => {
+                  e.target.disabled = true;
+                  unlink(member.id, {
+                    onSuccess: closeModal,
+                    onSettled: () => {
+                      e.target.disabled = false;
+                    },
+                  });
+                };
 
-              return (
-                <MemberBadge
-                  id={member.disciples.id ?? ""}
-                  status={member.status}
-                  editable={router.pathname === "/networks/[id]/update"}
-                  onSetActive={(e) =>
-                    handleSetToActive(member.disciples.id ?? "", e)
-                  }
-                  onRemove={() =>
-                    showModal(
-                      <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
-                        <button
-                          onClick={closeModal}
-                          className="absolute top-0 right-0 mt-[-12px] mr-[-12px] text-[#E22134]"
-                        >
-                          <TbSquareRoundedXFilled size={35} />
-                        </button>
-                        <div className="mb-3">{warning}</div>
-                        <button
-                          disabled={isUnlinking}
-                          onClick={handleConfirm}
-                          className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
-                        >
-                          Confirm
-                        </button>
-                      </div>
-                    )
-                  }
-                  key={member.id}
-                  first_name={member.disciples.first_name ?? ""}
-                  last_name={member.disciples.last_name ?? ""}
-                />
-              );
-            })}
+                return (
+                  <MemberBadge
+                    id={member.disciples.id ?? ""}
+                    status={member.status}
+                    editable={router.pathname === "/networks/[id]/update"}
+                    onSetActive={(e) =>
+                      handleSetToActive(member.disciples.id ?? "", e)
+                    }
+                    onLongPress={() => {
+                      if (router.pathname === "/networks/[id]/update")
+                        setSelectedMemberIds((prev) => [
+                          ...prev,
+                          member.disciples.id,
+                        ]);
+                    }}
+                    onRemove={() =>
+                      showModal(
+                        <div className="text-center bg-white px-7 mx-7 w-full py-12 rounded-3xl relative">
+                          <button
+                            onClick={closeModal}
+                            className="absolute top-0 right-0 mt-[-12px] mr-[-12px] text-[#E22134]"
+                          >
+                            <TbSquareRoundedXFilled size={35} />
+                          </button>
+                          <div className="mb-3">{warning}</div>
+                          <button
+                            disabled={isUnlinking}
+                            onClick={handleConfirm}
+                            className="disabled:opacity-50 bg-[#E22134] text-white py-3 px-7 rounded-lg"
+                          >
+                            Confirm
+                          </button>
+                        </div>
+                      )
+                    }
+                    key={member.id}
+                    first_name={member.disciples.first_name ?? ""}
+                    last_name={member.disciples.last_name ?? ""}
+                  />
+                );
+              })}
           </div>
         </div>
       )}
