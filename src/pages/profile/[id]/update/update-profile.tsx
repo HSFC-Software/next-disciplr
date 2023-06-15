@@ -64,7 +64,9 @@ export default function UpdateProfile() {
   };
 
   const handleCopySignUpEmailPassword = () => {
-    handleCopyToClipBoard("https://app.fishgen.org/sign-up?provider=google");
+    handleCopyToClipBoard(
+      `https://app.fishgen.org/sign-up?email=${profile?.email}`
+    );
     toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
   };
 
