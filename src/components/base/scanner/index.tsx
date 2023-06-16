@@ -1,9 +1,9 @@
 import { useState } from "react";
-import QrReader from "react-qr-reader";
 import axios from "axios";
-import { useEffect } from "react";
-import dynamic from "next/dynamic";
-const QrScan = dynamic(() => import("react-qr-reader"), { ssr: false });
+
+if (typeof window != "undefined") {
+  var QrReader = require("react-qr-reader");
+}
 
 const App = () => {
   const [code, setCode] = useState<any>(null);
