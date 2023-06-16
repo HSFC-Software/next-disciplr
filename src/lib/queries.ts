@@ -20,6 +20,10 @@ import {
   autocompletePlace,
   getPlaceDetails,
   getGeocode,
+  getCourse,
+  getSchoolRegistration,
+  getCourses,
+  getApplicationList,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -203,3 +207,35 @@ export const useGetGeocode = (lat: number, lng: number) =>
       enabled: true,
     }
   );
+
+export const useGetCourse = (course_id: string) =>
+  useQuery(
+    ["getCourse", { id: course_id }],
+    async () => await getCourse(course_id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+
+export const useGetCourses = () =>
+  useQuery(["getCourses"], async () => await getCourses(), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
+
+export const useGetSchoolRegistration = (id: string) =>
+  useQuery(
+    ["getSchoolRegistration", { id }],
+    async () => await getSchoolRegistration(id),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );
+
+export const useGetApplicationList = () =>
+  useQuery(["getApplicationList"], async () => await getApplicationList(), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
