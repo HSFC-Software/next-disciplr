@@ -32,25 +32,28 @@ export default function Apply() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main className="flex flex-col p-7">
-        <span>
+        <header className="shrink-0 text-primary font-bold text-2xl flex flex-col gap-4 mb-12">
+          School of Leaders
+        </header>
+        <div className="mb-7 text-xl">
           Registration form for <strong>{course?.title}</strong>
-        </span>
+        </div>
         <div className="flex flex-col gap-4">
           <input
             placeholder="First Name"
-            className="py-2 bg-[#F9F9F9] rounded-[12px] outline-0"
+            className="p-4 bg-[#F9F9F9] rounded-[12px] outline-0"
           />
           <input
             placeholder="Middle Name"
-            className="py-2 bg-[#F9F9F9] rounded-[12px] outline-0"
+            className="p-4 bg-[#F9F9F9] rounded-[12px] outline-0"
           />
           <input
             placeholder="Last Name"
-            className="py-2 bg-[#F9F9F9] rounded-[12px] outline-0"
+            className="p-4 bg-[#F9F9F9] rounded-[12px] outline-0"
           />
           <button
             onClick={handleSubmit}
-            className="bg-[#6E7AC5] text-white py-2 rounded-lg"
+            className="bg-[#6E7AC5] text-white p-4 rounded-lg mt-7"
           >
             Submit
           </button>
