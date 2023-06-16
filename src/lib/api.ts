@@ -2,6 +2,7 @@ import axios from "@/lib/axios";
 import request from "axios";
 import { Network } from "@/types/networks";
 import { Profile } from "@/types/profile";
+import { supabase } from "@/lib/supabase";
 
 export const getProfileByEmail = async (email: string) => {
   try {
@@ -543,4 +544,89 @@ export const addEventMoments = async (payload: {
   } catch (err) {
     return Promise.reject(err);
   }
+};
+
+export const getCourse = async (course_id: string) => {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("id, title")
+    .eq("id", course_id)
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export const getCourses = async () => {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("id, title")
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export type SchoolAdmissionPayload = {
+  course_id: string;
+  first_name: string;
+};
+
+export const schoolRegistration = async (payload: SchoolAdmissionPayload) => {
+  const { data, error } = await supabase
+    .from("school_registrations")
+    .insert(payload)
+    .select("id, course_id, first_name, status")
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export const getSchoolRegistration = async (id: string) => {
+  const { data, error } = await supabase
+    .from("school_registrations")
+    .select("id, course_id, first_name, status")
+    .eq("id", id)
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export const enrollStudent = async (registration_id: string) => {
+  const { data, error } = await supabase
+    .from("school_registrations")
+    .update({ status: "ENROLLED" })
+    .eq("id", registration_id)
+    .select("id, course_id, first_name, status")
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export const getApplicationList = async () => {
+  const { data, error } = await supabase //
+    .from("school_registrations")
+    .select("*, course_id")
+    .eq("status", "PENDING");
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
+export const updateApplication = async (
+  id: string,
+  status: "APPROVED" | "REJECTED"
+) => {
+  const { data, error } = await supabase
+    .from("school_registrations")
+    .update({ status })
+    .eq("id", id)
+    .select("id, course_id, first_name, status")
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data as any;
 };

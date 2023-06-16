@@ -6,6 +6,7 @@ import {
   ConsolidateResponse,
   createEvent,
   CreateEventParams,
+  enrollStudent,
   EventsResponse,
   linkExistingMember,
   LinkExistingMemberPayload,
@@ -18,10 +19,13 @@ import {
   removeMember,
   removeNetwork,
   removeParticipant,
+  SchoolAdmissionPayload,
+  schoolRegistration,
   sendBulkSms,
   signUp,
   SignUpPayload,
   unlinkMember,
+  updateApplication,
   updateLocation,
   UpdateLocationPayload,
   updateNetwork,
@@ -369,5 +373,26 @@ export const useUploadMoment = (event_id: string) => {
         queryClient.invalidateQueries(["getEvent", { id: event_id }]);
       },
     }
+  );
+};
+
+export const useSchoolRegistration = () =>
+  useMutation((payload: SchoolAdmissionPayload) => schoolRegistration(payload));
+
+export const useEnrollStudent = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation((id: string) => enrollStudent(id), {
+    onSuccess(res) {
+      queryClient.invalidateQueries(["getSchoolRegistration", { id: res.id }]);
+    },
+  });
+};
+
+export const useUpdateApplication = () => {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (payload: any) => updateApplication(payload.id, payload.status),
+    { onSuccess: () => queryClient.invalidateQueries(["getApplicationList"]) }
   );
 };
