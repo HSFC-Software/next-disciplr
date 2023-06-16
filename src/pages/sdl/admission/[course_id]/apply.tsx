@@ -11,10 +11,12 @@ export default function Apply() {
   const { mutate, isLoading } = useSchoolRegistration();
 
   const handleSubmit = () => {
+    const first_name = (document.getElementById("first_name") as any)?.value;
+
     mutate(
       {
         course_id: course_id as string,
-        first_name: "John",
+        first_name: first_name,
       },
       {
         onSuccess(data) {
@@ -40,6 +42,7 @@ export default function Apply() {
         </div>
         <div className="flex flex-col gap-4">
           <input
+            id="first_name"
             placeholder="First Name"
             className="p-4 bg-[#F9F9F9] rounded-[12px] outline-0"
           />
@@ -52,8 +55,9 @@ export default function Apply() {
             className="p-4 bg-[#F9F9F9] rounded-[12px] outline-0"
           />
           <button
+            disabled={isLoading}
             onClick={handleSubmit}
-            className="bg-[#6E7AC5] text-white p-4 rounded-lg mt-7"
+            className="bg-[#6E7AC5] text-white p-4 rounded-lg mt-7 disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Submit
           </button>
