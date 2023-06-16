@@ -169,6 +169,26 @@ a {
   -moz-text-fill-color: transparent;
 }
 
+.text-error {
+  background-color: #d74177;
+  background-image: linear-gradient(90deg, #d74177 -57.95%, #ffe98a 164.61%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+.text-success {
+  background-color: #6fd6ff;
+  background-image: linear-gradient(90deg, #c6ea8d -57.95%, #6fd6ff 164.61%);
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
 .pace {
   -webkit-pointer-events: none;
   pointer-events: none;
@@ -207,4 +227,19 @@ body {
 
 div[data-testid="flowbite-tooltip"] {
   z-index: 20;
+}
+
+/* SCANNER STARTED HERE */
+.scanner > section > section {
+  border-radius: 20%;
+}
+
+.scanner > section > section div {
+  box-shadow: none !important;
+  border: 70px solid rgba(0, 0, 0, 0.3) !important;
+  /* box-shadow: white 0px 0px 0px 5px inset !important; */
+}
+
+.scanner-container {
+  min-height: 100svh;
 }

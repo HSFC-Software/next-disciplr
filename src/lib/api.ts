@@ -3,6 +3,7 @@ import request from "axios";
 import { Network } from "@/types/networks";
 import { Profile } from "@/types/profile";
 import { supabase } from "@/lib/supabase";
+import { generateRandomHash } from "./utils";
 
 export const getProfileByEmail = async (email: string) => {
   try {
@@ -575,8 +576,11 @@ export type SchoolAdmissionPayload = {
 export const schoolRegistration = async (payload: SchoolAdmissionPayload) => {
   const { data, error } = await supabase
     .from("school_registrations")
-    .insert(payload)
-    .select("id, course_id, first_name, status")
+    .insert({
+      ...payload,
+      reference: generateRandomHash(5),
+    })
+    .select("id, course_id, first_name, status, reference")
     .single();
 
   if (error) return Promise.reject(error);
@@ -586,7 +590,7 @@ export const schoolRegistration = async (payload: SchoolAdmissionPayload) => {
 export const getSchoolRegistration = async (id: string) => {
   const { data, error } = await supabase
     .from("school_registrations")
-    .select("id, course_id, first_name, status")
+    .select("id, course_id, first_name, status, reference")
     .eq("id", id)
     .single();
 
@@ -599,7 +603,7 @@ export const enrollStudent = async (registration_id: string) => {
     .from("school_registrations")
     .update({ status: "ENROLLED" })
     .eq("id", registration_id)
-    .select("id, course_id, first_name, status")
+    .select("id, course_id, first_name, status, reference")
     .single();
 
   if (error) return Promise.reject(error);
@@ -624,7 +628,7 @@ export const updateApplication = async (
     .from("school_registrations")
     .update({ status })
     .eq("id", id)
-    .select("id, course_id, first_name, status")
+    .select("id, course_id, first_name, status, reference")
     .single();
 
   if (error) return Promise.reject(error);

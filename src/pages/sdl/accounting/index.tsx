@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase";
 import Head from "next/head";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import Scanner from "@/components/base/scanner";
+import Scanner from "@/components/tmp/scanner";
 import Flagged from "@/components/modules/flagged";
 
 export default function Accounting() {
@@ -35,7 +35,6 @@ export default function Accounting() {
           <meta name="viewport" content="width=device-width, initial-scale=1" />
         </Head>
         <Layout activeRoute="" isNavigationHidden>
-          <main className="flex flex-col p-7 gap-3"></main>
           <Scanner />
         </Layout>
       </>
