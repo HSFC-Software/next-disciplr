@@ -13,6 +13,7 @@ export default function Layout(props: {
   children?: ReactNode;
   activeRoute?: string;
   header?: ReactNode;
+  isNavigationHidden?: boolean;
 }) {
   const { activeRoute } = props;
   const token = useToken();
@@ -29,7 +30,7 @@ export default function Layout(props: {
             {props.children}
             <div id="footer-filler" className="bg-white" />
           </div>
-          <Nav activeRoute={activeRoute} />
+          {props?.isNavigationHidden ? null : <Nav activeRoute={activeRoute} />}
         </main>
       </Auth>
     </ModalProvider>
