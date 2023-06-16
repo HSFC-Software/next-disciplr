@@ -56,27 +56,41 @@ export default function Reference() {
           School of Leaders
         </header>
         <main className="grow flex justify-center items-center h-full flex-col">
-          {/* <p className="px-12 text-center text-xl text-[#656565]">
-            Waiting to be admitted in [COURSE] batch [BATCH].{" "}
-            <strong>Keep this QR code as your Admission reference</strong>. We
-            will notify you once you are admitted.
-          </p> */}
-          {/* <p className="px-12 text-center text-xl text-[#656565]">
-            <strong className="text-error">We are sorry</strong> to hear that
-            you are not able to accept you for application for this course.{" "}
-            <strong>Please proceed to window 3 and ask for assistance.</strong>
-          </p> */}
-          {/* <p className="px-12 text-center text-xl text-[#656565]">
-            <strong className="text-primary">You have now been admitted</strong>{" "}
-            to [COURSE] batch [BATCH].{" "}
-            <strong>Please proceed to Window 2</strong> and prepare for the
-            enrollment fee. Kindly present this QR code and proceed to payment.
-          </p> */}
-          <p className="px-12 text-center text-xl text-[#656565]">
-            <strong className="text-success">Congratulations!</strong> You have
-            successfully enrolled for the [COURSE] batch [BATCH].{" "}
-            <strong>Proceed to window 3 to verify your enrollment</strong>
-          </p>
+          {registration?.status === "PENDING" && (
+            <p className="px-12 text-center text-xl text-[#656565]">
+              Waiting to be admitted in [COURSE] batch [BATCH].{" "}
+              <strong>Keep this QR code as your Admission reference</strong>. We
+              will notify you once you are admitted.
+            </p>
+          )}
+          {registration?.status === "REJECTED" && (
+            <p className="px-12 text-center text-xl text-[#656565]">
+              <strong className="text-error">We are sorry</strong> to hear that
+              you are not able to accept you for application for this course.{" "}
+              <strong>
+                Please proceed to window 3 and ask for assistance.
+              </strong>
+            </p>
+          )}
+          {registration?.status === "APPROVED" && (
+            <p className="px-12 text-center text-xl text-[#656565]">
+              <strong className="text-primary">
+                You have now been admitted
+              </strong>{" "}
+              to [COURSE] batch [BATCH].{" "}
+              <strong>Please proceed to Window 2</strong> and prepare for the
+              enrollment fee. Kindly present this QR code and proceed to
+              payment.
+            </p>
+          )}
+          {registration?.status === "ENROLLED" && (
+            <p className="px-12 text-center text-xl text-[#656565]">
+              <strong className="text-success">Congratulations!</strong> You
+              have successfully enrolled for the [COURSE] batch [BATCH].{" "}
+              <strong>Proceed to window 3 to verify your enrollment</strong>
+            </p>
+          )}
+
           <header className="mt-20 text-[#686777] text-[12px] uppercase">
             Admission Reference
           </header>
