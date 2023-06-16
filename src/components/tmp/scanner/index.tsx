@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
-import { useGetCourse, useGetSchoolRegistration } from "@/lib/queries";
+import {
+  useGetCourse,
+  useGetSchoolRegistration,
+  useGetSchoolRegistrationByReference,
+} from "@/lib/queries";
 import { useEnrollStudent } from "@/lib/mutations";
 import { toast } from "react-toastify";
 import { AiOutlineScan } from "react-icons/ai";
@@ -16,18 +20,20 @@ const App = () => {
   const [startScan, setStartScan] = useState(false);
   const [data, setData] = useState("");
 
-  const registration_id = data.split("/").at(-1);
-  const course_id = data.split("/").at(-2);
+  const reference_id = data.split("/").at(-1);
 
-  const { data: registration } = useGetSchoolRegistration(
-    registration_id ?? ""
+  const { data: registration } = useGetSchoolRegistrationByReference(
+    reference_id ?? ""
   );
+
+  const course_id = registration?.course_id;
+
   const { data: course } = useGetCourse(course_id ?? "");
   const { mutate, isLoading } = useEnrollStudent();
 
   const handleReceivePayment = () => {
-    if (registration_id)
-      mutate(registration_id, {
+    if (registration?.id)
+      mutate(registration?.id, {
         onSuccess: () => {
           toast.success("Payment received. Student enrolled. 🎉", {
             autoClose: 2500,
@@ -40,16 +46,17 @@ const App = () => {
   };
 
   const handleScan = async (scanData: any) => {
+    console.log({ scanData });
     if (scanData && scanData !== "") {
-      const matcher =
-        /^https:\/\/\w+\.\w+\.\w+\/\w+\/\w+\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}\/[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/;
+      const matcher = /^https:\/\/\w+\.\w+\.\w+\/_\/\w+$/;
       const url = scanData;
+
+      console.log("matched?", matcher.test(url));
 
       // check if data matches a valid url
       if (matcher.test(url)) {
         setData(scanData);
-
-        setStartScan(false);
+        setStartScan(false); // close scanner
       }
     }
   };

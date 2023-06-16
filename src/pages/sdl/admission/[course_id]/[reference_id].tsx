@@ -21,8 +21,6 @@ export default function Reference() {
     course_id as string
   );
 
-  console.log(registration);
-
   useEffect(() => {
     supabase
       .channel("table-db-changes")
@@ -39,11 +37,12 @@ export default function Reference() {
             ["getSchoolRegistration", { id: reference_id }],
             payload.new
           );
-          console.log(payload.new);
         }
       )
       .subscribe();
   }, []);
+
+  console.log(registration);
 
   return (
     <Flagged flagKey="enableSdlAdmission">
@@ -89,7 +88,7 @@ export default function Reference() {
               eyeColor={"#313131"}
               fgColor="#313131"
               eyeRadius={0.5}
-              value={`api.fishgen.org/_/${registration?.reference}`}
+              value={`https://api.fishgen.org/_/${registration?.reference}`}
             />
           </div>
           <button className="text-[#6E7AC5] text-[12px] hover:underline">
