@@ -14,44 +14,6 @@ export default function Accounting() {
 
   const { data: courses } = useGetCourses();
   const { data: applications } = useGetApplicationList();
-  const { mutate } = useUpdateApplication();
-
-  const handleApprove = (id?: string) => {
-    mutate(
-      {
-        id: id ?? (global as any)?.id,
-        status: "APPROVED",
-      },
-      {
-        onSuccess() {
-          const application = applications?.find((item) => item.id === id);
-          const course = courses?.find(
-            (item) => item.id === application?.course_id
-          );
-
-          const contact_number = application?.contact_number;
-
-          const message = `You have now been admitted to ${course?.title}. Please proceed to Window 2 and prepare ${course?.fee} for the enrollment fee. Kindly present this QR code and proceed to payment.`;
-          sendBulkSms(message, [contact_number], "Disciplr");
-          toast.success("Application approved 🎉");
-        },
-      }
-    );
-  };
-
-  const handleReject = (id: string) => {
-    mutate(
-      {
-        id,
-        status: "REJECTED",
-      },
-      {
-        onSuccess() {
-          toast.success("Application rejected.");
-        },
-      }
-    );
-  };
 
   useEffect(() => {
     supabase
@@ -59,7 +21,7 @@ export default function Accounting() {
       .on(
         "postgres_changes",
         { event: "INSERT", schema: "public", table: "school_registrations" },
-        (payload) => queryClient.invalidateQueries(["getApplicationList"])
+        () => queryClient.invalidateQueries(["getApplicationList"])
       )
       .subscribe();
   }, []);
@@ -84,33 +46,134 @@ export default function Accounting() {
                 key={application?.id}
                 className="bg-[#F9F9F9] rounded-2xl p-5"
               >
-                <header>
-                  Name: {application?.first_name} {application?.middle_name}{" "}
-                  {application?.last_name}
-                </header>
-                <div>Course: {course?.title}</div>
-                <div>
-                  Date Enrolled: {moment(application?.created_at).format("lll")}
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="col-span-1 ">
+                    <div>
+                      Name: {application?.first_name} {application?.middle_name}{" "}
+                      {application?.last_name}
+                    </div>
+                    <div>Course: {course?.title}</div>
+                    <div>
+                      Date Enrolled:{" "}
+                      {moment(application?.created_at).format("lll")}
+                    </div>
+                  </div>
+                  <div className="col-span-1 ">
+                    <div>Leader: {application?.cell_leader_name}</div>
+                    <div>
+                      Network Leader: {application?.network_leader_name}
+                    </div>
+                    <div>
+                      Birthday:{" "}
+                      {application?.birthday ? (
+                        <>
+                          {moment(application?.birthday).format(
+                            "MMMM DD, YYYY"
+                          )}
+                        </>
+                      ) : (
+                        "-"
+                      )}
+                    </div>
+                  </div>
+                  <div className="col-span-1 ">
+                    <div>
+                      Consolidation Level: {application?.lesson_completed}
+                    </div>
+                    <div>OJT: {application?.ojt || "-"}</div>
+                  </div>
+                  <div className="col-span-1 ">
+                    <div>
+                      Do have cellgroup:{" "}
+                      {application?.with_cellgroup ? "✅" : "❌"}
+                    </div>
+                    <div>
+                      Want to be Admin or Teacher:{" "}
+                      {application?.want_to_be_admin_or_teacher ? "✅" : "❌"}
+                    </div>
+                    <div>Role: {application?.role || "-"}</div>
+                  </div>
                 </div>
-                <div className="flex gap-2 mt-3">
-                  <button
-                    onClick={() => handleApprove(application?.id)}
-                    className="bg-green-500 text-white text-sm px-2 py-1 rounded-lg"
-                  >
-                    Approve
-                  </button>
-                  <button
-                    onClick={() => handleReject(application?.id)}
-                    className="bg-red-500 text-white text-sm px-2 py-1 rounded-lg"
-                  >
-                    Reject
-                  </button>
-                </div>
+                <Actions application={application} />
               </div>
             );
           })}
         </main>
       </Layout>
+    </>
+  );
+}
+
+function Actions({ application }: any) {
+  const { data: courses } = useGetCourses();
+  const { data: applications } = useGetApplicationList();
+  const { mutate, isLoading } = useUpdateApplication();
+
+  const handleApprove = (id?: string) => {
+    mutate(
+      {
+        id: id ?? (global as any)?.id,
+        status: "APPROVED",
+      },
+      {
+        onSuccess() {
+          const application = applications?.find((item) => item.id === id);
+          const course = courses?.find(
+            (item) => item.id === application?.course_id
+          );
+
+          const contact_number = application?.contact_number;
+
+          const message = `Hi ${application?.first_name}! You have been admitted to ${course?.title}. Please proceed to Window 2 and prepare ${course?.fee} for the enrollment fee. Kindly present this QR code and proceed to payment. If you lost this QR code, you can visit this link to get a new one: https://api.fishgen.org/_/${application?.reference}`;
+          sendBulkSms(message, [contact_number], "Disciplr");
+          toast.success("Application approved 🎉");
+        },
+      }
+    );
+  };
+
+  const handleReject = (id: string) => {
+    mutate(
+      {
+        id,
+        status: "REJECTED",
+      },
+      {
+        onSuccess() {
+          const application = applications?.find((item) => item.id === id);
+          const course = courses?.find(
+            (item) => item.id === application?.course_id
+          );
+
+          toast.success("Application rejected.");
+
+          const message = `We are sorry to hear ${application?.first_name} that you are not able to accept you for application for ${course?.title}. Please proceed to window 3 and ask for assistance.`;
+          const contact_number = application?.contact_number;
+          if (contact_number)
+            sendBulkSms(message, [contact_number], "Disciplr");
+        },
+      }
+    );
+  };
+
+  return (
+    <>
+      <div className="flex gap-2 mt-3">
+        <button
+          disabled={isLoading}
+          onClick={() => handleApprove(application?.id)}
+          className="bg-green-500 text-white text-sm px-2 py-1 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Approve
+        </button>
+        <button
+          disabled={isLoading}
+          onClick={() => handleReject(application?.id)}
+          className="bg-red-500 text-white text-sm px-2 py-1 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Reject
+        </button>
+      </div>
     </>
   );
 }

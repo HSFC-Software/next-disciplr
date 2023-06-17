@@ -34,6 +34,7 @@ export default function Apply() {
       with_cellgroup: false,
       want_to_be_admin_or_teacher: false,
       role: "",
+      birthday: "",
     },
     onSubmit: () => {},
   });
@@ -165,6 +166,20 @@ export default function Apply() {
                 required
                 placeholder="09XXXXXXXXX"
                 maxLength={11}
+              />
+            </div>
+
+            <div>
+              <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
+                Birthday
+              </label>
+              <input
+                onChange={formik.handleChange}
+                value={formik.values.birthday}
+                name="birthday"
+                className="bg-[#F9F9F9] p-4 rounded-xl w-full outline-0 border-0"
+                required
+                type="date"
               />
             </div>
 
