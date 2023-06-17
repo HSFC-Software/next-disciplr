@@ -124,7 +124,7 @@ function Actions({ application }: any) {
 
           const contact_number = application?.contact_number;
 
-          const message = `You have now been admitted to ${course?.title}. Please proceed to Window 2 and prepare ${course?.fee} for the enrollment fee. Kindly present this QR code and proceed to payment.`;
+          const message = `Hi ${application?.first_name}! You have been admitted to ${course?.title}. Please proceed to Window 2 and prepare ${course?.fee} for the enrollment fee. Kindly present this QR code and proceed to payment. If you lost this QR code, you can visit this link to get a new one: https://api.fishgen.org/_/${application?.reference}`;
           sendBulkSms(message, [contact_number], "Disciplr");
           toast.success("Application approved 🎉");
         },
@@ -140,7 +140,17 @@ function Actions({ application }: any) {
       },
       {
         onSuccess() {
+          const application = applications?.find((item) => item.id === id);
+          const course = courses?.find(
+            (item) => item.id === application?.course_id
+          );
+
           toast.success("Application rejected.");
+
+          const message = `We are sorry to hear ${application?.first_name} that you are not able to accept you for application for ${course?.title}. Please proceed to window 3 and ask for assistance.`;
+          const contact_number = application?.contact_number;
+          if (contact_number)
+            sendBulkSms(message, [contact_number], "Disciplr");
         },
       }
     );
