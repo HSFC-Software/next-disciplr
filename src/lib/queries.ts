@@ -24,6 +24,7 @@ import {
   getSchoolRegistration,
   getCourses,
   getApplicationList,
+  getSchoolRegistrationByReference,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -239,3 +240,13 @@ export const useGetApplicationList = () =>
     staleTime: 1000 * 60 * 5,
     enabled: true,
   });
+
+export const useGetSchoolRegistrationByReference = (reference: string) =>
+  useQuery(
+    ["getSchoolRegistrationByReference", { reference }],
+    async () => await getSchoolRegistrationByReference(reference),
+    {
+      staleTime: 1000 * 60 * 5,
+      enabled: true,
+    }
+  );

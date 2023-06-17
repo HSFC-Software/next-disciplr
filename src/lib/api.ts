@@ -598,6 +598,17 @@ export const getSchoolRegistration = async (id: string) => {
   return data;
 };
 
+export const getSchoolRegistrationByReference = async (reference: string) => {
+  const { data, error } = await supabase
+    .from("school_registrations")
+    .select("id, course_id, first_name, status, reference")
+    .eq("reference", reference)
+    .single();
+
+  if (error) return Promise.reject(error);
+  return data;
+};
+
 export const enrollStudent = async (registration_id: string) => {
   const { data, error } = await supabase
     .from("school_registrations")
