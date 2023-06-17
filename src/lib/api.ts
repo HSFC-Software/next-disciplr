@@ -580,7 +580,7 @@ export const schoolRegistration = async (payload: SchoolAdmissionPayload) => {
       reference: generateRandomHash(5),
     })
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     )
     .single();
 
@@ -592,7 +592,7 @@ export const getSchoolRegistration = async (id: string) => {
   const { data, error } = await supabase
     .from("school_registrations")
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     )
     .eq("id", id)
     .single();
@@ -605,7 +605,7 @@ export const getSchoolRegistrationByReference = async (reference: string) => {
   const { data, error } = await supabase
     .from("school_registrations")
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     )
     .eq("reference", reference)
     .single();
@@ -620,7 +620,7 @@ export const enrollStudent = async (registration_id: string) => {
     .update({ status: "ENROLLED" })
     .eq("id", registration_id)
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     )
     .single();
 
@@ -632,7 +632,7 @@ export const getMasterList = async () => {
   const { data, error } = await supabase //
     .from("school_registrations")
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     );
   if (error) return Promise.reject(error);
   return data;
@@ -657,7 +657,7 @@ export const updateApplication = async (
     .update({ status })
     .eq("id", id)
     .select(
-      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role, birthday"
     )
     .single();
 

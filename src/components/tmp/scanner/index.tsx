@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react";
 import {
   useGetCourse,
-  useGetSchoolRegistration,
   useGetSchoolRegistrationByReference,
 } from "@/lib/queries";
 import { useEnrollStudent } from "@/lib/mutations";
 import { toast } from "react-toastify";
 import { AiOutlineScan } from "react-icons/ai";
 import { RiArrowLeftLine, RiSendPlane2Fill } from "react-icons/ri";
-import { useRouter } from "next/router";
-import { sendBulkSms } from "@/lib/api";
+import moment from "moment";
 
 if (typeof window != "undefined") {
   var QrReader = require("react-qr-reader");
 }
 
 const App = () => {
-  const router = useRouter();
   const [selected, setSelected] = useState("environment");
   const [startScan, setStartScan] = useState(false);
   const [data, setData] = useState("");
@@ -42,14 +39,6 @@ const App = () => {
           setTimeout(() => {
             setData("");
           }, 2500);
-
-          if (registration?.contact_number) {
-            sendBulkSms(
-              "Congratulations! You have successfully enrolled for the [COURSE] batch [BATCH]. Proceed to window 3 to verify your enrollment",
-              [registration?.contact_number],
-              "Disciplr"
-            );
-          }
         },
       });
   };
@@ -142,20 +131,53 @@ const App = () => {
           </div>
         )}
         {!!registration && (
-          <div className="flex flex-col gap-4 mt-12 self-start">
-            <header className="text-xl text-[#656565]">
-              Enrolling for <strong>{course?.title}</strong>
+          <div className="flex flex-col gap-4 mt-12 self-start w-full">
+            <header className="text-[#656565]">
+              Enrolling for{" "}
+              <span className="font-semibold">{course?.title}</span>
             </header>
-            <div className="w-full mt-7">
+            <div className="w-full">
               <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
-                First name
+                Student
               </label>
               <input
                 readOnly
-                value={registration?.first_name}
-                className="bg-[#F9F9F9] py-3 px-4 rounded-xl w-full cursor-not-allowed outline-0"
+                value={`${registration?.first_name} ${registration?.middle_name} ${registration?.last_name}`}
+                className="bg-[#F9F9F9] p-4 rounded-xl w-full outline-0"
               />
             </div>
+            <div className="w-full">
+              <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
+                Contact Number
+              </label>
+              <input
+                readOnly
+                value={registration?.contact_number}
+                className="bg-[#F9F9F9] p-4 rounded-xl w-full outline-0"
+              />
+            </div>
+            <div className="w-full">
+              <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
+                Birthday
+              </label>
+              <input
+                readOnly
+                value={moment(registration?.birthday).format("MMMM DD, YYYY")}
+                className="bg-[#F9F9F9] p-4 rounded-xl w-full outline-0"
+              />
+            </div>
+            {course?.title !== "Life Class" && (
+              <div className="w-full">
+                <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
+                  On the Job Training (OJT)
+                </label>
+                <input
+                  readOnly
+                  value={registration.ojt || "-"}
+                  className="bg-[#F9F9F9] p-4 rounded-xl w-full outline-0"
+                />
+              </div>
+            )}
           </div>
         )}
       </main>
