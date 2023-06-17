@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { AiOutlineScan } from "react-icons/ai";
 import { RiArrowLeftLine, RiSendPlane2Fill } from "react-icons/ri";
 import { useRouter } from "next/router";
+import { sendBulkSms } from "@/lib/api";
 
 if (typeof window != "undefined") {
   var QrReader = require("react-qr-reader");
@@ -41,6 +42,14 @@ const App = () => {
           setTimeout(() => {
             setData("");
           }, 2500);
+
+          if (registration?.contact_number) {
+            sendBulkSms(
+              "Congratulations! You have successfully enrolled for the [COURSE] batch [BATCH]. Proceed to window 3 to verify your enrollment",
+              [registration?.contact_number],
+              "Disciplr"
+            );
+          }
         },
       });
   };
