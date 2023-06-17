@@ -91,8 +91,8 @@ export default function Reference() {
             </p>
           )}
 
-          <header className="mt-20 text-[#686777] text-[12px] uppercase">
-            Admission Reference
+          <header className="mt-20 text-[#686777] text-[12px] ">
+            ADMISSION REFERENCE: {registration?.reference}
           </header>
           <div className="py-3">
             <QRCode

@@ -7,7 +7,7 @@ import {
 import { useEnrollStudent } from "@/lib/mutations";
 import { toast } from "react-toastify";
 import { AiOutlineScan } from "react-icons/ai";
-import { RiArrowLeftLine } from "react-icons/ri";
+import { RiArrowLeftLine, RiSendPlane2Fill } from "react-icons/ri";
 import { useRouter } from "next/router";
 
 if (typeof window != "undefined") {
@@ -19,12 +19,12 @@ const App = () => {
   const [selected, setSelected] = useState("environment");
   const [startScan, setStartScan] = useState(false);
   const [data, setData] = useState("");
+  const [isManual, setIsManual] = useState(false);
 
   const reference_id = data.split("/").at(-1);
 
-  const { data: registration } = useGetSchoolRegistrationByReference(
-    reference_id ?? ""
-  );
+  const { data: registration, isLoading: __registration } =
+    useGetSchoolRegistrationByReference(reference_id ?? "");
 
   const course_id = registration?.course_id;
 
@@ -46,7 +46,6 @@ const App = () => {
   };
 
   const handleScan = async (scanData: any) => {
-    console.log({ scanData });
     if (scanData && scanData !== "") {
       const matcher = /^https:\/\/\w+\.\w+\.\w+\/_\/\w+$/;
       const url = scanData;
@@ -65,6 +64,14 @@ const App = () => {
     console.error(err);
   };
 
+  const handleEnterManually = () => {
+    const reference = (document.getElementById("reference-input") as any)
+      ?.value;
+
+    setData("https://api.fishgen.org/_/" + reference);
+    setIsManual(true);
+  };
+
   useEffect(() => {
     function handleDoubleClick() {
       setSelected(selected === "environment" ? "user" : "environment");
@@ -75,11 +82,29 @@ const App = () => {
     return () => el?.removeEventListener("dblclick", handleDoubleClick);
   });
 
+  const handleBack = () => {
+    setData("");
+  };
+
+  const showNoResult = isManual && !registration && !__registration;
+
+  useEffect(() => {
+    if (showNoResult) {
+      toast.error("No result found. Please try again.", {
+        autoClose: 2500,
+        position: "top-center",
+      });
+
+      setIsManual(false);
+      (document.getElementById("reference-input") as any).value = "";
+    }
+  }, [showNoResult]);
+
   return (
     <div className="p-7 scanner-container w-screen flex flex-col">
       <header className="shrink-0 text-primary font-bold text-2xl flex flex-col gap-4">
         {!!registration && (
-          <button onClick={router.reload}>
+          <button onClick={handleBack}>
             <RiArrowLeftLine size={38} />
           </button>
         )}
@@ -127,13 +152,30 @@ const App = () => {
       </main>
       <footer className="shrink-0 px-7">
         {!registration && (
+          <div className="relative flex items-center mb-4">
+            <input
+              id="reference-input"
+              className="bg-[#F9F9F9] w-full p-5 rounded-2xl"
+              placeholder="Enter Reference Manually"
+            />
+            <button
+              disabled={isManual}
+              onClick={handleEnterManually}
+              className="absolute text-3xl px-4 right-0 text-[#6E7AC5] disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              <RiSendPlane2Fill />
+            </button>
+          </div>
+        )}
+        {!registration && (
           <button
             className="bg-[#6E7AC5] w-full text-white p-5 rounded-2xl"
             onClick={() => {
               setStartScan(!startScan);
             }}
           >
-            Scan QR
+            {startScan && "Close Scanner"}
+            {!startScan && "Open Scanner"}
           </button>
         )}
         {!!registration && (
