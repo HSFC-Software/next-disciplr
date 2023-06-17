@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import Scanner from "@/components/tmp/scanner";
 import Flagged from "@/components/modules/flagged";
+import { sendBulkSms } from "@/lib/api";
 
 export default function Accounting() {
   const [registration_id, setRegistrationId] = useState("");
@@ -19,6 +20,15 @@ export default function Accounting() {
     mutate(registration_id || (global as any)?.id, {
       onSuccess() {
         setRegistrationId("");
+
+        if (registration?.contact_number) {
+          sendBulkSms(
+            "Congratulations! You have successfully enrolled for the [COURSE] batch [BATCH]. Proceed to window 3 to verify your enrollment",
+            [registration?.contact_number],
+            "Disciplr"
+          );
+        }
+
         toast.success("Payment received. Student enrolled. 🎉", {
           autoClose: 2500,
         });
