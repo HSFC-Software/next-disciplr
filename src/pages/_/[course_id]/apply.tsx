@@ -44,6 +44,12 @@ export default function Apply() {
   const handleSubmit = (e: any) => {
     e?.preventDefault();
 
+    if (!formik.values.ojt) {
+      if (course?.id !== LC) {
+        return document.getElementById("ojt-input")?.focus();
+      }
+    }
+
     mutate(
       {
         course_id: course_id as string,
@@ -216,6 +222,7 @@ export default function Apply() {
                     required
                     readOnly
                     name="ojt"
+                    id="ojt-input"
                     onClick={() => setShowOjtPicker(true)}
                     onFocus={() => setShowOjtPicker(true)}
                     value={formik.values.ojt}
