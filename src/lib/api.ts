@@ -628,6 +628,16 @@ export const enrollStudent = async (registration_id: string) => {
   return data;
 };
 
+export const getMasterList = async () => {
+  const { data, error } = await supabase //
+    .from("school_registrations")
+    .select(
+      "id, course_id, first_name, status, reference, middle_name, last_name, contact_number, cell_leader_name, network_leader_name, lesson_completed, ojt, with_cellgroup, want_to_be_admin_or_teacher, role"
+    );
+  if (error) return Promise.reject(error);
+  return data;
+};
+
 export const getApplicationList = async () => {
   const { data, error } = await supabase //
     .from("school_registrations")
