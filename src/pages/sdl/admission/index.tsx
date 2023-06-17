@@ -1,10 +1,13 @@
 import Layout from "@/components/templates/page";
+import { sendBulkSms } from "@/lib/api";
 import { useUpdateApplication } from "@/lib/mutations";
 import { useGetApplicationList, useGetCourses } from "@/lib/queries";
 import { supabase } from "@/lib/supabase";
+import moment from "moment";
 import Head from "next/head";
 import { useEffect } from "react";
 import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
 export default function Accounting() {
   const queryClient = useQueryClient();
@@ -14,17 +17,40 @@ export default function Accounting() {
   const { mutate } = useUpdateApplication();
 
   const handleApprove = (id?: string) => {
-    mutate({
-      id: id ?? (global as any)?.id,
-      status: "APPROVED",
-    });
+    mutate(
+      {
+        id: id ?? (global as any)?.id,
+        status: "APPROVED",
+      },
+      {
+        onSuccess() {
+          const application = applications?.find((item) => item.id === id);
+          const course = courses?.find(
+            (item) => item.id === application?.course_id
+          );
+
+          const contact_number = application?.contact_number;
+
+          const message = `You have now been admitted to ${course?.title}. Please proceed to Window 2 and prepare ${course?.fee} for the enrollment fee. Kindly present this QR code and proceed to payment.`;
+          sendBulkSms(message, [contact_number], "Disciplr");
+          toast.success("Application approved 🎉");
+        },
+      }
+    );
   };
 
   const handleReject = (id: string) => {
-    mutate({
-      id,
-      status: "REJECTED",
-    });
+    mutate(
+      {
+        id,
+        status: "REJECTED",
+      },
+      {
+        onSuccess() {
+          toast.success("Application rejected.");
+        },
+      }
+    );
   };
 
   useEffect(() => {
@@ -38,8 +64,6 @@ export default function Accounting() {
       .subscribe();
   }, []);
 
-  console.log(applications);
-
   return (
     <>
       <Head>
@@ -50,7 +74,41 @@ export default function Accounting() {
       <Layout activeRoute="" isNavigationHidden>
         <main className="flex flex-col p-7 gap-3">
           <h1 className="text-4xl font-semibold">Application List</h1>
-          <button onClick={() => handleApprove()}>Approve</button>
+          {applications?.map((application) => {
+            const course = courses?.find(
+              (item) => item.id === application?.course_id
+            );
+
+            return (
+              <div
+                key={application?.id}
+                className="bg-[#F9F9F9] rounded-2xl p-5"
+              >
+                <header>
+                  Name: {application?.first_name} {application?.middle_name}{" "}
+                  {application?.last_name}
+                </header>
+                <div>Course: {course?.title}</div>
+                <div>
+                  Date Enrolled: {moment(application?.created_at).format("lll")}
+                </div>
+                <div className="flex gap-2 mt-3">
+                  <button
+                    onClick={() => handleApprove(application?.id)}
+                    className="bg-green-500 text-white text-sm px-2 py-1 rounded-lg"
+                  >
+                    Approve
+                  </button>
+                  <button
+                    onClick={() => handleReject(application?.id)}
+                    className="bg-red-500 text-white text-sm px-2 py-1 rounded-lg"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
+            );
+          })}
         </main>
       </Layout>
     </>
