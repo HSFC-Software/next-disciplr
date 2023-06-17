@@ -21,14 +21,6 @@ export default function Accounting() {
       onSuccess() {
         setRegistrationId("");
 
-        if (registration?.contact_number) {
-          sendBulkSms(
-            "Congratulations! You have successfully enrolled for the [COURSE] batch [BATCH]. Proceed to window 3 to verify your enrollment",
-            [registration?.contact_number],
-            "Disciplr"
-          );
-        }
-
         toast.success("Payment received. Student enrolled. 🎉", {
           autoClose: 2500,
         });
