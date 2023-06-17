@@ -550,7 +550,7 @@ export const addEventMoments = async (payload: {
 export const getCourse = async (course_id: string) => {
   const { data, error } = await supabase
     .from("courses")
-    .select("id, title")
+    .select("id, title, fee")
     .eq("id", course_id)
     .single();
 
@@ -561,7 +561,7 @@ export const getCourse = async (course_id: string) => {
 export const getCourses = async () => {
   const { data, error } = await supabase
     .from("courses")
-    .select("id, title")
+    .select("id, title, fee")
     .single();
 
   if (error) return Promise.reject(error);
