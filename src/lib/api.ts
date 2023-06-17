@@ -561,8 +561,7 @@ export const getCourse = async (course_id: string) => {
 export const getCourses = async () => {
   const { data, error } = await supabase
     .from("courses")
-    .select("id, title, fee")
-    .single();
+    .select("id, title, fee");
 
   if (error) return Promise.reject(error);
   return data;
