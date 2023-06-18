@@ -78,14 +78,15 @@ export default function Apply() {
         }}
         onClose={() => setShowOjtPicker(false)}
       >
-        <option value="Music">Music</option>
-        <option value="Media">Media</option>
-        <option value="Usher">Usher</option>
+        <option value="Art">Art</option>
         <option value="Dance">Dance</option>
         <option value="IT">IT</option>
-        <option value="MC">MC</option>
         <option value="Marshall">Marshall</option>
-        <option value="Art">Art</option>
+        <option value="MC">MC</option>
+        <option value="Media">Media</option>
+        <option value="Music">Music</option>
+        <option value="SST">SST</option>
+        <option value="Usher">Usher</option>
       </SelectPicker>
       <SelectPicker
         label="Role"
