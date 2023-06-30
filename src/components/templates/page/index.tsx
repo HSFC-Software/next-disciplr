@@ -71,7 +71,7 @@ function Nav(props: { activeRoute?: string }) {
             isActive={activeRoute === "conso"}
           />
         </Link>
-        <Link href="/sdl/accounting" className="relative flex items-center">
+        <Link href="/events" className="relative flex items-center">
           <NotificationIcon
             width={38}
             height={38}
