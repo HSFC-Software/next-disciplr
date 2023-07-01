@@ -4,12 +4,23 @@ import Header from "@/components/base/header";
 import { useRouter } from "next/router";
 import { useGetConsolidationById } from "@/lib/queries";
 import { useState } from "react";
+import { usePublishConsolidation } from "@/lib/mutations";
 
 export default function LessonScreen() {
   const router = useRouter();
-  const { data: lesson } = useGetConsolidationById(
+  const { data: lesson, isLoading } = useGetConsolidationById(
     router.query.lesson as string
   );
+  const { mutate: publish, isLoading: isUpdating } = usePublishConsolidation();
+
+  const handleComplete = () => {
+    publish?.(router.query.lesson as string, {
+      onSuccess: () => {
+        router.push("/conso/[id]", `/conso/${router.query.id}`);
+      },
+    });
+  };
+
   return (
     <>
       <Head>
@@ -19,13 +30,26 @@ export default function LessonScreen() {
       </Head>
       <Layout activeRoute="conso">
         <Header showBackArrrow>
-          <div className="flex w-full justify-between items-center">
-            <span>
-              {lesson?.lesson_code.name}: {lesson?.lesson_code.title}
-            </span>
-          </div>
+          {!isLoading && (
+            <div className="flex w-full justify-between items-center">
+              <span>
+                {lesson?.lesson_code.name}: {lesson?.lesson_code.title}
+              </span>
+            </div>
+          )}
         </Header>
         <Outline lessonCode={lesson?.lesson_code.code ?? ""} />
+        {!isLoading && lesson?.status === "DRAFT" && (
+          <div className="flex justify-center mt-10">
+            <button
+              disabled={isUpdating}
+              onClick={handleComplete}
+              className="w-[280px] disabled:opacity-30 bg-primary rounded-2xl px-8 py-4 text-white"
+            >
+              Complete
+            </button>
+          </div>
+        )}
       </Layout>
     </>
   );
