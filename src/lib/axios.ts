@@ -9,13 +9,17 @@ const functions = api.create({
   },
 });
 
+const key = process.env.NEXT_PUBLIC_SUPABASE_KEY;
+
 functions.interceptors.request.use(
   (config) => {
     const cookie = parseCookies();
     const token = cookie.token;
 
+    config.headers.Authorization = `Bearer ${key}`;
+
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers["X-Authorization-Key"] = token;
     }
 
     return config;
