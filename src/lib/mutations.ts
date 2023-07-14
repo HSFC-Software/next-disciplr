@@ -8,6 +8,7 @@ import {
   CreateEventParams,
   enrollStudent,
   EventsResponse,
+  inviteMember,
   linkExistingMember,
   LinkExistingMemberPayload,
   linkNewMember,
@@ -395,4 +396,9 @@ export const useUpdateApplication = () => {
     (payload: any) => updateApplication(payload.id, payload.status),
     { onSuccess: () => queryClient.invalidateQueries(["getApplicationList"]) }
   );
+};
+
+export const useInviteMember = () => {
+  // const queryClient = useQueryClient();
+  return useMutation((disciple_id: string) => inviteMember(disciple_id));
 };

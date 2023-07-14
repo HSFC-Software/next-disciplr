@@ -6,7 +6,11 @@ import { useGetProfileById } from "@/lib/queries";
 import Header from "@/components/base/header";
 import { useFormik } from "formik";
 import { Profile } from "@/types/profile";
-import { useUpdateUser, useUpdateProfilePicture } from "@/lib/mutations";
+import {
+  useUpdateUser,
+  useUpdateProfilePicture,
+  useInviteMember,
+} from "@/lib/mutations";
 import { UpdateUserPaypload } from "@/lib/api";
 import { useSelector } from "react-redux";
 import { State } from "@/lib/models";
@@ -31,6 +35,7 @@ export default function UpdateProfile() {
   const [previewURL, setPreviewURL] = useState("");
   const { mutate: updateProfilePicture, isLoading: isUploadingProfileImage } =
     useUpdateProfilePicture(profile?.id ?? "");
+  const { mutate: inviteMember, isLoading: isInviting } = useInviteMember();
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -54,21 +59,21 @@ export default function UpdateProfile() {
     formik.handleSubmit();
   };
 
-  const handleCopyToClipBoard = (str: string) => {
-    navigator.clipboard.writeText(str);
-  };
+  // const handleCopyToClipBoard = (str: string) => {
+  //   navigator.clipboard.writeText(str);
+  // };
 
-  const handleCopySignInGoogle = () => {
-    handleCopyToClipBoard("https://app.fishgen.org/sign-in?provider=google");
-    toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
-  };
+  // const handleCopySignInGoogle = () => {
+  //   handleCopyToClipBoard("https://app.fishgen.org/sign-in?provider=google");
+  //   toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
+  // };
 
-  const handleCopySignUpEmailPassword = () => {
-    handleCopyToClipBoard(
-      `https://app.fishgen.org/sign-up?email=${profile?.email}`
-    );
-    toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
-  };
+  // const handleCopySignUpEmailPassword = () => {
+  //   handleCopyToClipBoard(
+  //     `https://app.fishgen.org/sign-up?email=${profile?.email}`
+  //   );
+  //   toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
+  // };
 
   const handleChangeFile = (e: any) => {
     if (e?.target?.files?.length > 0) {
@@ -95,6 +100,24 @@ export default function UpdateProfile() {
       setPreviewURL(URL.createObjectURL(selectedPhoto!));
     }
   }, [selectedPhoto]);
+
+  const handleInvite = () => {
+    if (formik.initialValues.contact_number !== formik.values.contact_number) {
+      alert("You have unsaved changes. Save changes first");
+      return;
+    }
+
+    if (!formik.values.contact_number) {
+      alert("Please save contact number first.");
+      return document.getElementById("contact_number")?.focus?.();
+    }
+
+    inviteMember(String(profileId), {
+      onSuccess: () => {
+        toast("Invitation sent 🎉", { autoClose: 1500 });
+      },
+    });
+  };
 
   return (
     <>
@@ -281,59 +304,15 @@ export default function UpdateProfile() {
               />
             </div>
           </section>
+
           <section className="px-7 py-3 bg-white">
-            <label className={`${styles.label} uppercase font-medium`}>
-              Disciplr Account
-            </label>
-            <div className="py-5 flex flex-col gap-2">
-              <label className={styles.label}>Email</label>
-              <input
-                className="border-0 px-0 outline-0"
-                id="email"
-                name="email"
-                type="text"
-                onChange={formik.handleChange}
-                value={formik.values.email}
-                placeholder="Enter email"
-              />
-            </div>
-            {profile?.email && (
-              <>
-                <label className={styles.label}>Sign-in via google</label>
-                <div className="flex justify-between items-center mt-2 text-[#6e7ac5]">
-                  <div
-                    onClick={handleCopySignInGoogle}
-                    className="cursor-pointer"
-                  >
-                    https://app.fishgen.org/sign-in?provider=google
-                  </div>
-                  <button
-                    onClick={handleCopySignInGoogle}
-                    className="text-xl text-[#6e7ac5]"
-                  >
-                    <MdContentCopy />
-                  </button>
-                </div>
-                <div className="mt-4" />
-                <label className={styles.label}>
-                  Sign-in via email and password
-                </label>
-                <div className="flex justify-between items-center mt-2 text-[#6e7ac5]">
-                  <div
-                    onClick={handleCopySignUpEmailPassword}
-                    className="cursor-pointer"
-                  >
-                    https://app.fishgen.org/sign-up?email={profile?.email}
-                  </div>
-                  <button
-                    onClick={handleCopySignUpEmailPassword}
-                    className="text-xl text-[#6e7ac5]"
-                  >
-                    <MdContentCopy />
-                  </button>
-                </div>
-              </>
-            )}
+            <button
+              onClick={handleInvite}
+              disabled={isInviting}
+              className="bg-[#6E7AC5] w-full text-white p-5 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Invite to Disciplr
+            </button>
           </section>
         </section>
       </Layout>
