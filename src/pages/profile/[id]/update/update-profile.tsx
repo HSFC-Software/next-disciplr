@@ -104,7 +104,7 @@ export default function UpdateProfile() {
   const handleInvite = () => {
     if (formik.initialValues.contact_number !== formik.values.contact_number) {
       alert("You have unsaved changes. Save changes first");
-      return;
+      return document.getElementById("contact_number")?.focus?.();
     }
 
     if (!formik.values.contact_number) {
