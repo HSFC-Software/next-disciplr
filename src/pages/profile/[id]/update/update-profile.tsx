@@ -125,7 +125,7 @@ export default function UpdateProfile() {
         <title>Disciplr</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Layout activeRoute="profile">
+      <Layout isNavigationHidden activeRoute="profile">
         <Header showBackArrrow onBack={() => router.back()}>
           <div className="flex w-full justify-between items-center">
             <span className="whitespace-nowrap overflow-hidden text-ellipsis">
