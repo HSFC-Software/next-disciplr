@@ -26,6 +26,7 @@ import {
   getApplicationList,
   getSchoolRegistrationByReference,
   getMasterList,
+  getRewards,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -257,3 +258,9 @@ export const useGetSchoolRegistrationByReference = (reference: string) =>
       enabled: true,
     }
   );
+
+export const useGetRewards = () =>
+  useQuery(["getRewards"], async () => await getRewards(), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });

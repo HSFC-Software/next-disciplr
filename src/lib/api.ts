@@ -674,3 +674,12 @@ export const inviteMember = async (disciple_id: string) => {
     return Promise.reject(err);
   }
 };
+
+export const getRewards = async () => {
+  try {
+    const { data } = await axios.get("/v2/rewards");
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
