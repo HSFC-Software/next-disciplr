@@ -72,6 +72,7 @@ export type SearchedLeader = Pick<Profile, "id" | "first_name" | "last_name">;
 export const searchLeaders = async (
   keyword: string
 ): Promise<SearchedLeader[]> => {
+  if (!keyword) return Promise.reject("No keyword provided");
   try {
     const { data } = await axios.get(`/profile?q=${keyword}`);
     return data;
@@ -663,4 +664,13 @@ export const updateApplication = async (
 
   if (error) return Promise.reject(error);
   return data as any;
+};
+
+export const inviteMember = async (disciple_id: string) => {
+  try {
+    const { data } = await axios.post("/v2/auth/invite", { disciple_id });
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
 };
