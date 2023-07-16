@@ -36,7 +36,8 @@ functions.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       // redirect to sign-in page
-      window.location.href = `/sign-in?token=expired`;
+      const recentPage = window.location.href;
+      window.location.href = `/sign-in?token=expired&redirect_uri=${recentPage}`;
     }
   }
 );

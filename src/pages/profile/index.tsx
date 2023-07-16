@@ -12,6 +12,7 @@ import { useFlags } from "launchdarkly-react-client-sdk";
 import { supabase } from "@/lib/supabase";
 import { destroyCookie } from "nookies";
 import Avatar from "@/components/base/avatar";
+import nookies, { parseCookies } from "nookies";
 
 export default function Home() {
   const { data: profile } = useGetProfile();
@@ -35,6 +36,15 @@ export default function Home() {
     }
     destroyCookie(null, "token");
     window.location.href = "/sign-in";
+  };
+
+  const handleChangePassword = () => {
+    const cookie = parseCookies();
+
+    const token = cookie.token;
+    const redirect_uri = window.location.href;
+
+    window.location.href = `https://sso.fishgen.org/change-password?token=${token}&redirect_uri=${redirect_uri}&id=${id}`;
   };
 
   const initials = `${profile?.first_name?.charAt(0) ?? ""}${
@@ -68,6 +78,12 @@ export default function Home() {
                 ${styles.dropdownItem}`}
               >
                 Update Profile
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={handleChangePassword}
+                className={styles.dropdownItem}
+              >
+                Change Password
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={handleSignOut}

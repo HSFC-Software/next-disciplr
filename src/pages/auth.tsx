@@ -7,9 +7,9 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 export default function Auth() {
-  const router = useRouter();
   const [token, setToken] = useState("");
   const { data } = useGetProfileFromToken(token);
+  const router = useRouter();
 
   useEffect(() => {
     const params = Object.fromEntries(new URLSearchParams(location.hash));
@@ -20,7 +20,11 @@ export default function Auth() {
   }, []);
 
   if (data) {
-    window.location.href = "/networks";
+    if (Boolean(router.query.next)) {
+      window.location.href = String(router.query.next);
+    } else {
+      window.location.href = "/networks";
+    }
   }
 
   if (data === null) {
