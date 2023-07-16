@@ -44,12 +44,8 @@ export default function Home() {
     const token = cookie.token;
     const redirect_uri = window.location.href;
 
-    window.location.href = `https://sso.fishgen.org/change-password?token=${token}&redirect_uri=${redirect_uri}&id=${id}`;
+    window.location.href = `https://sso.fishgen.org/change-password?token=${token}&redirect_uri=${redirect_uri}`;
   };
-
-  const initials = `${profile?.first_name?.charAt(0) ?? ""}${
-    profile?.last_name?.charAt(0) ?? ""
-  }`.trim();
 
   return (
     <>
