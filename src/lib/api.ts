@@ -683,3 +683,12 @@ export const getRewards = async () => {
     return Promise.reject(err);
   }
 };
+
+export const getInviteStatus = async (id: string) => {
+  try {
+    const { data } = await axios.get(`/v2/auth/invite/status/${id}`);
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};

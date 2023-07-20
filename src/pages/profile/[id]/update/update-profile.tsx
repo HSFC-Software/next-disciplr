@@ -2,7 +2,7 @@ import Layout from "@/components/templates/page";
 import styles from "./update-profile.module.scss";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
-import { useGetProfileById } from "@/lib/queries";
+import { useGetInviteStatus, useGetProfileById } from "@/lib/queries";
 import Header from "@/components/base/header";
 import { useFormik } from "formik";
 import { Profile } from "@/types/profile";
@@ -22,6 +22,8 @@ import { MdContentCopy } from "react-icons/md";
 import { toast } from "react-toastify";
 import Avatar from "@/components/base/avatar";
 import { TiCamera } from "react-icons/ti";
+import { RWebShare } from "react-web-share";
+import RiShareLine from "react-icons/ri";
 
 export default function UpdateProfile() {
   const router = useRouter();
@@ -36,6 +38,10 @@ export default function UpdateProfile() {
   const { mutate: updateProfilePicture, isLoading: isUploadingProfileImage } =
     useUpdateProfilePicture(profile?.id ?? "");
   const { mutate: inviteMember, isLoading: isInviting } = useInviteMember();
+  const { data: invitation, isLoading: invitationLoading } = useGetInviteStatus(
+    profileId as string
+  );
+  console.log({ invitation });
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -58,22 +64,6 @@ export default function UpdateProfile() {
   const handleUpdate = () => {
     formik.handleSubmit();
   };
-
-  // const handleCopyToClipBoard = (str: string) => {
-  //   navigator.clipboard.writeText(str);
-  // };
-
-  // const handleCopySignInGoogle = () => {
-  //   handleCopyToClipBoard("https://app.fishgen.org/sign-in?provider=google");
-  //   toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
-  // };
-
-  // const handleCopySignUpEmailPassword = () => {
-  //   handleCopyToClipBoard(
-  //     `https://app.fishgen.org/sign-up?email=${profile?.email}`
-  //   );
-  //   toast("Copied to clipboard 📋 ", { autoClose: 500, hideProgressBar: true });
-  // };
 
   const handleChangeFile = (e: any) => {
     if (e?.target?.files?.length > 0) {
@@ -284,12 +274,6 @@ export default function UpdateProfile() {
               />
             </div>
           </section>
-          {/* <section className="px-7 py-3 bg-white">
-            <div className="py-5 flex flex-col gap-2">
-              <label className={styles.label}>Email Address</label>
-              <div className="opacity-50">{formik.values.email}</div>
-            </div>
-          </section> */}
 
           <section className="px-7 py-3 bg-white">
             <div className="py-5 flex flex-col gap-2">
@@ -306,13 +290,48 @@ export default function UpdateProfile() {
           </section>
 
           <section className="px-7 py-3 bg-white">
-            <button
-              onClick={handleInvite}
-              disabled={isInviting}
-              className="bg-[#6E7AC5] w-full text-white p-5 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Invite to Disciplr
-            </button>
+            <div className="py-5 flex flex-col gap-2">
+              <div className="flex gap-1 items-center">
+                <label className={styles.label}>
+                  Account {formik.values.email && "✅"}
+                </label>
+              </div>
+
+              {formik.values.email && (
+                <div className="py-5 flex flex-col gap-2">
+                  <label className={styles.label}>Email Address</label>
+                  <div className="opacity-50">{formik.values.email}</div>
+                </div>
+              )}
+
+              {!formik.values.email && (
+                <>
+                  <div className="opacity-50">
+                    <span className="font-semibold">{invitation?.link}</span> -{" "}
+                    <RWebShare
+                      data={{
+                        title: "Disciplr Invitation",
+                        text: `You have been invited to join Disciplr App. Click this link to continue: ${invitation?.link} \n\nIf your Disciplr does not make this request, you can ignore this message.`,
+                        url: `https://${invitation?.link}`,
+                      }}
+                      onClick={() => console.log("shared successfully!")}
+                    >
+                      <button className="underline text-[#6E7AC5]">
+                        Invite Link
+                      </button>
+                    </RWebShare>
+                  </div>
+
+                  <button
+                    onClick={handleInvite}
+                    disabled={isInviting || invitationLoading || invitation}
+                    className="bg-[#6E7AC5] w-full text-white p-5 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Invite to Disciplr
+                  </button>
+                </>
+              )}
+            </div>
           </section>
         </section>
       </Layout>

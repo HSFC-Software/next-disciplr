@@ -399,6 +399,13 @@ export const useUpdateApplication = () => {
 };
 
 export const useInviteMember = () => {
-  // const queryClient = useQueryClient();
-  return useMutation((disciple_id: string) => inviteMember(disciple_id));
+  const queryClient = useQueryClient();
+  return useMutation((disciple_id: string) => inviteMember(disciple_id), {
+    onSuccess(res) {
+      queryClient.invalidateQueries([
+        "getInviteStatus",
+        { id: res.disciple_id },
+      ]);
+    },
+  });
 };

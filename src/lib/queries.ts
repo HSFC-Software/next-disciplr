@@ -27,6 +27,7 @@ import {
   getSchoolRegistrationByReference,
   getMasterList,
   getRewards,
+  getInviteStatus,
 } from "@/lib/api";
 
 export const useGetProfileFromToken = (token: string) => {
@@ -261,6 +262,12 @@ export const useGetSchoolRegistrationByReference = (reference: string) =>
 
 export const useGetRewards = () =>
   useQuery(["getRewards"], async () => await getRewards(), {
+    staleTime: 1000 * 60 * 5,
+    enabled: true,
+  });
+
+export const useGetInviteStatus = (id: string) =>
+  useQuery(["getInviteStatus", { id }], async () => await getInviteStatus(id), {
     staleTime: 1000 * 60 * 5,
     enabled: true,
   });
