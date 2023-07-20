@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useModalContext } from "@/components/base/modal/Provider";
 import { TbSquareRoundedXFilled } from "react-icons/tb";
 import {
+  useBatchInactiveMember,
   useLinkExistingMember,
   useRemoveMember,
   useUnlinkMember,
@@ -12,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 import { IoEllipsisHorizontal } from "react-icons/io5";
 import { Dropdown } from "flowbite-react";
+import { RotatingLines } from "react-loader-spinner";
 
 export default function Member() {
   const router = useRouter();
@@ -22,6 +24,8 @@ export default function Member() {
   const { mutate: remove } = useRemoveMember(networkId);
   const { mutate: active } = useLinkExistingMember(networkId);
   const [selectedMemberIds, setSelectedMemberIds] = useState<any[]>([]);
+  const { mutate: batchInactive, isLoading: isInactivating } =
+    useBatchInactiveMember();
 
   const { showModal, closeModal } = useModalContext();
 
@@ -44,6 +48,23 @@ export default function Member() {
       {
         onSettled() {
           e.target.disabled = false;
+        },
+      }
+    );
+  };
+
+  const handleBacthInactive = () => {
+    batchInactive(
+      selectedMemberIds.map((id) => {
+        const member: any = members?.find(
+          (member) => member.disciples.id === id
+        );
+        console.log("id:", member.id);
+        return member.id;
+      }),
+      {
+        onSuccess() {
+          setSelectedMemberIds([]);
         },
       }
     );
@@ -80,19 +101,32 @@ export default function Member() {
                 </header>
 
                 <Dropdown
+                  disabled={isInactivating}
                   label={
-                    <button className="text-2xl pl-4 pr-1 text-[#6e7ac5]">
-                      <IoEllipsisHorizontal />
-                    </button>
+                    <>
+                      {isInactivating ? (
+                        <RotatingLines strokeColor="#6e7ac5" width="24" />
+                      ) : (
+                        <button className="text-2xl pl-4 pr-1 text-[#6e7ac5]">
+                          <IoEllipsisHorizontal />
+                        </button>
+                      )}
+                    </>
                   }
                   placement="bottom-end"
                   inline
                   arrowIcon={null!}
                 >
                   <Dropdown.Item className="font-normal text-xs px-7 py-4">
-                    Move to another network
+                    Move to a new network
                   </Dropdown.Item>
                   <Dropdown.Item className="font-normal text-xs px-7 py-4">
+                    Move to another network
+                  </Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={handleBacthInactive}
+                    className="font-normal text-xs px-7 py-4"
+                  >
                     Make Inactive
                   </Dropdown.Item>
                 </Dropdown>

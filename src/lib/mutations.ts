@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import {
   addEventMoments,
   addParticipants,
+  batchInactiveMembers,
   consolidate,
   ConsolidateResponse,
   createEvent,
@@ -408,4 +409,20 @@ export const useInviteMember = () => {
       ]);
     },
   });
+};
+
+export const useBatchInactiveMember = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation<unknown, unknown, string[]>(
+    (ids) => batchInactiveMembers(ids),
+    {
+      onSuccess: (res: any) => {
+        queryClient.invalidateQueries([
+          "getNetworkMembers",
+          { id: res?.network_id },
+        ]);
+      },
+    }
+  );
 };

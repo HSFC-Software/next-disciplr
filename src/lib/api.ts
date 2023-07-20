@@ -692,3 +692,12 @@ export const getInviteStatus = async (id: string) => {
     return Promise.reject(err);
   }
 };
+
+export const batchInactiveMembers = async (ids: string[]) => {
+  try {
+    const { data } = await axios.patch(`/v2/batch/inactive-member`, { ids });
+    return data as any;
+  } catch (err) {
+    return Promise.reject(err);
+  }
+};
