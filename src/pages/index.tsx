@@ -1,6 +1,17 @@
 import { GetServerSidePropsContext } from "next";
 
 export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  const token = ctx.req.headers.cookie?.split("=")[1];
+
+  if (token) {
+    return {
+      redirect: {
+        destination: "/networks",
+        permanent: false,
+      },
+    };
+  }
+
   let protocol = "http";
 
   if (process.env.NODE_ENV === "production") {

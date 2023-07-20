@@ -34,6 +34,10 @@ export default function MemberBadge(props: Props) {
 
   const router = useRouter();
 
+  const handleOnLongPress = useLongPress(() => {
+    onLongPress?.();
+  }, 250);
+
   const handleOnclick = () => {
     router.push("/profile/[id]", `/profile/${props.id}`);
   };
@@ -61,8 +65,7 @@ export default function MemberBadge(props: Props) {
 
   return (
     <button
-      onMouseDown={longPressHandler}
-      onMouseUp={() => clearTimeout(longPressTimer)}
+      {...handleOnLongPress}
       draggable
       onClick={handleOnclick}
       className="flex items-center bg-transparent"
@@ -99,4 +102,29 @@ export default function MemberBadge(props: Props) {
       )}
     </button>
   );
+}
+
+function useLongPress(callback = () => {}, ms = 200) {
+  const [startLongPress, setStartLongPress] = useState(false);
+
+  useEffect(() => {
+    let timerId: NodeJS.Timeout;
+    if (startLongPress) {
+      timerId = setTimeout(callback, ms);
+    } else {
+      clearTimeout(timerId!);
+    }
+
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [callback, ms, startLongPress]);
+
+  return {
+    onMouseDown: () => setStartLongPress(true),
+    onMouseUp: () => setStartLongPress(false),
+    onMouseLeave: () => setStartLongPress(false),
+    onTouchStart: () => setStartLongPress(true),
+    onTouchEnd: () => setStartLongPress(false),
+  };
 }
