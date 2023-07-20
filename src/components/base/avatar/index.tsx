@@ -1,7 +1,7 @@
 import { ReactNode, useState } from "react";
 import Image from "next/image";
 import { useGetProfileById } from "@/lib/queries";
-
+import { PhotoProvider, PhotoView } from "react-photo-view";
 type AvatarProps = {
   children?: ReactNode;
   imgSrc?: string;
@@ -55,17 +55,21 @@ export default function Avatar({
       }`}
     >
       {_imgSrc && (
-        <Image
-          onLoad={() => setIsImageReady(true)}
-          style={{
-            opacity: isImageReady ? 1 : 0,
-          }}
-          alt="profile"
-          src={_imgSrc}
-          className="w-full h-full rounded-full object-cover"
-          width={size}
-          height={size}
-        />
+        <PhotoProvider bannerVisible={false}>
+          <PhotoView src={_imgSrc}>
+            <Image
+              onLoad={() => setIsImageReady(true)}
+              style={{
+                opacity: isImageReady ? 1 : 0,
+              }}
+              alt="profile"
+              src={_imgSrc}
+              className="w-full h-full rounded-full object-cover"
+              width={size}
+              height={size}
+            />
+          </PhotoView>
+        </PhotoProvider>
       )}
       {!_imgSrc && <>{_initials}</>}
     </div>

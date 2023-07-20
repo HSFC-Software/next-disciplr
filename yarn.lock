@@ -3247,6 +3247,11 @@ react-modal@^3.16.1:
     react-lifecycles-compat "^3.0.0"
     warning "^4.0.3"
 
+react-photo-view@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/react-photo-view/-/react-photo-view-1.2.3.tgz#436f81ad0a611dfaa43bbc72a4fef26a057b5aef"
+  integrity sha512-dtaFjU8nAB/rD8mxBaaJcvESlDOweAd1tmvXujS/d3oh1QyGew3xD4C02l46E6Dhn3Tshzl2+IM1h0MWV9nG7g==
+
 react-qr-reader@2.2.1:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/react-qr-reader/-/react-qr-reader-2.2.1.tgz#dc89046d1c1a1da837a683dd970de5926817d55b"
