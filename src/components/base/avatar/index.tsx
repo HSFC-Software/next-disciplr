@@ -55,7 +55,7 @@ export default function Avatar({
       }`}
     >
       {_imgSrc && (
-        <PhotoProvider bannerVisible={false}>
+        <PhotoProvider>
           <PhotoView src={_imgSrc}>
             <Image
               onLoad={() => setIsImageReady(true)}
