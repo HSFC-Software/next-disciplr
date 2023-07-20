@@ -41,7 +41,6 @@ export default function UpdateProfile() {
   const { data: invitation, isLoading: invitationLoading } = useGetInviteStatus(
     profileId as string
   );
-  console.log({ invitation });
 
   const formik = useFormik<Profile>({
     enableReinitialize: true,
@@ -314,7 +313,6 @@ export default function UpdateProfile() {
                         text: `You have been invited to join Disciplr App. Click this link to continue: ${invitation?.link} \n\nIf your Disciplr does not make this request, you can ignore this message.`,
                         url: `https://${invitation?.link}`,
                       }}
-                      onClick={() => console.log("shared successfully!")}
                     >
                       <button className="underline text-[#6E7AC5]">
                         Invite Link
