@@ -292,7 +292,7 @@ export default function UpdateProfile() {
             <div className="py-5 flex flex-col gap-2">
               <div className="flex gap-1 items-center">
                 <label className={styles.label}>
-                  Account {formik.values.email && "✅"}
+                  Account {invitation?.is_registered && "✅"}
                 </label>
               </div>
 
@@ -303,26 +303,29 @@ export default function UpdateProfile() {
                 </div>
               )}
 
-              {!formik.values.email && (
+              {!invitation?.is_registered && (
                 <>
-                  <div className="opacity-50">
-                    <span className="font-semibold">{invitation?.link}</span> -{" "}
-                    <RWebShare
-                      data={{
-                        title: "Disciplr Invitation",
-                        text: `You have been invited to join Disciplr App. Click this link to continue: ${invitation?.link} \n\nIf your Disciplr does not make this request, you can ignore this message.`,
-                        url: `https://${invitation?.link}`,
-                      }}
-                    >
-                      <button className="underline text-[#6E7AC5]">
-                        Invite Link
-                      </button>
-                    </RWebShare>
-                  </div>
+                  {!!invitation?.link && (
+                    <div className="opacity-50">
+                      <span className="font-semibold">{invitation?.link}</span>{" "}
+                      -{" "}
+                      <RWebShare
+                        data={{
+                          title: "Disciplr Invitation",
+                          text: `You have been invited to join Disciplr App. Click this link to continue: ${invitation?.link} \n\nIf your Disciplr does not make this request, you can ignore this message.`,
+                          url: `https://${invitation?.link}`,
+                        }}
+                      >
+                        <button className="underline text-[#6E7AC5]">
+                          Invite Link
+                        </button>
+                      </RWebShare>
+                    </div>
+                  )}
 
                   <button
                     onClick={handleInvite}
-                    disabled={isInviting || invitationLoading || invitation}
+                    disabled={isInviting || invitationLoading || invitation?.id}
                     className="bg-[#6E7AC5] w-full text-white p-5 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Invite to Disciplr
