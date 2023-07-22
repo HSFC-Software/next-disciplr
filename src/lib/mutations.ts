@@ -214,19 +214,21 @@ export const useUpdateUser = () => {
 export const useConsolidate = () => {
   const queryClient = useQueryClient();
 
-  return useMutation<
-    ConsolidateResponse,
-    unknown,
-    { disciple_id: string; consolidator_id: string }
-  >((payload) => consolidate(payload.disciple_id, payload.consolidator_id), {
-    onSuccess: (_, { disciple_id }) => {
-      queryClient.invalidateQueries(["getConsolidations", { id: disciple_id }]);
-      queryClient.invalidateQueries([
-        "getConsolidationDetails",
-        { id: disciple_id },
-      ]);
-    },
-  });
+  return useMutation<ConsolidateResponse, unknown, string>(
+    (id) => consolidate(id),
+    {
+      onSuccess: ({ consolidators_disciples_id }) => {
+        queryClient.invalidateQueries([
+          "getConsolidations",
+          { id: consolidators_disciples_id },
+        ]);
+        queryClient.invalidateQueries([
+          "getConsolidationDetails",
+          { id: consolidators_disciples_id },
+        ]);
+      },
+    }
+  );
 };
 
 export const useUpdateProfilePicture = (id: string) => {
@@ -285,7 +287,7 @@ export const usePublishConsolidation = () => {
         queryClient.invalidateQueries(["getConsolidationById", { id }]);
         queryClient.invalidateQueries([
           "getConsolidationDetails",
-          { id: response?.disciple_id },
+          { id: (response as any)?.consolidators_disciples_id.id },
         ]);
       },
     }

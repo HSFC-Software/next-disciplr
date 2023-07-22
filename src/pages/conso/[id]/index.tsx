@@ -16,34 +16,26 @@ import {
 
 export default function ConsolidationDetails() {
   const router = useRouter();
-  const disciple_id = router.query.id;
-  const { data: user } = useGetProfile();
+  const reference_id = router.query.id;
   const { data, isLoading: isGettingData } = useGetConsolidationDetails(
-    String(disciple_id)
+    String(reference_id)
   );
+
   const { mutate: consolidate, isLoading } = useConsolidate();
 
   const handleGoUpOneLevel = () => {
-    const currentPathname = router.asPath;
-    const parentPathname = currentPathname.split("/").slice(0, -1).join("/");
-    router.push(parentPathname);
+    router.push("/conso/list");
   };
 
   const handleConsolidate = () => {
-    consolidate(
-      {
-        disciple_id: String(disciple_id),
-        consolidator_id: String(user?.id),
+    consolidate(String(reference_id), {
+      onSuccess: (response) => {
+        router.push(
+          "/conso/[id]/[lesson]",
+          `/conso/${reference_id}/${response.id}`
+        );
       },
-      {
-        onSuccess: (response) => {
-          router.push(
-            "/conso/[id]/[lesson]",
-            `/conso/${disciple_id}/${response.id}`
-          );
-        },
-      }
-    );
+    });
   };
 
   return (
@@ -60,7 +52,7 @@ export default function ConsolidationDetails() {
           </div>
         </Header>
         <div className="flex items-center flex-col py-5 z-10">
-          <Avatar fontSize="text-2xl" size={100} id={data?.disciple.id} />
+          <Avatar fontSize="text-2xl" size={100} id={data?.disciple?.id} />
 
           <div className="flex flex-col items-center gap-1 mt-5">
             <span className="text-[#8D8D8D]">
@@ -69,7 +61,7 @@ export default function ConsolidationDetails() {
             <span className="text-[#8D8D8D] text-center">
               {data?.disciple.email ?? "-"}
             </span>
-            {data?.recent && (
+            {data?.recent?.lesson_code && (
               <Lesson
                 code={data.recent.lesson_code.code}
                 name={data.recent.lesson_code.name}
@@ -90,9 +82,11 @@ export default function ConsolidationDetails() {
               Contact Now
             </button>
           </div>
-          <div className="text-[#B4B4B4] mt-10">
-            Consolidated {moment(data?.recent.created_at).fromNow()}
-          </div>
+          {data?.recent.created_at && (
+            <div className="text-[#B4B4B4] mt-10">
+              Consolidated {moment(data?.recent.created_at).fromNow()}
+            </div>
+          )}
         </div>
         <div className="px-7 z-10 mt-10">
           <header className="font-semibold text-[#686777] text-xl">
@@ -107,7 +101,7 @@ export default function ConsolidationDetails() {
                   onClick={() =>
                     router.push(
                       `/conso/[id]/[lesson]`,
-                      `/conso/${disciple_id}/${conso.id}`
+                      `/conso/${reference_id}/${conso.id}`
                     )
                   }
                 >

@@ -21,7 +21,7 @@ export default function Consolidations() {
     return (
       conso.disciple_id.first_name.toLowerCase().includes(search.toLowerCase()) || // prettier-ignore
       conso.disciple_id.last_name.toLowerCase().includes(search.toLowerCase()) || // prettier-ignore
-      conso.lesson_code.name.toLowerCase().includes(search.toLowerCase()) // prettier-ignore
+      conso?.lesson_code?.name?.toLowerCase().includes(search.toLowerCase()) // prettier-ignore
     );
   });
 
@@ -72,10 +72,7 @@ export default function Consolidations() {
                   <div
                     key={conso.id}
                     onClick={() =>
-                      router.push(
-                        "/conso/[id]",
-                        `/conso/${conso.disciple_id.id}`
-                      )
+                      router.push("/conso/[id]", `/conso/${conso.id}`)
                     }
                     className="cursor-pointer bg-[#F9F9F9] rounded-[25px] py-7 px-11 mx-7 flex items-center gap-5"
                   >
@@ -87,10 +84,12 @@ export default function Consolidations() {
                       />
 
                       <div className="absolute bottom-0 whitespace-nowrap z-50">
-                        <Lesson
-                          code={conso.lesson_code.code}
-                          name={conso.lesson_code.name}
-                        />
+                        {conso?.lesson_code && (
+                          <Lesson
+                            code={conso.lesson_code.code as any}
+                            name={conso.lesson_code.name as any}
+                          />
+                        )}
                       </div>
                     </div>
                     <div className="flex flex-col">

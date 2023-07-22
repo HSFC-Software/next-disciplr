@@ -8,13 +8,13 @@ import { usePublishConsolidation } from "@/lib/mutations";
 
 export default function LessonScreen() {
   const router = useRouter();
-  const { data: lesson, isLoading } = useGetConsolidationById(
-    router.query.lesson as string
-  );
+  const id = router.query.lesson;
+
+  const { data: lesson, isLoading } = useGetConsolidationById(id as string);
   const { mutate: publish, isLoading: isUpdating } = usePublishConsolidation();
 
   const handleComplete = () => {
-    publish?.(router.query.lesson as string, {
+    publish?.(id as string, {
       onSuccess: () => {
         router.push("/conso/[id]", `/conso/${router.query.id}`);
       },
@@ -40,7 +40,7 @@ export default function LessonScreen() {
         </Header>
         <Outline lessonCode={lesson?.lesson_code.code ?? ""} />
         {!isLoading && lesson?.status === "DRAFT" && (
-          <div className="flex justify-center mt-10">
+          <div className="flex justify-center mt-7">
             <button
               disabled={isUpdating}
               onClick={handleComplete}
@@ -50,6 +50,7 @@ export default function LessonScreen() {
             </button>
           </div>
         )}
+        <div className="mb-7" />
       </Layout>
     </>
   );
