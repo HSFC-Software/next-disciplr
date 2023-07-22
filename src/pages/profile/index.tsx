@@ -47,6 +47,10 @@ export default function Home() {
     window.location.href = `https://sso.fishgen.org/change-password?token=${token}&redirect_uri=${redirect_uri}`;
   };
 
+  const handleClickSupport = () => {
+    window.location.href = "https://forms.gle/AX1yNbV3Lx2FfzRq5";
+  };
+
   return (
     <>
       <Head>
@@ -80,6 +84,12 @@ export default function Home() {
                 className={styles.dropdownItem}
               >
                 Change Password
+              </Dropdown.Item>
+              <Dropdown.Item
+                onClick={handleClickSupport}
+                className={styles.dropdownItem}
+              >
+                Contact Support
               </Dropdown.Item>
               <Dropdown.Item
                 onClick={handleSignOut}
