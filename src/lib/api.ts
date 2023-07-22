@@ -228,17 +228,15 @@ type Consoliations = {
     first_name: string;
     last_name: string;
   };
-  lesson_code: {
-    code: LessonCodes;
-    name: string;
+  lesson_code?: {
+    code?: LessonCodes;
+    name?: string;
   };
 };
 
 export const getConsolidations = async (consolidatorId: string) => {
   try {
-    const { data } = await axios.get(
-      `/consolidations?consolidator=${consolidatorId}&client=disciplr`
-    );
+    const { data } = await axios.get(`/v2/consolidators/${consolidatorId}`);
     return data as Consoliations[];
   } catch (err) {
     return Promise.reject(err);
@@ -274,7 +272,7 @@ type ConsolidationDetails = {
 
 export const getConsolidationDetails = async (id: string) => {
   try {
-    const { data } = await axios.get(`/consolidations?disciple=${id}`);
+    const { data } = await axios.get(`/v2/consolidators/history/${id}`);
     return data as ConsolidationDetails;
   } catch (err) {
     return Promise.reject(err);
@@ -287,16 +285,15 @@ export type ConsolidateResponse = {
     code: LessonCodes;
     name: string;
   };
+  consolidators_disciples_id: string;
 };
 
 export const consolidate = async (
-  disciple_id: string,
-  consolidator_id: string
+  consolidators_disciples_id: string
 ): Promise<ConsolidateResponse> => {
   try {
-    const { data } = await axios.post(`/consolidations`, {
-      disciple_id,
-      consolidator_id,
+    const { data } = await axios.post(`/v2/consolidations`, {
+      consolidators_disciples_id,
     });
     return data;
   } catch (err) {
@@ -327,7 +324,7 @@ type GetConsolidationByIdResponse = {
 
 export const getConsolidationById = async (id: string) => {
   try {
-    const { data } = await axios.get(`/consolidations?id=${id}`);
+    const { data } = await axios.get(`/v2/consolidations/${id}`);
     return data as GetConsolidationByIdResponse;
   } catch (err) {
     return Promise.reject(err);
@@ -345,7 +342,7 @@ export const getProfileById = async (id: string) => {
 
 export const publishConsolidation = async (id: string) => {
   try {
-    const { data } = await axios.patch(`/consolidations?id=${id}`, {
+    const { data } = await axios.patch(`/v2/consolidations/${id}`, {
       status: "PUBLISHED",
     });
     return data;
