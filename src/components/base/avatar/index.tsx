@@ -57,7 +57,7 @@ export default function Avatar({
       {_imgSrc && (
         <PhotoProvider>
           <PhotoView src={_imgSrc}>
-            <Image
+            <img
               onLoad={() => setIsImageReady(true)}
               style={{
                 opacity: isImageReady ? 1 : 0,
