@@ -61,6 +61,7 @@ export default function Avatar({
               onLoad={() => setIsImageReady(true)}
               style={{
                 opacity: isImageReady ? 1 : 0,
+                imageOrientation: "none",
               }}
               alt="profile"
               src={_imgSrc}

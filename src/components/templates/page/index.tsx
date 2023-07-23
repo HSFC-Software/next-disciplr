@@ -52,41 +52,71 @@ function Nav(props: { activeRoute?: string }) {
   return (
     <nav
       id="nav"
-      className="shrink-0 flex px-7 py-5 justify-center fixed bottom-7 w-screen z-50 pointer-events-none"
+      className="shrink-0 flex pt-5 justify-center fixed bottom-0 w-screen z-50 pointer-events-none"
     >
       <div
-        className={`${styles.navigation} px-14 py-5 bg-blue-200 bg-white pointer-events-auto`}
+        className={`${styles.navigation} px-7 py-3 bg-white pointer-events-auto w-full`}
       >
-        <Link href="/networks">
+        <Link className="gap-2 flex flex-col items-center" href="/networks">
           <GroupIcon
-            width={38}
-            height={38}
+            width={30}
+            height={30}
             isActive={activeRoute === "networks"}
           />
+          <small
+            style={{ opacity: activeRoute === "networks" ? 1 : 0.4 }}
+            className="text-[10px] font-medium text-[#6e7ac5]"
+          >
+            NETWORK
+          </small>
         </Link>
-        <Link href="/conso" className="relative flex items-center">
+
+        <Link
+          href="/conso"
+          className="gap-2 flex flex-col items-center relative flex items-center"
+        >
           <ConsolidationIcon
-            width={38}
-            height={38}
+            width={30}
+            height={30}
             isActive={activeRoute === "conso"}
           />
+          <small
+            style={{ opacity: activeRoute === "conso" ? 1 : 0.4 }}
+            className="text-[10px] font-medium text-[#6e7ac5]"
+          >
+            CONSO
+          </small>
         </Link>
-        <Link href="/events" className="relative flex items-center">
-          <NotificationIcon
-            width={38}
-            height={38}
-            isActive={activeRoute === "/events"}
-          />
-          <span className="text-[8px] absolute bg-primary text-white px-2 rounded-lg w-[50px] text-center ml-[-7px]">
-            Soon
+        <div className="relative flex items-center">
+          <Link href="/events" className="gap-2 flex flex-col items-center">
+            <NotificationIcon
+              width={30}
+              height={30}
+              isActive={activeRoute === "events"}
+            />
+            <small
+              style={{ opacity: activeRoute === "events" ? 1 : 0.4 }}
+              className="text-[10px] font-medium text-[#6e7ac5]"
+            >
+              SDL
+            </small>
+          </Link>
+          <span className="text-[8px] absolute bg-primary text-white py-[1px] px-2 rounded-lg w-[50px] text-center ml-[-10px] font-medium">
+            SOON
           </span>
-        </Link>
-        <Link href="/profile">
+        </div>
+        <Link className="gap-2 flex flex-col items-center" href="/account">
           <UserIcon
-            width={38}
-            height={38}
-            isActive={activeRoute === "profile"}
+            width={30}
+            height={30}
+            isActive={activeRoute === "account"}
           />
+          <small
+            style={{ opacity: activeRoute === "account" ? 1 : 0.4 }}
+            className="text-[10px] font-medium text-[#6e7ac5]"
+          >
+            ACCOUNT
+          </small>
         </Link>
       </div>
     </nav>
