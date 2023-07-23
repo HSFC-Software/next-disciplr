@@ -41,7 +41,7 @@ export default function UpdateProfile() {
       updateUser(payload, {
         onSuccess: () => {
           // TODO:make it dynamic
-          window.location.href = "/profile";
+          window.location.href = "/account";
         },
       });
     },
