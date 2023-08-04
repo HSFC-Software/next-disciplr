@@ -20,7 +20,7 @@ export default function Auth({ children }: { children?: ReactNode }) {
     let token = cookie.token;
 
     if (!token) {
-      destroyCookie(null, "token");
+      // destroyCookie(null, "token");
       window.location.href = `/sign-in`;
     }
   }, []);

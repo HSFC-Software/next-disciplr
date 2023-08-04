@@ -6,6 +6,8 @@ import Script from "next/script";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
+const SEVEN_DAYS_IN_MILLISECONDS = 7 * 24 * 60 * 60 * 1000;
+
 export default function Auth() {
   const [token, setToken] = useState("");
   const { data } = useGetProfileFromToken(token);
@@ -15,7 +17,8 @@ export default function Auth() {
     const params = Object.fromEntries(new URLSearchParams(location.hash));
     setToken(params["#access_token"]);
     setCookie(null, "token", params["#access_token"], {
-      expires: new Date(Date.now() + 60 * 60 * 1000),
+      // expires in 7 days
+      expires: new Date(Date.now() + SEVEN_DAYS_IN_MILLISECONDS),
     });
   }, []);
 
