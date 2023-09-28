@@ -60,7 +60,24 @@ export default function Accounting() {
                   item?.middle_name
                     ?.toLowerCase()
                     .includes(keyword.toLowerCase()) ||
-                  item?.last_name?.toLowerCase().includes(keyword.toLowerCase())
+                  item?.last_name
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.cell_leader_name
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.network_leader_name
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.lesson_completed
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.status
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) ||
+                  item?.role
+                    ?.toLowerCase()
+                    .includes(keyword.toLowerCase()) 
                 );
               });
             })
