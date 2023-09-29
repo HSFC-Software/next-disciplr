@@ -16,6 +16,7 @@ const SDL2 = [
   "acceaa08-672f-4358-8e78-6af4d9408fde",
 ];
 const SDL3 = "80d556eb-8426-496e-afc4-872cafe33eb7";
+const SDL3_B6 = "80d556eb-8426-496e-afc4-872cafe33eb7";
 
 export default function Apply() {
   const router = useRouter();
@@ -265,7 +266,7 @@ export default function Apply() {
                   />
                 </div>
 
-                {[...SDL2, SDL3].includes(String(course_id)) && (
+                {[...SDL2, SDL3, SDL3_B6].includes(String(course_id)) && (
                   <>
                     <div>
                       <label className="text-[12px] text-[#686777] font-medium uppercase mb-1">
