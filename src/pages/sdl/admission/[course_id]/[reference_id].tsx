@@ -85,7 +85,7 @@ export default function Reference() {
               able to accept you for application for {course?.title}.{" "}
               <div className="mt-8">
                 <span className="font-semibold">
-                  Please proceed to window 3 and ask for assistance.
+                  Please proceed to admission table and ask for assistance.
                 </span>
               </div>
             </p>
@@ -95,7 +95,7 @@ export default function Reference() {
               Awesome! You have now been admitted to {course?.title}.
               <div className="mt-8">
                 <span className="font-semibold">
-                  Please proceed to Window 2
+                  Please proceed to accounting table
                 </span>{" "}
                 and prepare {course?.fee ?? "0.00"} pesos for the enrollment
                 fee. Kindly present this QR code and proceed to payment.
@@ -108,7 +108,8 @@ export default function Reference() {
               enrolled for {course?.title}.{" "}
               <div className="mt-8">
                 <span className="font-semibold">
-                  Proceed now to window 3 and verify your enrollment status.
+                  Proceed now to admission table and verify your enrollment
+                  status.
                 </span>
               </div>
             </p>
